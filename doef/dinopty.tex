@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Динамическая оптимизация в экономике и финансах}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+\section{\foreignlanguage{russian}{Вариацонное исчисление}}
+
+\begin{enumerate}
+
+\item Функционал
+
+Переменная величина V называется функционалом, зависящим от функции y(t) 	
+\begin{equation}
+V = V(y(t)), \,\,\, \operatorname{if} \,\, \forall y(t) \in \operatorname{M} \rightarrow V 
+\end{equation}
+где $M$ - класс функций, а $V$ - число 
+
+Примеры функционалов
+\begin{align}
+V = \max_{t \in [0, T]} y(t) \\
+V = \int_{0}^T y(t) dt \\
+V = y(a) 
+\end{align}
+Пример задачи (микроэкономика). Есть фирма, которая имеет функцию издержек и т.д. Причем спрос зависит не только от цен, но и от их динамики. 
+\begin{align}
+Q(t) = D(P(t), P^{'}(t)) \\
+C(Q) - \operatorname{costs} \\
+\pi = P(t) \cdot D(P(t), P^{'} (t)) - C(D(P(t)), P^{'}(t)) \\
+\int_{0}^T \pi (P, P^{'}) dt \rightarrow \max_{P(t)} 
+\end{align}
+где $\int_0^T \pi(P, P^{'}) dt$ - прибыль фирмы с момента 0 по момент $T$ 
+
+
+Пример задачи (макроэкономика). Типовая задача домохозяйств в современных макроэкономических моделях, заключающаяся в максимизации дисконтировонной полезности с момента 0 по момент T. 
+\begin{align}
+\int_0^T U(C(T)) \cdot e^{-\delta t} dt \rightarrow \max \\
+Y = C +  I \\
+K^{'} = I \\
+Y = F(K, L) \\
+C = Y - K^{'} \\
+\int_{0}^T U(F(K, L) - K^{'}) e^{-\delta t} dt \rightarrow \max 
+\end{align}
+\item Каноническая задача вариационного исчисления 
+
+Как правило, такие задачи сводятся к следующему: найти оптимальную траекторию, чтобы попасть из точки 0 в точку T. (Видимо, это заключается в нахождении оптимальных параметров, функций) 
+\begin{align}
+V(y) = \int_0^T F(t, y, y^{'}) dt \\
+\operatorname{restrictions}: \begin{cases} 
+y(0) = y_0 \\
+y(T) = y_T 
+\end{cases} 
+\end{align}
+Предположения: интеграл сходится, а $F$ и $y$ непрерывные и дважды дифференцируемые
+
+\item Расстояние между функциями
+
+Расстояние между функциями n-го порядка 
+\begin{equation}
+\rho_n (y_1 (t), y_2(t)) = \max_{0 \le k \le n} \{ \max_{0 \le t \le T} | y_1^{(k)} (t) - y_2^{(k)} (t) | \}
+\end{equation}
+Пример. Даны две функции, найти между ними расстояние 0-го порядка. 
+\begin{align}
+y_1 = t ^ 3 \\
+y_2 = t ^ 2 \\ 
+t \in [0, 1 ] \\
+\rho_0 = \max_{t \in [0,1]} |t ^ 3 - t ^ 2| 
+\end{align}
+Чтобы найти максимум, будем дифференцировать и проверять значения в крайних точках. 
+\begin{align}
+2t - 3 t ^ 2 = 0 \\
+t = \frac{2}{3} \\
+\Big(\frac{2}{3}\Big)^2 - \Big(\frac{2}{3}\Big)^3 = \frac{4}{9} - \frac{8}{27} = \frac{4}{27} \\
+\rho_0 = \max \begin{cases} \frac{4}{27}& t = \frac{2}{3}\\ 0 & t = 1 \\ 0 & t = 0 \end{cases}
+\end{align}
+Теперь найдём расстояние 1-го порядка 
+\begin{align} 
+\rho_1 = \max \{ \rho_0, \max_{t \in [0,1]} |y_1^{'} - y_2^{'}|\} \\
+ \max_{t \in [0,1]} |2t-3t^2| \\
+ 6 t - 2 = 0 \Rightarrow t = \frac{1}{3} \\
+\rho_1 = \max
+\begin{cases}
+\frac{1}{3} & t = \frac{1}{3} \\
+0 & t = 0 \\
+1 & t = 1  \\
+\rho_0 = \frac{4}{27} & \,\,
+\end{cases}
+\Rightarrow
+\rho_1 = 1
+\end{align}
+$\varepsilon$-окрестность порядка n для функции $y(t)$ - множество всех функций $y_1(t)$ для которых 
+\begin{equation}
+\rho_n(y, y_1)<\varepsilon
+\end{equation}
+n = 0 сильная окрестность $\varepsilon_0$. Задаёт сильный максимум.
+
+n = 1 слабая окрестность $\varepsilon_1 \le \varepsilon_0 $. Задаёт слабый максимум.
+
+$y(t)$ - точка локального максимума если $\forall y_1 \in \varepsilon_0 \\
+V(y_1) \le V(y) \Rightarrow$ $y_0$ сильный max и $y_1$ слабый max   
+
+\item Непрерывный функционал
+
+Функционал $V$ называется непрерывным в смысле близости n-го порядка на $y_0(t)$ если 
+\begin{align}
+\forall \varepsilon > 0:\exists \delta (\varepsilon) > 0: 
+\begin{cases}\rho(y, y_0) < \delta \\
+|V(y) - V(y_0) | < \varepsilon \end{cases}
+\end{align}
+\item Приращение функционала 
+
+Пусть $\delta y(t)$ - приращение аргумента. 
+\begin{align}
+y(t) \rightarrow V(y(t)) \\
+y(t) + \delta y(t) \rightarrow V(y + \delta y) \\
+\Delta V = V(y + \delta y) - V(y) 
+\end{align}
+Если приращение функционала $\Delta V$ представимо в виде 
+\begin{equation}
+\Delta V = L\Big( y(t), \delta y(t) \Big) + \beta (y, \delta y) \max | \delta y) 
+\end{equation}
+где $L(\cdots)$ линейна по $\delta y$, а $\beta(\cdots) \rightarrow 0$ при $\max | \delta y| \rightarrow 0 $, тогда: 
+
+1. L называется вариацией функционала $ V (\delta V) $
+
+2. $\delta V = \frac{\partial}{\partial \alpha} \big( V(y + \alpha \cdot \delta y) \big)$
+
+\item Задача 1
+
+1 способ решения: 
+
+\begin{align}
+V = \int_0^T y^2 dt \\
+\Delta V = V (y + \delta y) - V(y) =  \\
+= \int_0^T (y + \delta y) ^2 dt - \int_0^T y^2 dt = \\
+= \int_0^T y ^ 2 + 2 \delta y y + \delta y^2 - y ^ 2 dt = \\
+= \int_0^T 2 \delta y y + \delta y^2 \\
+\end{align}
+Оставляем только часть, линейную по $\delta y(t)$
+\begin{align}
+\delta V = \int_0^T 2 y \delta y dt 
+\end{align}
+
+2 способ решения:
+
+\begin{align}
+V = \int_0^T y^2 dt \\
+\delta V = \frac{\partial }{\partial \alpha} \big( \int_0^T (y + \alpha \delta y)^ 2 dt\big)|_{\alpha = 0} = \\
+= \int_0^T 2 (y + \alpha \delta y) \delta y dt |_{\alpha = 0} \Rightarrow \\
+\Rightarrow \delta V = \int_0^T 2y\delta y dt 
+\end{align}
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

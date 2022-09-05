@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика-1 семинар}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+Формула оценки 
+
+0.2 дз + 0.2 семинары + 0.05 лекции + 0.2 кр + 0.35 экз
+
+Кстати семерша приятная по первым впечатлениям
+
+Она всё-таки базируется
+
+Вообще, в МО мы тоже можем сказать, что произошло с данными и посмотреть, как какие факторы влияют.
+
+Случайные величины бывают дискретными и непрерывными. Дискретные, как правило, задаются таблицами, а непрерывные функцией плотности $f_x(x)$
+\begin{align}
+F_x(x) = \operatorname{P}(X \le x) \\
+f_x(x) = \frac{\partial F_x(x)}{\partial x} \\
+F_x(x) = \int_{-\infty}^x f_x(t) dt
+\end{align}
+Матожидание
+\begin{equation}
+\operatorname{E} (X) = \begin{cases} 
+\sum_{i=1}^n x_i \cdot p_i \\
+\int_{-\infty}^{+\infty} f_x(x) \cdot x dx 
+\end{cases}
+\end{equation}
+Дисперсия
+\begin{equation}
+\operatorname{D} (X) = \begin{cases} 
+\operatorname{E} \big( (x - \operatorname{E}(x))^2\big) \\
+\operatorname{E}(X^2) - (E(X))^2
+\end{cases}
+\end{equation}
+\begin{align}
+\operatorname{cov}(X, Y) = E \big( (X - E(X)) (Y - E(Y)) \big) = E(XY) - E(X)(EY) \\
+\operatorname{corr}(X, Y) = \frac{\operatorname{cov}(X,Y)}{\sqrt{D(X)D(Y)}}
+\end{align}
+Пример задачи на что-то дискретное
+\begin{align}
+\begin{pmatrix}
+Y / X & 3 & 4 & 5 \\
+2 & 0.2 & 0.2 & 0.1 \\
+4 & 0.12 & 0.12 & 0.05 \\
+6 & 0.08 & 0.08 & 0.05
+\end{pmatrix} \\
+\begin{pmatrix}
+X & 3 & 4 & 5 \\
+P & 0.4 & 0.4 & 0.2
+\end{pmatrix} \\
+\begin{vmatrix}
+Y & 2 & 4 & 6 \\
+P & 0.5 & 0.29 & 0.21
+\end{vmatrix} \\
+\begin{vmatrix}
+Y | X = 4 & 2 & 4 & 6 \\
+P & \frac{0.2}{0.4} & \frac{0.12}{0.4} & \frac{0.08}{0.4}
+\end{vmatrix}
+\end{align}
+\begin{enumerate}
+\item Виды распределений
+Нормальное
+\begin{equation}
+X \sim N(\mu, \sigma^2) \rightarrow f(x) ={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}
+\end{equation}
+Хи-квадрат 
+\begin{equation}
+\chi^2_k = Z_1^2 + \cdots + Z_k^2; \forall i: Z_i \sim N(0;1) 
+\end{equation}
+Стьюдент 
+\begin{equation}
+t_k = \frac{N(0;1)}{\sqrt{\chi^2_k / k}}
+\end{equation}
+Фишер
+\begin{equation}
+F_{m;n} = \frac{\chi^2_m / m}{\chi^2_n / n}
+\end{equation}
+\item Проверка гипотез
+Дана выборка: $X_1, \cdots, X_n \sim N(\mu; \sigma^2)$
+$H_0: \mu = \mu_0 \\
+H_1: \mu \ne \mu_0$ 
+Подсчет $Z_{stat} < \frac{\bar{X} - \mu_0}{\sqrt{\sigma^2 / n}} \sim^{H_0} N(0;1)$.
+Если $Z_{stat} < Z_{\alpha}$ , то $H_0$ отвергается
+$\operatorname{P-value}$ - минимальный уровень значимости, прик котором $H_0$ отвергается.
+Мораль: $\operatorname{P-value} < \alpha \Rightarrow H_0$ отвергается. 
+
+Задача 1
+
+Оценки $\sim N(\mu;1) $
+
+реализация выборки: $ [10,9, 8, 5, 3]$
+
+$\begin{cases}
+H_0: \mu = 8 \\
+H_1: \mu \ne 8 
+\end{cases}$
+
+$Z_{stat} = \frac{7-8}{\sqrt{1 / 5}} = - 2.24$ 
+
+$\operatorname{P-value} = (1 - \Phi (2.24)) \cdot 2 = 0.025$, где $\Phi(x) = \int_{-\infty}^x f_x(x) dx$
+
+\item Свойства оценок 
+
+$\theta$ - параметр
+
+$\check{\theta}$ - оценка
+
+Несмещенность: $\operatorname{E} (\check{\theta}) = \theta $
+
+Состоятельность: $\check{\theta} \rightarrow^P_{n \rightarrow \infty} \theta $
+
+Эффективность: $\min MSE $ в классе, где $MSE = E \big( (\check{\theta} - \theta) ^ 2 \big)$
+
+Интересные факты:
+$
+\begin{cases}
+\operatorname{E} (\check{\theta}) = \theta \\ \operatorname{D} (\check{\theta}) \rightarrow_{n \rightarrow \infty} 0
+\end{cases} \Rightarrow$ состоятельность
+
+\item Матрицы
+
+
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Заголовок}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section{\foreignlanguage{russian}{Секция}}
+Пример графика в TeX (соединение точек) 
+\begin{tikzpicture}
+\begin{axis}[
+ylabel=Data,
+xlabel=time ]
+\addplot[only marks] coordinates {
+( 338.1, 266.45 )
+( 169.1, 143.43 )
+( 84.5, 64.80 )
+( 42.3, 34.19 )
+( 21.1, 9.47 )};
+\addlegendentry{Dots}
+\addplot[mark = none] coordinates {( 350, 279 )
+( 0, 0 )};
+\addlegendentry{Line}
+\end{axis}
+\end{tikzpicture}
+
+Пример считывания соединений точек из файла foo.dat
+3\begin{tikzpicture}
+\begin{axis}[ no markers,
+xmin=0, xmax=20 ]
+\addplot table[x=x,y=t] {foo.dat};
+\end{axis}
+\end{tikzpicture}
+
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+}3
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:6, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$x$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  hide y axis
+  ]
+
+ \addplot [fill=purple!30, draw=none, domain=0:4] {gauss(x, 3, 1)} \closedcycle;
+ \addplot [very thick,cyan!50!black] {gauss(x, 3, 1)};
+\pgfmathsetmacro\valueA{gauss(1,3,1)}
+\pgfmathsetmacro\valueB{gauss(2,3,1)}
+\draw [gray] (axis cs:1,0) -- (axis cs:1,\valueA)
+    (axis cs:5,0) -- (axis cs:5,\valueA);
+\draw [gray] (axis cs:2,0) -- (axis cs:2,\valueB)
+    (axis cs:4,0) -- (axis cs:4,\valueB);
+    
+\node[below] at (axis cs:1, 0)  {$\mu - 2\sigma$}; 
+\node[below] at (axis cs:2, 0)  {$\mu - \sigma$}; 
+\node[below] at (axis cs:3, 0)  {$\mu$}; 
+\node[below] at (axis cs:4, 0)  {$\mu + \sigma $}; 
+\node[below] at (axis cs:5, 0)  {$\mu + 2\sigma $}; 
+\end{axis}
+
+
+
+\end{tikzpicture}
+\end{otherlanguage*}
+\end{document}	

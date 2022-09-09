@@ -48,7 +48,7 @@ $ C_1 = + \infty $
 
 $ C_2 = + \infty $ 
 
-$ A_3 = - \infty $ - индивид нажрется, имеет право
+$ A_3 = - \infty $ 
  
 \item Из динамического бюджетного ограничения первого периода выразите $ A_2 $ и подставьте результ в динамическое бюджетное ограничение второго периода 
 
@@ -123,17 +123,13 @@ C_2 = (1 + r) (A_1 + Y_1) + Y_2 - (1 + r) C_1
 
 \end{tikzpicture}
 
-$ (1 + r) (A_1 + Y_1) + Y_2 $
-
-$ (1 + r) $
-
-Кринжанул. 
 \end{enumerate}
 
 \item Различные виды ограничения ликвидности
 \begin{enumerate}
 \item Мягкое ограничение ликвидности
 
+Предположено, что $r^{cr} > r^d$. Надо записать, как будет выглядеть БО. 
 \begin{equation}
 C_2 = \begin{cases}
 (1 + r^d ) (A_1 + Y_1) - (1 + r^d ) C_1, & C_1 \le A_1 + Y_1\\ 
@@ -172,6 +168,9 @@ C_2 = \begin{cases}
 \end{axis}
 \end{tikzpicture}
 
+\item Жесткое ограничение ликвидности 
+
+Потребитель не имеет возможности брать деньги в кредит, но может осуществлять вклады.  
 \begin{equation}
 C_2 = \begin{cases} 
 (1 + r^d) (A_1 + Y_1) + Y_2 - (1 + r^d) \\
@@ -207,7 +206,7 @@ C_2 = \begin{cases}
 (0.5, 1.5)
 (1, 0)};
 \node[below] at (axis cs:0.4, 1.6)  {$1 + r^d$};
-\node[below] at (axis cs:0.9, 0)  {$ A_1 + Y_1$}; 
+\node[below] at (axis cs:0.5, 0)  {$ A_1 + Y_1$}; 
 \end{axis}
 \end{tikzpicture}
 \end{enumerate}
@@ -247,16 +246,16 @@ u(C_t)  = \frac{C^{1 - \theta}_t - 1}{1 - \theta} \rightarrow u^{'}_{C_t} = \fra
 \theta \cdot \frac{C_2 - C_1}{C_1} = r - \rho 
 \end{equation}
 $ \frac{C_2 - C_1}{C_1} $ можно назвать как темп прироста потребления. Ответ. Ответ на что? 
-\end{enumerate}
 \item На сколько процентных пунктов изменится темп прироста потребления если ставка процента изменится на 1 пп 
 \begin{equation}
 g_c = \frac{1}{\theta} (r - \rho ) 
 \end{equation}
 Перепишем "в дельтах"
-\begin{equation}
+\begin{align}
 \Delta g_c = \frac{1}{\theta} ( \Delta r - \Delta \rho) \\
 \Delta g_c = \frac{1}{\theta} \Delta z = \frac{1}{\theta}
-\end{equation}
+\end{align}
+\end{enumerate}
 \end{enumerate}
 \end{otherlanguage*} 
 \end{document}

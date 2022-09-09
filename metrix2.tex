@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика-1 Лекция 2}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+Линейная регрессионная модель для случая одной переменной
+\begin{enumerate}
+\item Линейная регрессионная модель 
+
+\begin{equation}
+Y_i = \beta_0 + \beta_1 X_i  + \varepsilon_i; \,\,\, i = 1, \ldots, n 
+\end{equation}
+$\beta_0, \beta_1$ - параметры которые необходимо оценить по выборке 
+
+$(X_1, Y_1), \ldots, (X_n, Y_n). $
+
+$ Y = \beta_0+ \beta_1 X $ - линия теоретиеской регрессии 
+
+$\check{Y} = \check{\beta_0} + \check{\beta_1} \cdot X $ - линия выборочной регрессии
+
+\begin{enumerate}
+\item Остатки  регрессии
+
+$\varepsilon_i,\,\,\,\, i = 1,\ldots, n$ - ошибки регрессии
+
+$\check{Y}_i = \check{\beta}_0 + \check{\beta}_1 \cdot X_i$ - оценочное значение зависимой еременной
+
+$ e_i = Y_i - \check{Y}_i, \,\,\,\, i = 1, \ldots, n $ - остатки регрессии
+
+На картинке остатки регрессии - этр расстояние от линии до точки. 
+
+\begin{tikzpicture}
+\begin{axis}[
+ylabel=Y,
+xlabel=X]
+\addplot[only marks] coordinates {
+( 338.1, 266.45 )
+( 169.1, 143.43 )
+( 84.5, 64.80 )
+( 120.5, 75.80 )
+( 42.3, 34.19 )
+( 21.1, 9.47 )};
+\addlegendentry{Dots}
+\addplot[mark = none] coordinates {( 350, 279 )
+( 0, 0 )};
+\addlegendentry{$\check{Y} = \check{\beta}_0 + \check{\beta}_1 X$}
+\end{axis}
+\end{tikzpicture}
+\item Оценка параметров линейной регрессиии
+
+Критерии оценки $ \sum_{i=1}^n g(e_i) \rightarrow \min $
+
+\pgfmathdeclarefunction{square_x}{1}{%
+  \pgfmathparse{#1 ^ 2 }%
+}
+
+\pgfmathdeclarefunction{abs_x}{1}{%
+  \pgfmathparse{abs(#1)}%
+}
+
+
+Ну графики корчое такие 
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=-2:2, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$x$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  enlargelimits=false, 
+  ]
+
+ \addplot [very thick,cyan!50!black] {square_x(x)};
+  \addplot [very thick,purple!50!black] {abs_x(x)};
+
+\end{axis}
+\end{tikzpicture}
+
+\item Mean Squared Error
+
+\begin{enumerate}
+\item Явные аналитические формулы для оценок параметров
+\item Не робастнонсть, то есть чувствительность к выбросам
+\item МНК, OLS
+\end{enumerate}
+\begin{equation}
+\sum_{i=1}^n e^2_i \rightarrow \min
+\end{equation}
+
+\item Mean Absolute Error
+
+\begin{enumerate}
+\item Оценки более робасты
+\item Нет аналитической формулы для оценок, они являются решением некоторой здачи линейного программирования
+\item Оценки медианной регрессии
+
+\begin{equation}
+\sum_{i=1}^n |e_i| \rightarrow \min 
+\end{equation}
+\end{enumerate}
+\item Метод наименьших квадратов
+
+RSS - residual sum of squares
+
+$ RSS(\check{\beta_0}, \check{\beta_1}) = e_1^2 + \cdots + e^2_n \rightarrow \min$ 
+
+Сумма остатков в квадрате, будьте здоровы
+\begin{equation}
+RSS = \cdots = \sum_{i=1}^n Y_i^2 + n \check{\beta_0}^2 + \check{\beta_1}^2 \sum_{i=1}^n X_i^2 - 2 \check{\beta_0} \sum_{i=1}^n Y_i - 2 \check{\beta_1} \cdot \sum_{i=1}^n X_i\cdot Y_i + 2 \check{\beta_0} \check{\beta_1} \sum_{i=1}^n X_i 
+\end{equation}
+
+окэй.
+
+\begin{align}
+\frac{\partial RSS}{\partial \check{\beta_0}} = 0 \Rightarrow 2 n \check{\beta_0} - 2 \sum_{i=1}^n Y_i + 2 \check{\beta_1} \sum_{i=1}^n X_i = 0 \\
+n \check{\beta_0} + \check{\beta_1} \cdot \sum_{i=1}^n X_i = \sum_{i=1}^n Y_i \\
+n \check{\beta_0} = \sum_{i=1}^n Y_i - \check{\beta_1} \cdot \sum_{i=1}^n X_i  \\
+\cdots \cdots \\ 
+\check{\beta_0} = \bar{Y} - \check{\beta_1} \cdot \bar{X} \\
+\check{\beta_1} = \frac{\sum_{i=1}^n X_i Y_i - n \bar{X} \bar{Y}}{\sum_{i=1}^n X_i - n \bar{X} ^ 2}
+\end{align}
+
+Важный результат 
+\begin{equation}
+\bar{Y} = \check{\beta_0} + \check{\beta_1} \bar{X} 
+\end{equation}
+
+Ещё одна оценка $\beta_1$ 
+\begin{equation}
+\check{\beta_1}^{MRS} = \frac{\check{cov} (X, Y)}{\check{var}(X)}
+\end{equation}
+\end{enumerate}
+\item Зачем это всё надо 
+
+Не привязывайтесь пожалуйста к статистическим пакетам. Окэй? 
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

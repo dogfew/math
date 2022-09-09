@@ -1,0 +1,262 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Макра-2 Семинар 1}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\begin{enumerate}
+\item Комплексная задача на модель межвременного выбора 
+\begin{equation}
+U(C_t) = u(C_1) + \frac{1}{1 + \rho} \cdot u(C_2)
+\end{equation}
+
+где $ \rho $ - это норма субъективного межвременного дисконтирования, $ u $ - функция мгновенной полезности, обладающая стандартными свойствами: $ u^{'} > 0$, $ u^{''} < 0 $
+\begin{enumerate}
+
+\item Динамическое бюджетное ограничение
+
+\begin{enumerate}
+\item Пусть $ A_1 = 0$. Надо написать динамические бюджетные ограничения для первого и второго периода. 
+\begin{align}
+S_t = Y^d_t - C_t \\
+A_{t+1} = (A_t + S_t) ( 1 + r) \Rightarrow A_2 = S_1 (1 + r)\\
+A_{t+2} = (A_{t+1} + S_{t+1}) (1 +r) \Rightarrow A_3 = (A_2 + S_2) (1 + r) ` 
+\end{align}  
+
+\item Пусть $ A_1 > 0 $. Тогда динамические бюджетные ограничения выглядят иначе:
+\begin{align}
+A_2 = (S_1 + A_1) (1 + r) \\
+A_3 = (S_2 + A_2) (1 + r) 
+\end{align}
+
+\item Как связаны сбережения в периоде $ t $ и начальное богатство потребителя в периоде $ t + 1 $? 
+\begin{align}
+\frac{A_2}{1 + r} = S_1 +A_1 \rightarrow S_1 = - A_1 + \frac{A_2}{1 + r}\\
+\frac{A_3}{1 + r} = S_2 + A_2 \Rightarrow S_2 = - A_2 + \frac{A_3}{1 + r}
+\end{align}
+
+\item Каковы будут $ A_3, C_1, C_2 $, если ограничения на $ A_3 $ отсутствуют. 
+
+$ C_1 = + \infty $ 
+
+$ C_2 = + \infty $ 
+
+$ A_3 = - \infty $ - индивид нажрется, имеет право
+ 
+\item Из динамического бюджетного ограничения первого периода выразите $ A_2 $ и подставьте результ в динамическое бюджетное ограничение второго периода 
+
+\begin{align}
+A_2 = (A_1 + S_1) (1 +r) \\
+A_3 = (A_2 + S_2) (1 + r) \\
+A_3 = \Big( (A_1 + S_1) (1 + r) + S_2 \Big) (1 + r) \\
+A_3 = A_1 (1 + r)^2 + S_1 (1 + r)^ 2 + S_2 ( 1+ r) \\
+A_3 = A_1 (1 + r)^2 + (Y_1 - C_1) (1 + r)^ 2 + (Y_2 - C_2) ( 1+ r) 
+\end{align}
+
+\item Выразить $A_3$, если оно $ \ge 0 $ и нарисовать 
+
+С точки зрения первого периода:
+\begin{align}
+A_1 + Y_1 - C_1 + \frac{Y_2}{1 + r} - \frac{C-2}{1 +r } \ge 0 \\
+(A_1 + Y_1) + \frac{Y_2}{1 + r} \ge C_1 + \frac{C_2}{1 + r} 
+\end{align}
+С точки зрения второго периода:
+\begin{align}
+(1 + r)(A_1 + Y_1) + Y_2 \ge C_1 ( 1 + r) + C_2 
+\end{align}
+
+
+\begin{equation}
+C_2 = (1 + r) (A_1 + Y_1) + Y_2 - (1 + r) C_1
+\end{equation}
+
+
+\pgfmathdeclarefunction{f_1}{1}{%
+  \pgfmathparse{3 + -  1 * #1}%
+}
+\pgfmathdeclarefunction{u}{2}{%
+  \pgfmathparse{#2 + 0.2 / #1}%
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:3, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$C_1$,
+  ylabel=$C_2$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  ]
+
+ \addplot [very thick,cyan!20!black] {f_1(x)};    
+
+ \addplot[only marks] coordinates {
+ (0, 4) 
+ (4, 0)
+( 3, 0 )
+( 0, 3 )};
+
+ \node[below] at (axis cs:0.7, 3.5)  {$ (1 + r) (A_1 + Y_1) + Y_2 $}; 
+  \node[below] at (axis cs:3, 1)  {$ 1 + r$}; 
+
+\end{axis}
+
+
+
+\end{tikzpicture}
+
+$ (1 + r) (A_1 + Y_1) + Y_2 $
+
+$ (1 + r) $
+
+Кринжанул. 
+\end{enumerate}
+
+\item Различные виды ограничения ликвидности
+\begin{enumerate}
+\item Мягкое ограничение ликвидности
+
+\begin{equation}
+C_2 = \begin{cases}
+(1 + r^d ) (A_1 + Y_1) - (1 + r^d ) C_1, & C_1 \le A_1 + Y_1\\ 
+(1 + r^{cr} ) ( A_1 + Y_1) + Y_2 - (1 + r^{cr}) C_1 & C_1 > A_1 + Y_1  
+\end{cases} 
+\end{equation}
+\begin{tikzpicture}
+\begin{axis}[
+ no markers, 
+  domain=0:3, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$C_1$,
+  ylabel=$C_2$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=8cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+]
+\addplot[] coordinates {
+(0, 2)
+(0.5, 1.5)
+(1, 0)};
+ \addplot[only marks] coordinates {
+(0, 2.5)
+(1.5, 0)};
+\node[below] at (axis cs:0.45, 2.3)  {$ (1 + r^d) (A_1 + Y_1) + Y_2$};
+\node[below] at (axis cs:0.9, 0)  {$ A_1 + Y_1$}; 
+\end{axis}
+\end{tikzpicture}
+
+\begin{equation}
+C_2 = \begin{cases} 
+(1 + r^d) (A_1 + Y_1) + Y_2 - (1 + r^d) \\
+\in [0; Y_2] 
+\end{cases}
+\end{equation}
+\begin{tikzpicture}
+\begin{axis}[
+ no markers, 
+  domain=0:3, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$C_1$,
+  ylabel=$C_2$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=8cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+]
+\addplot[] coordinates {
+(0, 2)
+(0.5, 1.5)
+(0.5, 0)};
+ \addplot[only marks] coordinates {
+(0, 3)
+(0.5, 1.5)
+(1, 0)};
+\node[below] at (axis cs:0.4, 1.6)  {$1 + r^d$};
+\node[below] at (axis cs:0.9, 0)  {$ A_1 + Y_1$}; 
+\end{axis}
+\end{tikzpicture}
+\end{enumerate}
+\item Уравнение Эйлера
+
+Задача потребителя
+\begin{equation}
+U = u(C_1) + \frac{1}{1 + \rho} u(c_2) \rightarrow \max_{C_1, C_2} 
+\end{equation}
+\begin{equation}
+s.t. \,\,\, C_1 + \frac{C_2}{1 + r} = A_1 + Y_1 + \frac{Y_2}{1 + r}
+\end{equation}
+\begin{align}
+\Lambda = u(C_1) + \frac{1}{1 + \rho} u(C_2) + \lambda \Big( A_1 + Y_1 + \frac{Y_2}{1 + r} - C_1 - \frac{C_2}{1 + r}\Big) \\ 
+\Lambda \rightarrow \max_{C_1 \ge 0, C_2 \ge 0, \lambda > 0} \\
+\Lambda^{'}_{C_1} = u^{'}_{C_1} - \lambda = 0 \rightarrow u^{'}_{C_1} = \lambda \\
+\Lambda^{'}_{C_2} =\frac{1}{1 + \rho}  u^{'}_{C_2} - \frac{\lambda}{1 + r} = 0 \rightarrow \frac{u^{'}_{C_2}}{1 + \rho} = \frac{u^{'}_{C_1}}{1 + r} 
+\end{align}
+Уравнение Эйлера в итоге выглядит так: 
+\begin{equation}
+ \frac{u^{'}_{C_2}}{1 + \rho} = \frac{u^{'}_{C_1}}{1 + r} 
+\end{equation}
+\item Слайды 17-18 - ответы на 3.с
+\item Функция полезности представлена функцией CRRA 
+
+\begin{equation}
+u(C_t)  = \frac{C^{1 - \theta}_t - 1}{1 - \theta} \rightarrow u^{'}_{C_t} = \frac{1}{1 - \theta} \cdot C^{1 - \theta}_\theta - 1 \frac{1}{1 - \theta})^{'}_{C_t} = \cdots = C_t^{- \theta} 
+\end{equation}
+\begin{align}
+\frac{u^{'}(C_1)}{u^{'}(C_2) = \frac{1 + r}{1 + \rho}} \Rightarrow \frac{C_1^{-\theta}}{C_2^{-\theta}} = \frac{1 + r}{1 + \rho} \Rightarrow \Big( \frac{C_2}{C_1}\Big)^\theta = \frac{1 + r}{1 + \rho} \\
+(\frac{C_2}{C_1} + 1 - 1)^\theta = \frac{1 + r}{1 + \rho} \Rightarrow \Big( \frac{C_2 - C_1}{C_1} + 1 \Big)^\theta = \frac{1 + r}{1 + \rho} \\
+\ln \Big(\Big( \frac{C_2 - C_1}{C_1} + 1 \Big)^\theta \Big)= \ln (\frac{1 + r}{1 + \rho}) \\
+\theta \ln (\frac{C_2 - C_1}{C_1} + 1) = \ln ( 1+ r) - \ln (1 + \rho) 
+\end{align}
+После разложения на ряд Тейлора получится 
+\begin{equation}
+\theta \cdot \frac{C_2 - C_1}{C_1} = r - \rho 
+\end{equation}
+$ \frac{C_2 - C_1}{C_1} $ можно назвать как темп прироста потребления. Ответ. Ответ на что? 
+\end{enumerate}
+\item На сколько процентных пунктов изменится темп прироста потребления если ставка процента изменится на 1 пп 
+\begin{equation}
+g_c = \frac{1}{\theta} (r - \rho ) 
+\end{equation}
+Перепишем "в дельтах"
+\begin{equation}
+\Delta g_c = \frac{1}{\theta} ( \Delta r - \Delta \rho) \\
+\Delta g_c = \frac{1}{\theta} \Delta z = \frac{1}{\theta}
+\end{equation}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

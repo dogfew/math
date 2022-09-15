@@ -1,0 +1,336 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Динамическая оптимизация в экономике и финансах}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+\section{\foreignlanguage{russian}{Вариацонное исчисление}}
+Матанализ ; Варисч
+переменная $x$ ; $y(t)$ - траекториия
+
+функция $f(x)$ ; функционал $V[y(t)]$ 
+
+производная $f'(x)$ ; Вариация $\delta V[y(t)]$ - функционал 
+
+$\Delta f(x) $- приращение ; $ \Delta V[y(t)] $
+
+\begin{enumerate}
+
+\item Задача Коши
+
+Условия:
+\begin{align}
+y^{''}(t) = \frac{1}{2} t \\
+y(0) = 0 \\
+y(1) = 1 
+\end{align}
+Решение:
+\begin{align}
+y^{'} (t) = \frac{t^2}{4} + C_1 \\
+y(t) = \frac{t^3}{12} + C_1 t + C_2 \\
+\begin{cases}
+y(0) = \frac{0^3}{12} + C_1 \cdot 0 + C_2 = 0 \\
+y(1) = \frac{1^3}{12} + C_1 \cdot 1 + C-2 = 1 
+\end{cases} \Rightarrow
+\begin{cases}
+C_2 = 0 \\
+C_1 = \frac{11}{12}
+\end{cases}
+\end{align}
+Ответ: $y(t) = \frac{t^3}{12} + \frac{11}{12} t + 0 $
+
+\item Уравнение с разделяющимися переменными
+
+Условия:
+\begin{align}
+y^{'} - y = 2 t - 3 
+\end{align}
+
+Идея: все что с $y$ в левую часть. всё что с $t$ - в правую часть
+
+Факты:
+\begin{align}
+y^{'} (t) = \frac{dy(t)}{dt}
+\end{align}
+
+Решение: 
+
+$\frac{dy}{dt} = y + 2t - 3$
+
+Введем обозначение:
+\begin{align}
+\frac{dy}{dt}= y^{'} = z \\
+z = y + 2 t - 3 \\
+\frac{dz}{dt} = \frac{d(y + 2 t - 3)}{dt} = z + 2 \\
+\frac{1}{z + 2} dz = dt \\
+\int \frac{1}{z + 2 } dz = \int dt \\
+\ln |z + 2 | = C_1 + t \\
+\ln | z + 2 | = \ln C_2 + \ln e^t \\
+z + 2 = C_2 \cdot e^t \\
+y + 2t - 3 + 2 = C_2 \cdot e ^ t 
+\end{align}
+
+Ответ: $y(t) = C_2 \cdot e^t - 2 t + 1 $
+
+\item Однородные линейные уравнения с некратными вещественными корнями
+
+Условия:
+$ y^ {'''} - y^{'} = 0 $
+
+Решение:
+
+1. Характеристическое уравнение: $ \lambda ^ 3 - \lambda^1 = 0 $. То есть лямбды, где степень лямбды соответствует порядку производной. 
+
+2.Корни этого характеристического уравнения: $ \lambda_1 = 0; \lambda_2 = 1; \lambda_3 = - 1$. 
+
+3. Ответ: $y(t) = C_1 \cdot e^{0t} + C_2 \cdot e^{1t} + C_3 \cdot e^{-1t} $. 
+
+4. В общем виде: $y(t) = C_1 \cdot e ^ {\lambda_1 t} + \cdots + C_n \cdot e ^ {\lambda_n t} $О
+\item Однородные линейные уравнения с кратными вещественными корнями
+
+Условия: 
+$y^{'''} - 3 y^{''} + 3 y ^{'} - y = 0 $
+
+1. Характеристическое уравнение: $\lambda^3 - 3 \lambda ^2 + 3 \lambda - 1 = 0 = (\lambda - 1)^3 $
+
+2. Корни этого уравнения: $ \lambda_1 = \lambda_2 = \lambda_3 = 1$
+
+3. Ответ: $y(t) = C_1 \cdot e ^{1 \cdot t} + t \cdot C_2 \cdot e^{1\cdot t} + t ^ 2 \cdot C_2 \cdot e^{1 \cdot t} $.  
+
+4. В общем виде: $ y(t) = C_1 e ^ {\lambda t} + t \cdot C_2 \cdot e^{\lambda t} + t^2 \cdot C_3 \cdot e^{\lambda t} + \cdots + t^{n-1} \cdot C_n \cdot e^{\lambda t} $. Мнемоническое правило: кратность добавляет умножение на t. 
+
+\item Однородные линейные уравнения с некратными комплексными корнями
+
+Условия: 
+
+$ y ^{''} + a^2 y = 0$ 
+
+1. Характеристическое уравнение: $ \lambda^ 2 + a ^ 2 = 0 $ 
+
+2. Корни этого уравнения: $ \lambda_{1,2} = \pm a \cdot i$. Комплексное число задаётся как $ \lambda = \alpha + \beta \cdot i $ 
+
+3. Ответ: $ y(t) = C_1 \cdot \cos(at) + C_2 \cdot \sin(at) $.  
+
+4. В общем виде $ y(t) = C_1 \cdot e ^ {\alpha t} \cdot \cos (\beta t) + C_2 \cdot e^{\alpha t} \cdot \sin(\beta t) + \cdots  C_n \cdot e ^ {\alpha_n t} \cdot \cos (\beta_n t) + C_{n+1} \cdot e^{\alpha_n t} \cdot \sin(\beta_n t)$
+
+Мнемоническое правило: для каждой пары комплексных чисел пишется пара из cos и sin. 
+ 
+\item Однородные линейные уравнения с кратными комплексными корнями
+
+1.Условия: $ \cdots $
+
+2. Корни этого уравнения: $ \lambda_{1, 2} = \pm a \cdot i; \lambda_{3,4} = \pm a \cdot i$
+
+3. Ответ: $ y(t) = C_1 \cos (at) + C_2 \sin (at) + t \cdot \Big( C_3 \cos (at) + C_4 \cdot \sin (at) \Big)$
+
+\item Однородные линейные уравнения со специальной правой частью 
+
+1. Условия: $y^{''} + y = t ^ 2 + t$
+
+2. Решение однородного уравнения: $ y^{''} + y = 0 $
+
+2.1 Характеристическое уравнение: $ \lambda ^ 2 + 1 = 0 $ 
+
+2.2 Корни этого х.у.: $ \lambda_{1, 2} = \pm i $ 
+
+2.3 Ответ: $ y(t) = C_1 \cos t + C_2 \sin t $ 
+
+3. Подбор частного решения. Введём обозначение: $ t^2 + t = f(t) $. Если мы можем представить правую часть в общем виде как $ f(t) = Pm(t) \cdot e^{\lambda t}$. Тогда $ y_2 (t) = Q_m (t) \cdot e ^{\lambda t} \cdot t ^k $
+
+3.1 Попробуем представить правую часть в желаемом виде: $t^2 + t = (t^2 + t) \cdot e ^ {0t} $
+
+3.2 $ y_2(t) = (A t ^ 2 + Bt + C) \cdot e ^{0t} $, поскольку корень х.у. не совпал с 0, то $t^k$ игнорируется. $ k $ - количество корней, которые соответствуют числу над $e$.  
+
+3.3 $ y ^ {'}_2 (t) = 2 At + t$
+
+3.4 $ y^{''}_2 (t) = 2 A  $
+
+3.5 Подставим частное решение в исходное уравнение. 
+\begin{align}
+2 A + A t ^ 2 + Bt + C = t ^ 2 + t \\
+\begin{cases}
+2 A + C = 0 & 2 = - 2 \\
+A = 1 & B = 1 
+\end{cases} \Rightarrow y_2 (t) = t ^ 2 + t - 2 
+\end{align}
+4. Ответ : $ y(t) = y_{homo} (t) + y_{part} (t) = C_1 \cos t + C_2 \sin t + t ^ 2 + t - 2 $
+
+\item Однородные линейные уравнения со специальной правой частью 
+
+\begin{enumerate}
+\item Условие: $y^{(4)} + 2 y ^{''} + y = \sin t $ 
+
+\item Найти y однородное 
+
+Характеритическое уравнение: $ \lambda ^ 4 + 2 \lambda ^ 2 + 1 = (\lambda ^ 2 + 1) ^ 2 = 0 $
+Его корни: $\lambda_{1, 2} = \pm i$, $\lambda_{3, 4} = \pm i$ 
+
+Решение однородного уравнения: $ C_1 \cdot \cos t + C_2 \cdot \sin t + t \big( C_3 \cos t + C_4 \sin t \big)$  
+
+\item Как находится частное решение в этом случае
+
+Представим правую часть и т.д.
+
+$ f(t) = \big( P_m(t) \cos \beta t + Q_n(t) \sin \beta t \big) \cdot e ^{\alpha t} $
+
+$ y_2(t) = \big( S_m (t) \cos \beta t + R_n (t) \sin \beta t \cdot e^{\alpha t} + t^k \big)$
+
+\item Найти y частное
+
+$ \sin t = ( 0 \cdot \cos \beta t + 1 \cdot \sin \beta t) \cdot e ^{0 t}$
+
+$ \lambda = 0 \pm 1 \cdot i $
+
+$ y_2 (t) = (A \cos t + B \sin t) \cdot e ^ {0 t} \cdot t ^ 2 $
+
+\item Посчитать ответ как сумму однородного решения + частного. 
+
+Мораль: считайте сами. 
+
+Ответ: $ y(t) = y_{homo} (t) + y_{part} (t) = $
+\end{enumerate}
+\end{enumerate}
+\section{\foreignlanguage{russian}{Вариация функционала}}
+Обозначение: $ \delta V [y(t)] $ 
+
+Способы подсчёта:
+\begin{enumerate}
+\item Способ
+
+\begin{equation}
+\delta V [y(t)] = \frac{\partial }{\partial \alpha} V[ y(t) + \alpha \cdot \delta y (t)]|_{\alpha = 0}
+\end{equation} 
+
+\begin{equation}
+V [y(t)] = \int_a^b y - y^{'^{2}} dt 
+\end{equation}
+\begin{align}
+y(t) \rightarrow y(t) + \alpha \delta y (t) \\
+\delta V [ y(t)] = \frac{\partial}{\partial \alpha} \int_a^b y(t) + \alpha \delta y (t) - (y^{'} (t) + \alpha \delta y^{'} (t) ) ^ 2 dt |_{\alpha = 0} = \\
+= \int_a^b \delta y (t) - 2 ( y^{'} (t) + \alpha \delta y^{'} (t) ) \cdot \delta y^{'} (t) dt |_{\alpha = 0} =  \\
+= \int_a^b \delta y(t) - 2 y^{'}(t) \delta y^{'} (t) dt  
+\end{align}
+
+\item Способ 
+
+\begin{equation}
+\Delta V [y(t) ] = V [ y(t) + \delta y (t) ] - V [ y(t) ]
+\end{equation}
+
+\begin{align}
+y(t) \rightarrow y(t) + \delta y(t) \\
+\Delta V[y(t)] = \int_a^b y + \delta y - (y^{'} + \delta y ^{'}) ^ 2 dt - \int_a^b y - y^{'^{2}} dt = \\
+\int_a^b y + \delta y - (y^{'} + \delta y ^{'}) ^ 2- y + y^{'^{2}} dt = \\
+= \int_a^b \delta y - 2 y^{'} \delta y - \delta y^{'^2} dt 
+\end{align}
+
+На кончиках пальцев: вариация это когда мы даём линейное приращение и что-то у нас меняется. Нас интересует линейная часть. Вариация линейна по $ \delta y $ и по $ \delta y^{'}$. Фильтруем только линейные штуки. 
+
+Итоговый результат: 
+
+\begin{equation}
+\delta V[y(t)] = \int_a^b \delta y - 2 y^{'} \delta y^{'} dt
+\end{equation}
+\item Расстояние между 2-мя функциями 
+
+Расстояние между функциями - максимум между всеми порядками производных этих функций
+
+\begin{equation}
+\rho_n (y_1 (t) , y_2(t)) = \max \{ \max_{0 \le k \le n} | y_1^{(k)}(t) - y_2^{(k)} (t) | \} 
+\end{equation}
+Пример: 
+\begin{align}
+y_1(t) = e^t  \\
+y_2(t) = t ^ 2 \\
+t \in [0, 1]  
+\end{align}
+
+Порядок 0: 
+\begin{equation}
+\max_{0 \le t \le 1} | e^ t - t ^ 2 |
+\end{equation}
+\begin{align}
+e^t - 2t = 0 
+\end{align}
+На $[0,1 ] $ они не пересекутся. 
+
+\begin{align}
+\delta y (0 ) = e^0 - 0 ^ 2 = 1 \\
+\delta y (1) = e - 1 = 1.71 \\ 
+\rho_0 = \max_{k = 0} \{  1.71 \} = 1.71
+\end{align}
+
+Порядок 1: 
+
+\begin{align}
+\max_{0 \le t \le 1} |e^t - 2t| \\
+e^t - 2 = 0 \\
+t^* = \ln 2 = 0.69 \\
+\begin{cases}
+\delta y(0) = e^ 0 - 2 \cdot 0 = 1 \\
+\delta y(1) = e - 2 = 0.71 \\
+\delta y(\ln 2) = e^{ln 2} - 2 \ln 2 = 0.69 \\
+\end{cases}
+\rho_1 = \max_{0 \le k \le 1} \{ 1.71;1 \} = 1.71 
+\end{align}
+
+Порядок 2: 
+
+\begin{align}
+\max_{0 \le t \le 1} | e ^ t - 2 | \\
+e^t \ne 0  \\
+\delta y(0) = |e^0 - 2| = 1 \\ 
+\delta y(1) = |e^1 - 2| = 0.71 \\
+\rho_2 = \max \{ 1.71; 1; 1 \} = 1.71
+\end{align}
+
+Порядок 3 и более: 
+
+\begin{align}
+\max_{0 \le t \le 1} | e ^ t | \\
+\delta y(1) = e^ 1 = e \\
+\rho_{n \ge 3}  = \max \{ 1.71; 1; 1; e \} = e
+\end{align}
+
+Ответ: 
+\begin{equation}
+\begin{cases}
+\rho_0 = 1.71 \\
+\rho_1 = 1.71 \\
+\rho_2 = 1.71 \\
+\rho_{n \ge 3} = 2.71  
+\end{cases}
+\end{equation}
+
+Вас 300, а мы не психотерапевты и не психологи. Мы всю эмпатию проявить не сможем, мы где-то сойдём с ума. 
+
+ДЗ Задачки: 
+\begin{enumerate}
+
+\item Найти вариацию функционала двумя способами 
+
+\begin{equation}
+V [ y(t) ] = y^ 2 (0) + \int_0^1 (ty + y^{'^2} ) dt  \\
+\end{equation}
+\begin{align}
+y(0) + \alpha \delta y (0) \\
+y(0) + \delta y (0) 
+\end{align}
+
+\item Найти расстояние между функциями 
+
+\begin{align}
+y_1 (t) = t ^ 2 - 2 t + 1 \\
+y_2(t) = -t ^ 2 + 4 \\
+t \in [0;2] 
+\end{align}
+\end{enumerate}
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

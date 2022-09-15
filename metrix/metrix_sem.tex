@@ -1,0 +1,277 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика-1 семинар}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+Формула оценки 
+
+0.2 дз + 0.2 семинары + 0.05 лекции + 0.2 кр + 0.35 экз
+
+
+Случайные величины бывают дискретными и непрерывными. Дискретные, как правило, задаются таблицами, а непрерывные функцией плотности $f_x(x)$
+\begin{align}
+F_x(x) = \operatorname{P}(X \le x) \\
+f_x(x) = \frac{\partial F_x(x)}{\partial x} \\
+F_x(x) = \int_{-\infty}^x f_x(t) dt
+\end{align}
+Матожидание
+\begin{equation}
+\operatorname{E} (X) = \begin{cases} 
+\sum_{i=1}^n x_i \cdot p_i \\
+\int_{-\infty}^{+\infty} f_x(x) \cdot x dx 
+\end{cases}
+\end{equation}
+Дисперсия
+\begin{equation}
+\operatorname{D} (X) = \begin{cases} 
+\operatorname{E} \big( (x - \operatorname{E}(x))^2\big) \\
+\operatorname{E}(X^2) - (E(X))^2
+\end{cases}
+\end{equation}
+\begin{align}
+\operatorname{cov}(X, Y) = E \big( (X - E(X)) (Y - E(Y)) \big) = E(XY) - E(X)(EY) \\
+\operatorname{corr}(X, Y) = \frac{\operatorname{cov}(X,Y)}{\sqrt{D(X)D(Y)}}
+\end{align}
+Пример задачи на что-то дискретное
+\begin{align}
+\begin{pmatrix}
+Y / X & 3 & 4 & 5 \\
+2 & 0.2 & 0.2 & 0.1 \\
+4 & 0.12 & 0.12 & 0.05 \\
+6 & 0.08 & 0.08 & 0.05
+\end{pmatrix} \\
+\begin{pmatrix}
+X & 3 & 4 & 5 \\
+P & 0.4 & 0.4 & 0.2
+\end{pmatrix} \\
+\begin{vmatrix}
+Y & 2 & 4 & 6 \\
+P & 0.5 & 0.29 & 0.21
+\end{vmatrix} \\
+\begin{vmatrix}
+Y | X = 4 & 2 & 4 & 6 \\
+P & \frac{0.2}{0.4} & \frac{0.12}{0.4} & \frac{0.08}{0.4}
+\end{vmatrix}
+\end{align}
+\begin{enumerate}
+\item Виды распределений
+
+Нормальное
+\begin{equation}
+X \sim N(\mu, \sigma^2) \rightarrow f(x) ={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}
+\end{equation}
+Хи-квадрат 
+\begin{equation}
+\chi^2_k = Z_1^2 + \cdots + Z_k^2; \forall i: Z_i \sim N(0;1) 
+\end{equation}
+Стьюдент 
+\begin{equation}
+t_k = \frac{N(0;1)}{\sqrt{\chi^2_k / k}}
+\end{equation}
+Фишер
+\begin{equation}
+F_{m;n} = \frac{\chi^2_m / m}{\chi^2_n / n}
+\end{equation}
+\item Проверка гипотез
+
+Дана выборка: $X_1, \cdots, X_n \sim N(\mu; \sigma^2)$
+
+$H_0: \mu = \mu_0$
+
+$H_1: \mu \ne \mu_0$ 
+
+Подсчет $Z_{stat} = \frac{\bar{X} - \mu_0}{\sqrt{\sigma^2 / n}} \sim^{H_0} N(0;1)$.
+
+Если не выполняется $|Z_{stat}| < Z_{\alpha}$, то $H_0$ отвергается
+
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:6, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$x$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  hide y axis
+  ]
+
+ \addplot [fill=purple!30, draw=none, domain=0:1] {gauss(x, 3, 1)} \closedcycle;
+  \addplot [fill=purple!30, draw=none, domain=5:6] {gauss(x, 3, 1)} \closedcycle;
+ \addplot [very thick,cyan!50!black] {gauss(x, 3, 1)};
+\pgfmathsetmacro\valueA{gauss(1,3,1)}
+\pgfmathsetmacro\valueB{gauss(2,3,1)}
+\draw [gray] (axis cs:1,0) -- (axis cs:1,\valueA)
+    (axis cs:5,0) -- (axis cs:5,\valueA);
+\draw [gray] (axis cs:2,0) -- (axis cs:2,\valueB)
+    (axis cs:4,0) -- (axis cs:4,\valueB);
+    
+\node[below] at (axis cs:1, 0)  {$- Z_{1 - \alpha / 2}$}; 
+\node[below] at (axis cs:0.5, 0.1)  {$H_1$}; 
+\node[below] at (axis cs:2, 0)  {$-Z_{stat}$}; 
+\node[below] at (axis cs:3, 0.2)  {$H_0$}; 
+\node[below] at (axis cs:4, 0)  {$+Z_{stat}$}; 
+\node[below] at (axis cs:5, 0)  {$Z_{1 -\alpha / 2}$}; 
+\node[below] at (axis cs:5.5, 0.1)  {$H_1$}; 
+\end{axis}
+
+\end{tikzpicture}
+
+$\operatorname{P-value}$ - минимальный уровень значимости, при котором $H_0$ отвергается. 
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:6, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$x$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  hide y axis
+  ]
+
+ \addplot [fill=blue!30, draw=none, domain=0:2] {gauss(x, 3, 1)} \closedcycle;
+  \addplot [fill=blue!30, draw=none, domain=4:6] {gauss(x, 3, 1)} \closedcycle;
+ \addplot [very thick,cyan!50!black] {gauss(x, 3, 1)};
+\pgfmathsetmacro\valueA{gauss(1,3,1)}
+\pgfmathsetmacro\valueB{gauss(2,3,1)}
+\draw [gray] (axis cs:1,0) -- (axis cs:1,\valueA)
+    (axis cs:5,0) -- (axis cs:5,\valueA);
+\draw [gray] (axis cs:2,0) -- (axis cs:2,\valueB)
+    (axis cs:4,0) -- (axis cs:4,\valueB);
+    
+\node[below] at (axis cs:1, 0)  {$- Z_{1 - \alpha / 2}$}; 
+\node[below] at (axis cs:0.5, 0.1)  {$H_1$}; 
+\node[below] at (axis cs:1.6, 0.1)  {$\frac{\operatorname{P-value}}{2}$}; 
+\node[below] at (axis cs:2, 0)  {$-Z_{stat}$}; 
+\node[below] at (axis cs:3, 0.2)  {$H_0$}; 
+\node[below] at (axis cs:4, 0)  {$+Z_{stat}$}; 
+\node[below] at (axis cs:5, 0)  {$Z_{1 -\alpha / 2}$}; 
+\node[below] at (axis cs:5.5, 0.1)  {$H_1$}; 
+\node[below] at (axis cs:4.4, 0.1)  {$\frac{\operatorname{P-value}}{2}$}; 
+\end{axis}
+
+\end{tikzpicture}
+
+Мораль: $\operatorname{P-value} < \alpha \Rightarrow H_0$ отвергается. 
+
+Задача 1
+
+Оценки $\sim N(\mu;1) $
+
+реализация выборки: $ [10,9, 8, 5, 3]$
+
+$\begin{cases}
+H_0: \mu = 8 \\
+H_1: \mu \ne 8 
+\end{cases}$
+
+$Z_{stat} = \frac{7-8}{\sqrt{1 / 5}} = - 2.24$ 
+
+$\operatorname{P-value} = (1 - \Phi (2.24)) \cdot 2 = 0.025$, где $\Phi(x) = \int_{-\infty}^x f_x(x) dx$
+
+\item Свойства оценок 
+
+$\theta$ - параметр
+
+$\check{\theta}$ - оценка
+
+Несмещенность: $\operatorname{E} (\check{\theta}) = \theta $
+
+Состоятельность: $\check{\theta} \rightarrow^P_{n \rightarrow \infty} \theta $
+
+Эффективность: $\min MSE $ в классе, где $MSE = E \big( (\check{\theta} - \theta) ^ 2 \big)$
+
+Интересные факты:
+$
+\begin{cases}
+\operatorname{E} (\check{\theta}) = \theta \\ \operatorname{D} (\check{\theta}) \rightarrow_{n \rightarrow \infty} 0
+\end{cases} \Rightarrow$ состоятельность
+
+\item Матрицы
+
+Повторить следующее: 
+
+\begin{enumerate}
+\item Умножение матрицы на число
+
+Все элементы матрицы умножаются на число
+\item Сложение матриц
+
+Матрицы должны быть одинакового размера. Тогда все элементы матриц складываются друг с другом
+\item Умножение матриц
+
+Если есть матрицы $A: \,\, l \cdot m$ и $B: m \cdot n$:
+\begin{equation}
+{\displaystyle A={\begin{bmatrix}a_{11}&a_{12}&\cdots &a_{1m}\\a_{21}&a_{22}&\cdots &a_{2m}\\\vdots &\vdots &\ddots &\vdots \\a_{l1}&a_{l2}&\cdots &a_{lm}\end{bmatrix}},\;\;\;B={\begin{bmatrix}b_{11}&b_{12}&\cdots &b_{1n}\\b_{21}&b_{22}&\cdots &b_{2n}\\\vdots &\vdots &\ddots &\vdots \\b_{m1}&b_{m2}&\cdots &b_{mn}\end{bmatrix}}.}
+\end{equation}
+То их произведение: 
+\begin{equation}
+{\displaystyle C={\begin{bmatrix}c_{11}&c_{12}&\cdots &c_{1n}\\c_{21}&c_{22}&\cdots &c_{2n}\\\vdots &\vdots &\ddots &\vdots \\c_{l1}&c_{l2}&\cdots &c_{ln}\end{bmatrix}},}
+\end{equation}
+где ${\displaystyle c_{ij}=\sum _{r=1}^{m}a_{ir}b_{rj}\;\;\;\left(i=1,2,\ldots l;\;j=1,2,\ldots n\right).}$
+\item Минор
+\begin{equation}
+M^3_2 = \begin{vmatrix}\,\,1&4&\bullet \,\\\,\bullet &\bullet &\bullet \,\\-1&9&\bullet \,\\\end{vmatrix} = {\displaystyle {\begin{vmatrix}\,\,\,1&4\,\\-1&9\,\\\end{vmatrix}}=1\cdot 9-4\cdot (-1)=13}
+\end{equation}
+\item Определитель
+\begin{equation}
+\Delta =\sum _{j=1}^{n}(-1)^{1+j}a_{1j}{M}_{j}^{1}
+\end{equation}
+\item Присоединенная матрица
+\begin{equation}
+\mathbf {C} = 
+\begin{bmatrix}
++ M^1_1 & - M^2_1 & + M^3_1 \\
+- M^1_2 & + M^2_2 & - M^3_2 \\
++ M^1_3 & - M^2_3 & + M^3_3
+\end{bmatrix}
+\end{equation}
+\begin{equation}
+\operatorname{adj} A = C^T
+\end{equation}
+\item Обратная матрица
+\begin{equation}
+{\displaystyle A^{-1}={\frac {{\mbox{adj}}A}{|A|}},}
+\end{equation}
+\begin{equation}
+A^{-1} \cdot A = \mathbf{E}
+\end{equation}
+где $\mathbf{E}$ - единичная матрица (из нулей, кроме главной диагонали, где единицы) 
+\end{enumerate}
+
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

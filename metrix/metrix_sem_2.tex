@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 2}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section{\foreignlanguage{russian}{МНК и парная линейная регрессия}}
+Типы данных: 
+\begin{table}
+\begin{tabular}{| p{3cm} | p{3cm} | p{3cm} | p{3cm} }
+\,\,\,\,\,\, Типы данных \\ Показатель & Пространственные & Панельные & Временные \\ 
+\hline
+Объект & много & 1 & много \\
+Временной период & 1 & много & несколько \\
+Показатели & много & 1 & много
+\end{tabular}
+\caption{Типы данных}
+\label{table:Типы данных}
+\end{table}
+
+Data generating process: 
+\begin{equation}
+Y_i = \beta_0 = \beta_1 + X_i + \varepsilon_i 
+\end{equation}
+\begin{tikzpicture}
+\begin{axis}[
+ylabel=WAGE,
+xlabel=GPA ]
+\addplot[only marks] coordinates {
+(0, 16.0) (10, 6.0) (20, 15.0) (30, 33.0) (40, 27.0) (50, 34.0) (60, 42.0) (70, 35.0) (80, 48.0) (90, 64.0) (100, 54.0) (110, 72.0) (120, 75.0) (130, 69.0) (140, 87.0) (150, 86.0) (160, 84.0) (170, 93.0) (180, 95.0) (190, 107.0) (200, 107.0) (210, 120.0) (220, 112.0) (230, 131.0) (240, 134.0) (250, 137.0) (260, 132.0) (270, 154.0) (280, 156.0) (290, 151.0)
+};
+\addlegendentry{Dots}
+\addplot[mark = none] coordinates {( 300, 170 )
+( 0, 0 )};
+\addlegendentry{Line}
+\end{axis}
+\end{tikzpicture}
+
+RSS: 
+\begin{equation}
+RSS = \sum_{i=1}^n e_i^2 \rightarrow \min_{\check{\beta_0}, \check{\beta_1}}
+\end{equation}
+\begin{equation}
+\sum_{i=1}^n e_i^2 = \sum_{i=1}^n (Y_i - \check{\beta_0} - \check{\beta_1} \cdot X_i)^2 \rightarrow \min_{\check{\beta_0}, \check{\beta_1}}  
+\end{equation}
+\begin{align}
+\frac{\partial RSS}{\partial \check{\beta_0}} =- 2 \sum_{i=1}^n (Y_i - \check{\beta_0} - \check{\beta_1} \cdot X_i) = 0  \\
+\frac{\partial RSS}{\partial \check{\beta_1}} = - 2 \sum_{i=1}^n (Y_i - \check{\beta_0} - \check{\beta_1} \cdot X_i) X_i = 0  
+\end{align}
+\begin{align}
+\frac{\partial RSS}{\partial \check{\beta_0}} = \sum_{i}^n Y_i	 - n \cdot \check{\beta_0} - \check{\beta_1} \cdot \sum_{i=1}^n X_i = 0 \\
+\frac{\partial RSS}{\partial \check{\beta_1}} = \sum_{i=1}^n X_i Y_i - \check{\beta_0} \cdot \sum_{i=1}^n X_i - \check{\beta_1} \cdot \sum_{i=1}^n X_i^ 2 
+\end{align}
+\begin{align}
+\frac{\partial RSS}{\partial \check{\beta_1}} = \sum_{i=1}^n X_i Y_i - (\bar{Y} - \check{\beta_1} \bar{X}) \sum_{i=1}^n X_i - \check{\beta_1} \cdot \sum_{i=1}^n X_i^2 = 0 \\
+\sum_{i=1}^n X_i Y_i - \bar{Y} \cdot \sum_{i=1}^n X_i + \check{\beta_1} \cdot \bar{X} \cdot \sum_{i=1}^n X_i - \check{\beta_1} \cdot \sum_{i=1}^n X_i^2 = 0 \\
+\check{\beta_1} = \frac{\sum_{i=1}^n X_i Y_i - \bar{Y} \sum_{i=1}^n X_i}{\sum_{i=1}^n X_i^2 - \bar{X} \sum_{i=1}^n X_i} = \frac{n \cdot \sum X_i Y_i - \sum X_i \cdot \sum Y_i}{n \sum X_i^2 - (\sum X_i)^2} = \\
+= \frac{\bar{XY} - \bar{X} \cdot \bar{Y}}{\bar{X^2} - (\bar{X})^2}
+\end{align}
+
+Задача: доказать, что $ \check{\beta_1} = \frac{\check{cov} (x, y)}{\check{var} (x)}$
+
+\begin{align}
+\check{\beta_1} = \frac{\check{cov} (x, y)}{\check{var} (x)}  = \frac{\sum (X - \bar{X}) (Y - \bar{Y})}{\sum (X - \bar{X})^2} = 
+\frac{
+\sum_{i=1}^n (X_i Y_i + \bar{X} \bar{Y} - \bar{X} \cdot Y_i - \bar{Y} \cdot X_i) 
+}
+{\sum (X_i ^ 2 - 2 \bar{X} \cdot X_i + (\bar{X}) ^ 2)} = \\ = \frac{\sum X_i Y_i + n \bar{X} \bar{Y} - \bar{X} \cdot n \bar{Y} - n \bar{X}}{\sum X_i ^ 2 - 2 \bar{X} \sum X_i + n (\bar{X}) ^ 2} = \frac{\sum X_i Y_i - n \bar{X} \bar{Y}}{\sum X_i^2 - n (\bar{X})^2} = \frac{n \sum X_i Y_i - \sum X_i \sum Y_i}{n \sum X_i^2 - (\sum X_i) ^ 2 }
+\end{align}
+Вернемся к парной линейной регресии. Допустим, что $ \beta_0 $ отсутствует 
+\begin{align}
+Y_i = \beta X_i + \varepsilon_i \\
+\sum_{i=1}^n (Y_i - \check{\beta} X_i)^2 \rightarrow \min \\
+\frac{\partial RSS}{\check{\beta}} = \cdots \Rightarrow \check{\beta} = \\
+\frac{\sum X_i Y_i}{\sum X_i^2}
+\end{align}
+Если же допустить, что отсутствует $ \beta_1$, то при подсчёте выяснится, что $\check{\beta} = \bar{Y} $ 
+\end{otherlanguage*}
+\end{document}

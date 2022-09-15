@@ -1,0 +1,286 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Динамическая оптимизация в экономике и финансах}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+\section{\foreignlanguage{russian}{Уравнение Эйлера}}
+\begin{enumerate}
+\item Теорема
+
+\begin{enumerate}
+
+\item Формулировка: 
+
+Если функционал $ V(y(t)) $, имеющий вариацию достигает $ \max (\min)$ на некоторой кривой $y_0$, то $ \delta V = 0 $ 
+
+\item Доказательство: 
+
+зафиксируем $y_0(t), \delta y(t)$. Тогда пусть $ y(t) = y_0(t) + \delta y \cdot \alpha $ 
+
+$ V(y(t)) = V(y_0 + \delta y \cdot \alpha) = V(\alpha) $ 
+
+Т.е. экстремум достигается при $\alpha = 0 \Rightarrow V^{'} (\alpha)|_{\alpha = 0} = 0 \Rightarrow \delta V = 0 $ 
+\end{enumerate}
+
+\item Каноническая задача  
+\begin{align} 
+\frac{\partial }{\partial \alpha} \Big( \int_{0}^T F(t, y_0 + \alpha \cdot \delta y, y^{'}_0 + \alpha \cdot \delta y^{'})dt\Big)_{\alpha = 0} = 0 \\
+\int_0^T F^{'}_y \cdot \delta y + F^{'}_{y^{'}} \cdot \delta y^{'} dt 
+\end{align} 
+Для решения задачи стоит вспомнить интегрирование по частям: 
+\begin{equation}
+\int_a^b u dv = uv|^b_a - \int_a^b v du 
+\end{equation}
+Пусть $ F^{'}_y  = u$, $\delta y^{'} = dv $ 
+
+\begin{align}
+\int_0^T \Big( F^{'}_y \cdot \delta y + F^{'}_{y^{'}} \cdot \delta y^{'} \Big) dt = \\
+= F^{'}_{y^{'}} \delta y|^T_0 + \int_0^T \Big(F^{'}_y \cdot \delta y - \frac{d}{d t} F^{'}_{y^{'}} \cdot \delta y \Big) dt = \\
+\begin{pmatrix} \delta y(0) = 0 & \delta y (T) = 0 \end{pmatrix} = \\
+= F^{'}_{y^{'}} |_{t = T} \,\,\delta y(T) - F^{'}_{y^{'}} |_{t = 0} \,\,\delta y(0) + \int_0^T \Big( F^{'}_y - \frac{d}{d t} F^{'}_{y{'}} \Big) \delta y dt = 0 
+\end{align}
+
+\item Само уравнение Эйлера
+
+\begin{equation}
+F^{'}_y - \frac{d }{d t} F^{'}_{y^{'}} = 0
+\end{equation}
+
+Кривые, удовлетворяющиее уравнению Эйлера, называются экстремалями. 
+
+\item Задача 
+
+Найдите экстремали
+\begin{enumerate}
+\item Условия
+\begin{align}
+\int_0^2 12 ty + y^{'^{2}} dt \\
+\begin{cases}
+y(0) = 0 \\ 
+y(2) = 8 
+\end{cases}
+\end{align}
+\item Решение
+
+\begin{align} 
+\begin{cases}
+F^{'}_y = 12 t \\
+F^{'}_{y^{'}} = 2 y^{'} \\ 
+12 t - 2 y^{''} = 0 \\ 
+\end{cases}
+\Rightarrow
+\begin{cases}
+y^{''} = 6t \\
+y^{'} = 3t^2 + C_1 \\
+y = t^3 + C_1 t + C_2 
+\end{cases} \\
+y(0) = 0^3 + C_1 \cdot 0 + C_2 = 0 \Rightarrow  C_2 = 0 \\ 
+y(2) = 2^3 + 2 \cdot C_1 = 8 \Rightarrow C_1 =0 
+\end{align} 
+\end{enumerate}
+\item Частные случаи уравнения Эйлера 
+
+\begin{enumerate}
+\item $ 
+F(y, y^{'}) \Rightarrow \begin{cases}\frac{\partial}{\partial} F_{y^{'}} = 0 \\
+F_{y^{'}} = 0 \end{cases} $
+
+\item $ F (y, y^{'}) \Rightarrow F_y - F_{y^{'} t} - F_{y^{'} y} - F_{y^{'} y^{'}} = 0 $
+
+\begin{equation}
+\frac{d}{dt} (y^{'} F_{y^{'}} - F) = 0 \\ 
+y^{'} F_{y^{'}} - F = 0 
+\end{equation}
+Мораль такая: сначала попробуйте всё-таки вот в такой постановке решить через отдельное уравнение $ F_{y^{'}} (t, y, y^{'}) $, если вдруг вылазиют слоны, то попробовать. 
+
+\item $ F(y^{'}) $ 
+
+\begin{align}
+F_{y^{'}} = C \Rightarrow y^{'} = C_1 \Rightarrow y = C_1 \cdot t + C_2 
+\end{align}
+
+Пример задачи 
+\begin{equation}
+\int_0^1 y^{'^{5}} + e^{sin(y^{'})} dt \Rightarrow y = C_1 t + C_2 
+\end{equation}
+
+\item $ F(t, y) $
+
+\begin{equation}
+F_y = 0 
+\end{equation}
+Не дифференциальное уравнение $ \Rightarrow $ нет $ \operatorname{const} $ 
+
+Решение существует, только если удовлетворяет граничным условиям $ 
+\begin{cases} 
+y(0) = y_0 \\ 
+y(T) = y_T \\
+\end{cases}$ 
+\end{enumerate}
+\item Сюжет: фракталы и пространства дробной размерности 
+
+Введем размерность по аналогии: = $ \log_{\operatorname{incr}} \operatorname{amt}$ 
+
+Мораль: существуют странные объекты непонятных размерностей помимо гладких и приятных функций. 
+
+\item Обобщения уравнения Эйлера 
+\begin{enumerate}
+\item Случай нескольких переменных 
+
+Предположим, что задача теперь выглядит вот таким вот образом: 
+\begin{equation}
+\int_0^T F(t, y_1, y_2, \ldots, y_n, y^{'}_1, \ldots, y^{'}_n) dt \rightarrow (\max | \min) 
+\end{equation}
+\begin{align}
+\begin{cases}
+y_1(0) = y_{10} \\
+y_1(T) = y_{1T} 
+\end{cases} 
+\cdots
+\begin{cases}
+y_n(0) = y_{n0} \\
+y_n (T) = y_{nT} 
+\end{cases}
+\end{align}
+То есть решение задачи описывается наобором из n уравнений второго порядка: 
+\begin{equation}
+i = 1, \ldots, n \,\,\,\, F_{y_i} - \frac{d}{dt} F_{y^{'}_i} = 0 
+\end{equation}
+Констант будет $ 2 n$. Все нормально. 
+Пример задачи: 
+\begin{align}
+\int_0^T (y + z + y^{'^{2}} + z^{'^{2}}) dt  \\
+F_y = 1 \\ 
+F_{y^{'}} = 2y^{'} \\ 
+1 - \frac{d}{dt} 2y^{'} = 0 \\ 
+y^{''} = \frac{1}{2} \\
+\begin{cases}
+F_z = 1 \\ 
+F_{z^{'}} = 2 z^{'} 
+\end{cases} \Rightarrow z^{''} = \frac{1}{2}
+\end{align}
+\item Случай производных более высокого порядка 
+
+Вид задачи:
+\begin{equation}
+\int_0^T F(t, y, y^{'}, \cdots, y^{(k)}) dt \rightarrow (\max | \min) 
+\end{equation}
+В этом случае надо пользоваться уравнением Эйлера-Пуассона. 
+\begin{equation}
+F_y - \frac{d}{dt} F_{y^{'}} + \frac{d^2}{dt^2} F_{y^{''}} - \frac{d^3}{dt^3} F_{y^{'''}} + \ldots + (-1)^k \frac{d^k}{dt^k} F_{y^{(k)}} = 0 
+\end{equation}	
+Тогда будет дифференциальное уравнение порядка $ 2k \Rightarrow $ нужно $ 2k $ ограничений. 
+\begin{align}
+y(0) = y_0 \,\,\,\,\,\,\,\,
+y(T) = y_T \\ 
+y^{'}(0) = y_{1, 0} \,\,\,\,\,\,\,\,
+y^{'}(T) = y_{1, T} \\ 
+y^{''}(0) = y_{2, 0} \,\,\,\,\,\,\,\,
+y^{''}(T) = y_{2, T} \\ 
+\ldots \ldots \ldots \ldots \ldots \ldots\ldots \ldots \ldots \\ 
+y^{(k-1)} (0) = y_{k-1, 0} \,\,\,\,\,\,\,\, y^{(k-1)} (T) = y_{k-1, T} 
+\end{align} 
+\item Случай условной задачи. Как в пункте (а), но добавить ограничения. 
+
+Целевая функция:
+\begin{equation}
+\int_0^T F(t, y_1, y_2, \ldots, y_n, y^{'}_1, \ldots, y^{'}_n) dt \rightarrow (\max | \min) 
+\end{equation}
+Ограничения (которые выполняются в каждой точке):
+\begin{align} 
+g_i (t, y_1, y_2, \ldots, y_n, y^{'}_1, \ldots, y^{'}_n) = 0 \\
+\end{align} 
+Кол-во ограничений: $i = 1, \ldots, m < n $
+
+Вводим двойственную переменную (функцию) к i-му ограничению $ \lambda_i (t) $
+
+Составляем функционал Лагранжа:
+
+\begin{align} 
+\mathbf{L} = \int_0^T F dt + \sum_{i=1}^m \int_0^T \lambda_i g_i dt = \\
+= \int_0^T \Big( F + \sum_{i=1}^m \lambda_i \cdot g_i \Big) \rightarrow
+\end{align} 
+Решение обычной задачи с $ n + m $ переменными
+
+Также бывают ограничения, которые должны выполняться целиком за период.
+\begin{equation}
+\int_0^T G_j (t, y_1, \ldots, y^{'}_n) dt = 0
+\end{equation}
+Вводим двойственную скалярную переменную $ \Lambda_j$, которая от t не зависит. 
+\end{enumerate}
+\item Сюжет 2: Динамический хаос 
+
+Там были красивые картинки. 
+
+\item Вариационные задачи с подвижными концами 
+\begin{enumerate}
+\item Задача с фиксированным конечным временем (задача с вертикальной конечной линией) 
+\begin{align}
+\int_0^T F(t, y, y^{'}) dt \\ 
+y(0) = y_0 \\ 
+y(T) = y_T 
+\end{align} 
+\item Задача с фиксированным состоянием. Задача с горизонтальной линией. Надо найти траектории до горизонтальной линии. 
+
+\item Задача с конечной кривой. Надо найти траектории до кривой линии. 
+
+\item Условие трансверсальности (условие после жизни) 
+
+\begin{equation}
+y = y_0 + \alpha \cdot \delta y 
+\end{equation}
+
+Пусть есть оптимальный момент остановки
+
+$ T = T^* + \alpha \cdot \Delta T $
+
+$ y_T = y_T^* + \alpha \cdot \Delta y_T$   
+\begin{equation} 
+V(\alpha) = \int_0^{T^* + \alpha \cdot \Delta T} F(t, y_0 + \alpha \cdot \delta y, y^{'}_0 + \alpha \cdot \delta y^{'}_0 ) dt    
+\end{equation}
+\begin{align}
+\frac{d V(\alpha)}{d(\alpha)} = 0 \\ 
+\frac{dv }{d\alpha} = \int_0^{T^* + \alpha \cdot \Delta T } F_y \delta y + F_{y^{'}} \delta y^{'} dt  + \\ +  F (T, y(T), y^{'}(T)) \cdot \Big(T^* + \alpha \cdot \Delta T \Big)^{'}_{\alpha} = \\
+\int_0^{T^* + \alpha \cdot \Delta T } F_y \delta y + F_{y^{'}} \delta y^{'} dt  + F (T, y(T), y^{'}(T)) \cdot \delta T = \\  =  \int_0^T (F_y - \frac{d}{dt} F_{y^{'}}) dt  + F_{y^{'}}|_{t = T} \delta y (T) + F (\cdots ) \Delta T = 0 
+\end{align}
+
+\item (Картинка) 
+
+Мощнейшая формула:
+ 
+\begin{align}
+\Delta y_T = \delta y (T) + y^{'} (T) \cdot \Delta T \\ y = y_0 + \alpha \delta y \\
+\delta y (T) = \Delta y_T  - y^{'} (T) \Delta T \\
+F_{y^{'}}|_{t=T} \Big( \Delta y_T - y^{'} (T) \Delta T \Big) + F|_{t = T} \Delta T = 0 
+\end{align}
+В итоге, условие трансверсальности выглядит так: 
+\begin{equation}
+\Big( F_{y^{'}} \Big)_{t = T}  \Delta y_T + \Big( F - y^{'} F_{y^{'}} \Big)_{t = T} \Delta T = 0  
+\end{equation}
+\item Случай 1 
+$ T = \operatorname{const} $, $ y_t $ - любой 
+
+$ \Delta T = 0 $, $ \Delta y_T $ - любой 
+
+$ \Rightarrow \Big( F_{y^{'}} \Big)_{t = T} = 0 $
+
+\item Случай 2 
+
+$ T $ - любое $\,\,\,\,\,  y_T $ фиксирвано
+
+$\Delta T \,\, \forall \,\,\,\,\, \,\,\,\,\,\Delta y_T = 0 $ 
+
+$ \Big( F - y^{'} F_{y^{'}} \Big) = 0 $ 
+\end{enumerate}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

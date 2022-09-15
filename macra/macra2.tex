@@ -1,0 +1,383 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Макроэкономика 2}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section{\foreignlanguage{russian}{Межвременной выбор}}
+\begin{equation}
+C_t = \bar{C} + \operatorname{mpc} \cdot Yd_t
+\end{equation}
+блин так поспать хочется
+
+Почему потребительские расходы в долгосрочном периоде сглажены? Почему? 
+Чето про динамическую задачу оптимального выбора потребителя. Рациональные ожидания. Согласны? Узнали?
+
+Обозначения:
+
+$C_t$ - потребление агрегированного блага в периоде t
+
+$S_t$ - сбережения из трудового дохода в периоде t
+
+$Y_t$ - трудовой доход в периоде t
+
+$Yd_t$ - располагаемый трудовой доход в периоде t
+
+$A_t$ - богатство в периоде t (на начало периода t) 
+
+$r_t$ - реальная рыночная ставка процента в периоде t
+
+$u(C_t)$ - мгновенная полезность домашнего хозяйства от потребления агрегированного блага в периоде t
+
+$u(C_1)$ где $C_1$ - это потребление барана.
+\begin{enumerate}
+\item Целевая функция полезности домашнего хозяйства, которое живёт $T$ лет:
+
+$ \sum_{i=1}^{T-1} \frac{u(C_t)}{(1 + \rho)^t} \rightarrow \max $
+
+где: $\frac{1}{(1+\rho)^t} = \beta$  - дисконт-фактор
+
+Свойства мгновенной функции полезности:
+
+$u^{'}(C) > 0; u^{''}(C) < 0$
+
+Согласны?
+\item Динамическое бюджетное ограничение
+
+$A_{t+1} = (A_t + S_t) (1 + r) $
+
+\item Межвременное бюджетное ограничение
+
+\begin{align}
+A_{t+1} = (1 + r) (A_t + S_t)  \\
+A_1 = (1 + r) (A_0 + S_0) \rightarrow A_0 = \frac{A_1}{1+r} - S_0 \\
+A_2 = (1 + r) (A_1 + S_1) \rightarrow A_1 = \frac{A_2}{1 + r} - S_1 \\
+A_3 = (1 + r) (A_2 + S_2) \rightarrow A_2 = \frac{A_3}{1 + r} - S_2
+\end{align}
+Мораль: 
+\begin{equation}
+A_t = - \sum_{\tau = 0}^{T-t-1} \frac{S_{t+r}}{(1 + r)^{\tau}} + \frac{A_T}{(1+r)^{T-t}}
+\end{equation}
+
+Согласны?
+\item Решение задачи домашнего хозяйства
+\begin{align}
+\sum_{t=1}^{T-1} \frac{u(C_t)}{(1 + \rho)^2} \rightarrow \max_{C_t \ge 0} \,\,\,\, \forall t \in [0; T -1]\\
+A_{t+1} = (A_t + Y^d_t - C_t) (1 + r)  \\
+\Lambda = \sum_{t=0}^{T-1} \frac{u(C_t)}{(1 + \rho)^t} + \sum_{t=0}^{T-1} \lambda_t \cdot \Big( A_{t+1} - (A_t + Y^d_t - C_t) (1 + r) \Big)
+\end{align}
+Согласны?
+\begin{align}
+\frac{\partial \Lambda}{\partial C_t} = \frac{u^{'}(C_t)}{(1 + \rho)^t} + \lambda_t (-1) (1 + r) =  0 \\
+\frac{\partial \Lambda}{\partial C_{t+1}} = \frac{u^{'}(C_{t+1})}{(1 + \rho)^{t+1}} + \lambda_{t+1} (-1) (1+r) = 0
+\end{align}
+Интересный факт: 
+\begin{equation}
+\frac{\frac{u^{'}(C_t)}{(1 + \rho)^t}}
+{\frac{u^{'}(C_{t+1})}{(1 + \rho)^{t+1}}} = \frac{\lambda_t}{\lambda_{t+1}}
+\end{equation}
+\item Условие отсутствия игр Понци (условие трансверсальности) 
+\begin{equation}
+\frac{A_t}{(1+r)^{T - t}} = 0
+\end{equation}
+Предполагается, что $A_T = 0 $ (индивид не оставляет ни наследства, ни долгов после оконч). Тогда: 
+\begin{equation}
+A_t = - \sum_{\tau = 0}^{T-t-1} \frac{S_{t + \tau}}{(1 + r)^{\tau)}}
+\end{equation}
+Согласны?
+\item Конечный вид межвременного бюджетного ограничения
+\begin{equation}
+\sum_{t=0}^{T-1} \frac{Y^d_t}{(1 + r)^t} + A_0 = \sum_{t=0}^{T-1} \frac{C_t}{(1+r)^t}
+\end{equation}
+\item Интересные факты про МБО 
+\begin{align}
+A_t > 0 \Rightarrow \sum_{\tau = 0}^{T-t-1} \frac{S_{t + \tau}}{(1 + r)^{\tau}} < 0 \\
+A_t < 0 \Rightarrow \sum_{\tau = 0}^{T-t-1} \frac{S_{t + \tau}}{(1 + r)^{\tau}} > 0
+\end{align}
+Т.е. при накоплении богатства в некоторый момент времени t, в будущем можно делать отрицательные сбережения. 
+
+В случае наличия задолженности на момент t, в будущем необходимо делать положительные сбережения. 	
+
+\item Ещё один вариант решения задачи домашнего хозяйства
+
+\begin{equation}
+L = \sum_{t = 0}^{T-1} \frac{u(C_t)}{(1 + \rho)^t}  + \lambda \Big( A_0 + \sum_{t=0}^{T-1} \frac{Y^d_t}{(1 + r)^t} - \sum_{t=0}^{T-1} \frac{C_t}{(1 + r)^t}\Big)
+\end{equation}
+Решение:
+\begin{align}
+\frac{\partial L}{\partial C_t}: \frac{u^{'} (C_t)}{(1 + \rho) ^ t } - \lambda \cdot \frac{1}{(1 + r)^t} = 0 \\
+\frac{\partial L}{\partial C_{t+1}} : \frac{u^{'}(C_{t+1})}{(1 + \rho)^{t+1}} - \lambda \cdot \frac{1}{(1 + r) ^ {t + 1}} = 0 \\
+\frac{u^{'}(C_t)}{u^{'}(C_{t+1})} = \frac{(1 + r)}{(1 + \rho)} 
+\end{align}
+Ещё вариант: 
+\begin{align}
+\frac{\partial :}{\partial A_{t+1}}: \lambda_t + \lambda_{t+1} (-1) (1 + r) = 0 \Rightarrow \frac{u^{'}(C_t)}{u^{'}(C_{t+1})} = \frac{1 + r }{1 + \rho}
+\end{align}
+\item Уравнение Эйлера (Правило Рамсея-Кейнса) 
+
+В любом случае, оптимальный выбор домашнего хозяйства описывается уравнением: 
+\begin{equation}
+\frac{u^{'}(C_t)}{u^{'}(C_{t+1})} = \frac{(1 + r)}{(1 + \rho)} 
+\end{equation}
+\begin{equation}
+\frac{u^{'}(C_t)}{u^{'}(C_{t+1})(1 + \rho)^{-1}} = \frac{1}{(1 + r)^{-1}}
+\end{equation}
+$(1 + r) ^{-1} $ есть относительная цена потребления в периоде $ t + 1 $ 
+
+Микроэкономическая интерпретация: предельная норма замещения между потреблением в периодах $ t$ и $ t + 1$ должна быть равна отношению цен 
+
+\item Эффект межвременного замещения
+
+Как меняется выбор домашнего хозяйства, если экзогенно меняется ставка процента 
+
+\begin{enumerate}
+
+\item Эффект замещения:
+\begin{equation}
+r \uparrow \Rightarrow \frac{u^{'}(C_t)}{u^{'}(C_{t+1})} \uparrow \Rightarrow C_t \downarrow, S_t \uparrow, C_{t+1 } \uparrow
+\end{equation}
+
+Пояснение: чем выше процентный доход от сбережений в будущем, тем дороже обходится нам текущее потребление (растут альтернативные издержки) 
+
+\item Эффект дохода
+
+Предположим, что $S_t > 0 $, тогда: 
+\begin{equation}
+r \uparrow \Rightarrow (1 + r) S_t \uparrow \Rightarrow C_t \uparrow, C_{t+1} \uparrow, S_t \downarrow
+\end{equation}
+
+Пояснение: рост ставки процента приводит к увеличению капитального дохода от сбережений в периоде $ t + 1 $ что приводит к росту совокупного дохода в течении всей жизни 
+
+\item Свойства функции сбережений
+
+Какой эффект будет доминировать: эффект дохода или эффект замещения? Это зависит от величины внутривременной эластичности замещения (короче, от функции полезности): 
+\begin{equation}
+\sigma = - \frac{u{'}(c)}{u^{''}(c)c} = \lim_{\tau \rightarrow t} \sigma (c_t, c_{\tau}) 
+\end{equation}
+\begin{equation}
+\sigma(c_t, c_{\tau}) = - \frac{d \ln (c_{\tau} / c_t)}{d \ln MRS (c_t, c_{\tau})} 
+\end{equation}
+\begin{equation}
+\frac{\partial S_t}{\partial r}  = \begin{cases}
+> 0 & \operatorname{if} \sigma > 1 \\
+ = 0 & \operatorname{if} \sigma = 1 \\
+< 0 & \operatorname{if} \sigma < 1
+\end{cases}
+\end{equation}
+
+\item Динамика потребительских расходов
+
+Если $ r > \rho $, потребление растёт в  течение жизни
+
+Если $ r < \rho $, потребление падает в течение жизни
+
+Если $ r = \rho $, потреблениее постоянно в течение жизни  
+
+\end{enumerate}
+\item Межвременное бюджетное ограничение в случае бесконечного временного горизонта 
+
+\begin{align}
+A_{t+1} = (A_t + S_t) (1 + r) \\
+A_t = - \sum_{\tau = 0 } ^{T - t -1 } \frac{S_{t + \tau}}{(1 + r)^{\tau}} + \frac{A_T}{(1 + r)^{T - t}}\\
+\lim_{T \rightarrow \infty} \frac{A_T}{(1 + r)^{T - t}} = 0 \\
+\sum_{t = 0}^{\infty} \frac{C_t}{(1 + r)^t} = A_0 + \sum_{t = 0 }^{\infty} \frac{Y^d_t}{(1 + r)^t} + \lim_{T \rightarrow \infty} \frac{A_t}{(1 + r)^T} \rightarrow 0
+\end{align}
+Короче, кажется, оно выглядит как-то так:
+\begin{equation}
+\sum_{\tau = 0}^{\infty} \frac{C_{t + \tau}}{(1 + r)^{\tau}} = A_t + \sum_{\tau = 0}^{\infty} \frac{Y^d_{t + \tau}}{(1 + r)^{\tau}} 
+\end{equation}
+\item Условия отсутствия игр Понци в бесконечном временном периоде 
+
+\begin{equation}
+\lim_{T \rightarrow \infty} \frac{A_T}{(1 + r)^{T - t}} = 0 
+\end{equation}
+
+\item Ещё обозначения:
+
+$  G_t $ - государственные закупки в периоде $ t$ 
+
+$ T_t$ - чистые налоги в периоде $t$.
+
+$ T_t = T x_t - Tr_t $
+
+$ b_t $ - государственный долг на начало периода $t$
+ 
+$d_t = G_t - T_t$ - первичный дефицит государственного бюджета в периоде $ t $ 
+
+$ r $ - рыночная ставка процента 
+
+\item Динамическое бюджетное ограничение правительства: 
+
+\begin{align}
+d_t + b_t = \frac{b_{t+1}}{1 +r} \\
+b_{t+1} = (b_t + d_t) (1 + r) = (b_t + G_t - T_t) (1 + r) \\
+\cdots \\ 
+b_t = - \sum_{\tau = 0}^{T - t - 1} \frac{d_{t + \tau}}{(1 + r) ^{\tau}} + \frac{b_T}{(1 + r)^{T -t}}
+\end{align}
+
+\item Условие отсутствия игр Понци для правительства
+
+\begin{equation}
+\lim_{T \rightarrow \infty} \frac{b_T}{(1 + r)^{T - t}} = 0 
+\end{equation}
+Приведенная стоимость государственного долга стремится к нулю на бесконечном промежутке времени;
+
+Государственный долг не должен расти слишком быстро: темп роста не должен превышать ставку процента 
+
+\item Межвременное бюджетное ограничение для правительства
+
+В каждом периоде сумма приведенной стоимости будущих расходов правительства и накопленного госдолга должна равняться сумме приведенной стоимости налоговых сборов
+\begin{equation}
+b_t > 0 \Rightarrow \sum_{\tau = 0}^{\infty} \frac{d_{t+\tau}}{(1 + r)^{\tau}} < 0 
+\end{equation}
+Накопленный госдолг на сегодняшний день может быть обеспечен будущими излишками бюджета
+\item Консолидированное бюджетное ограничение для правительства и домохозяйств 
+
+\begin{align}
+\sum_{\tau = 0}^{\infty} \frac{C_{t + \tau}}{(1 + r)^{\tau}} = \sum_{\tau = 0}^{\infty} \frac{(Y_{t + \tau} - G_{t + \tau})}{(1 + r)^{\tau}} 
+\end{align}
+\end{enumerate}
+\section{\foreignlanguage{russian}{Рикардианская эквивалентность}}
+\begin{enumerate}
+\item Понятие
+
+Мысль, вложенная в это понятие, такая: способ финансирования государственных закупок не влияет на величину потребительских расходов
+
+\item Абстрактный пример
+
+Пусть в периоде $ t $ чистые налоги сокращаются на $ \Delta T$. Фискальная политика более не устойчива, так как равенство 
+\begin{equation}
+\sum_{\tau = 0}^{\infty} \frac{G_{t + \tau}}{(1 + r)^{\tau}} + b_t = \sum_{\tau = 0}^{\infty} \frac{T_{t + \tau}}{(1 + r)^{\tau}}
+\end{equation}
+
+Способы вернуться на устойчивую траекторию :
+\begin{enumerate}
+\item Сократить $G_t$ на $\Delta T_t$ 
+
+\item Увеличить $ T_{t + s} $ на $ \Delta T (1 + r)^s $ в периоде $ t + s $
+
+\item Государственный долг даёт возможность перераспределить налоги  
+\end{enumerate}
+\item Конкретный примеер
+\begin{align}
+t = 1, 2 \\
+Y_1 = 1000 \\ 
+Y_2 = 1100 \\
+r = 0.1 \\
+\end{align}
+
+Для домохозяйства: 
+\begin{equation}
+C_1 + \frac{C_2}{1 + r}  = (Y_1 - T_1) + \frac{(Y_2 - T_2)}{1 + r}
+\end{equation}
+
+Для правительства: 
+
+\begin{equation}
+G_1 + \frac{G_2}{1 + r}  = T_1 + \frac{T_2}{1 + r} 
+\end{equation}
+
+Первый пример:
+\begin{align}
+T_1 = 200 \\
+T_2 = 0
+\end{align}
+Государство: $ 200 + \frac{0}{1.1} = 200 $
+
+Д-ства: $ 1000 - 200 + \frac{1100}{1.1} = 1800 $  
+\end{enumerate}
+Но если $ T_2 = 220, T_1 = 0$, то ничего не меняется (в частности, оптимальный потребительский выбор)
+
+У д-хва $ 1000 + \frac{1100 -200}{1.1} $
+
+Что-то про муультипликатор
+\begin{align}
+C = \bar{C} + mpc Y_d \\ 
+C^* = C(Y - T, r=\operatorname{const}) \\
+Y = C + G = C(Y - T) + G \\
+dY = C^{'} dY + dG \\ 
+dY ( 1 - C^{'}_{Y_d}) = dG  \\
+\frac{dY}{dG} = \frac{1}{1 - C^{'}_{Y_d}} = \frac{1}{1 - mpc} > 1 \\
+\begin{cases}
+C^* = C(Y_t - G_t, Y_{t+1} - G_{t+1}, \ldots, r) \\
+Y = C + G 
+\end{cases}\\
+Y = G + C (Y_t - G_t, Y_{t+1} - G_{t+1}, \ldots, r)  \\
+dy = dG + C^{'}_{Y_d} dY - C^{'}_{Y_d} dG \\
+(1 - C^{'}_{Y_d}) dY = dG ( 1 - C^{'}_{Y_d}) \\
+\frac{dY}{dG} = 1
+\end{align}
+В результате построение фискальной политики правительства в экономике с "рациональными и вперед смотрящими агентами" будет отличаться от политики в экономике, где агенты такими не являются
+
+\section{\foreignlanguage{russian}{Модель Рамсея}}
+\begin{enumerate}
+\item Производственный сектор
+
+Рост населения: $ L_{t + 1} = L_t (1 + n) $ 
+
+Предложение труда экзогенно
+
+Функция выпуска: $ Y_t = F(K_t, L_t) $  
+
+Производственная функця в интенсивной форме: 
+
+$ y_t = f(k_t)$, $ y_t = Y_t / L_t$, $ k_t = K_t / L_t$
+
+Агрегированное тождество в двухсекторной экономике: $ Y_t = C_t + I_t $ 
+
+Инвестиции: $I_t = (K_{t+1} - K_t) + \delta K_t $ 
+
+Накопление капитала: $ K_{t + 1} = I_t + K_t ( 1 - \delta) = Y_t - C_t + K_t (1 - \delta) $ 
+
+На душу населения:
+
+\begin{align}
+K_{t + 1} = Y_t - C_t + K_t (1 - \delta) \\
+\frac{K_{t+1}}{L_t} = \frac{Y_t}{L_t} - \frac{C_t}{L_t} + \frac{K_t}{L_t} (1 - \delta), \\
+L_t = \frac{L_{t+1}}{1 + n} \\
+(1 + n ) k_{t+1} = f(k_t) - c_t + k_t (1 - \delta) 
+\end{align}
+Рынки факторов производства являются совершенно конкурентными, следовательно:
+
+\begin{align}
+w_t = f(k_t) - k f^{'} (k_t) \\
+r_t = f^{'} (k_t) - \delta 
+\end{align}
+
+\item Задача социального планировщика:
+
+Максимизация функции общественного благосостояния:
+\begin{equation}
+\sum_{t = 0}^{\infty} \frac{u(c_t)}{(1 + \rho)^t} \rightarrow \max_{c_t} \\
+\end{equation}
+\begin{equation}
+(1 + n) k_{t+1} = f (k_t) - c_t + k_t (1 - \delta) 
+\end{equation}
+\item Эндогенные переменные в модели 
+
+$ c, y, k, r, w $ 
+
+\item Экзогенные переменные в модели
+
+$\rho, n, \delta $ 
+
+\item Решение задачи
+
+\begin{align}
+\sum_{t = 0}^{\infty} \frac{u(C_t)}{(1 + \rho)^t} \rightarrow \max_{C_t} \\
+(1 + n) k_{t+1} = f(k_t) - c_t + k_t (1 - \delta) \\
+\Lambda = \sum_{t = 0}^\infty \frac{u(c_t)}{(1 + \rho)^t} + \sum_{t = 0}^{\infty} \lambda_t \Big( f(k_t) - c_t + k_t (1 - \delta) - (1+ n) k_{t + 1} \Big) \\
+\frac{\partial \Lambda}{\partial c_t} = 0 \Rightarrow \frac{u^{'}(c_t)}{(1 + \rho)^t} - \lambda_t = 0 \forall t \\ 
+\frac{\partial \Lambda}{\partial k_{t+ 1}} = 0 \Rightarrow - \lambda_t (1 + n) + \lambda_{t + 1} (f^{'}(k_{t+1}) + (1 - \delta)) = 0 \forall t \\
+\frac{\lambda_t}{\lambda_{t+1}} = \frac{1 + f^{'}(k_{t+1}) - \delta}{1 + n}
+\end{align}
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

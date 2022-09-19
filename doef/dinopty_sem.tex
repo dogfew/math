@@ -332,5 +332,221 @@ t \in [0;2]
 \end{align}
 \end{enumerate}
 \end{enumerate}
+\section{\foreignlanguage{russian}{Уравнение Эйлера}}
+\begin{enumerate}
+\item .. 
+\begin{align}
+\begin{cases}
+V [y(t)] \cdot \int_0^T F(t, y(t), y^{'} (t) ) dt \\
+y(0) = y_0 \\
+y(T) = y_T  
+\end{cases} \\
+F_y - \frac{d}{dt} F_{y^{'}} = 0 
+\end{align}
+Как найти допустимую экстремаль 
+\begin{align}
+\begin{cases}
+\int_0^1 t^2 + y^{'^{2}} dt \\
+y(0) =0 \\
+y(1) = 2 \\
+\end{cases} \\
+F_y - \frac{d}{dt} F_{y^{'}} = 0 \\
+F_y = 0 \,\,\, F_{y^{'}} = 2 y^{'} \\
+0 = - \frac{d}{dt} (2 y ^{'}) = 0 \Rightarrow y^{'} = 0 \\
+y^{'} = C_1 \\
+y = t C_1 + C_2 \\ 
+y(0) = C_2 = 0; \,\,\, y(1) = C_1 + 0 - 2 \Rightarrow \begin{cases}
+C_2 = 0 \\
+C_1 = 2 
+\end{cases} \Rightarrow y(t) = 2 t \\
+\end{align}
+\item Случай 1 
+
+\begin{equation}
+F(y^{'}, t) \Rightarrow F_y - \frac{d}{dt} F_{y^{'}} = 0 \Rightarrow F_{y^{'}} = C_1 
+\end{equation}
+Пример: 
+\begin{align}
+\int_0^1 (t \cdot y ^{'} + y ^{'^{2}} dt = y(0) = y(1) = 1 \\
+F_{y^{'}} = C_1 \\
+t + 2y^{'} = C_1  \\
+y^{'} = \frac{C_1}{2} - \frac{t}{2} \Rightarrow y(t) = \frac{C_1}{2} t - \frac{t^2}{4} + C_2 \\
+\begin{cases}
+y(0) = C_2 = 1 \\
+y(1) = \frac{C_1}{2} - \frac{1}{4} + 1 = 1
+\end{cases} \Rightarrow C-1 = \frac{1}{2} \\
+y(t) = \frac{t}{4} - \frac{t^2}{4} + 1
+\end{align}
+
+\item Случай 2 
+
+\begin{equation}
+F(y, y^{'}) 
+\end{equation}
+
+Первая история
+\begin{align}
+y^{'} F_{y^{'}} - F = C (*) 
+\end{align}
+Вторая история: 
+\begin{equation}
+F_y - \frac{d}{dt} F_{y^{'}} = 0
+\end{equation}
+Пример с неберущимся интегралом
+\begin{align}
+\begin{cases}
+\int_0^1 y^2 + y^{'^{2}} dt  \\
+y(0) = y(1) = 0 
+\end{cases}
+y^{'} (2y^{'}) - y ^ 2 - y^{'^{2}} = C \\
+y^{'^{2}} - y ^ 2 = C 
+\end{align}
+В задаче стоит пойти по уравнению Эйлера.
+\begin{align}
+2y - \frac{d}{dt} 2 y^{'} = 0 \\
+y - y^{''} = 0 \\
+\end{align}
+Это типовое дифференциальное уравнение: однородное ду. 
+\begin{align}
+\lambda_{1, 2} = \pm 1 \\
+y(t) = C_1 \cdot e ^t + C_2 e ^{-t} \\
+C_1 = -C_2 = 0 \\
+y(t) = 0 
+\end{align}
+
+\item Случай 3
+
+\begin{equation}
+F(y^{'}) 
+\end{equation}
+
+Пример: 
+\begin{align}
+\int_0^1 y^{'^{5}} + y^{'^{4}} + 8y^{'^{2}} dt \\
+y(0) = y(1) = 5 
+\end{align}
+В этой ситуации можно сразу выписывать решение уравнения Эйлера: 
+\begin{align}
+y^{'} = C_1 
+\end{align}
+Почему? Потому что: с
+\begin{align}
+F_y = \frac{d}{dt} F_{y^{'}} = 0 \\
+\frac{d}{dt} F_{y^{'}} = 0 \\
+F_{y^{'}} = C_0 \\
+5 \cdot y^{'^{4}} + 4 y^{'^{3}} + 16 y ^{'} = C_0 
+\end{align}
+Проверка, соответствует ли экстремаль, которую мы выведем, нашим ограничениям
+\begin{align}
+y(t) = C_1 t + C_2 \\
+\begin{cases}
+y(0) = C_2 = 5 \\
+y(1) = C_1 + 5 = 5 \Rightarrow C_1 = 0 
+\end{cases} \Rightarrow y(t) = 5 
+\end{align}
+
+\item Случай 4 
+
+
+\begin{equation}
+F(y, t) \Rightarrow F_y - \frac{d}{dt} F_{y^{'}} = 0 \Rightarrow F_y = 0 
+\end{equation}
+Пример. Нам надо подобрать константы, где ограничение выполнено. В примере определенная траектория противоречит ограничению 
+\begin{align}
+\int_0^1 t ^3 + \sin t + y ^ 2 + 2 y dt \\
+y(0) = y(1) = 1 \\
+2 y + 2 = 0 \\
+y(t) = - 1 
+\end{align}
+
+Ответ: нет решений / нет допустимых экстремалей
+
+\item Обобщение уравнения Эйлера (1) Случай нескольких функций
+
+\begin{equation}
+F \big( t, y(t), y^{'} (t), z(t) , z^{'} (t) \big)
+\end{equation}
+Пример. Условия. 
+\begin{align}
+\begin{cases}
+F_y - \frac{d}{dt} F_{y^{'}} = 0 \\
+F_z - \frac{d}{dt} F_{z^{'}} = 0 
+\end{cases} \\
+\int_1^2 y^{'^{2}} + z ^ 2 + z ^{'^{2}} dt \\
+y(1) = 1\,\,\, y(2) = 2 \,\,\, z(1) = 0 \,\,\, z(2) = 1 
+\end{align}
+Пример. Решение
+\begin{align}
+\begin{cases}
+2y^{'} = C_1 \\
+2z - \frac{d}{dt} 2 z^{'} = 0 
+\end{cases} \Leftrightarrow \begin{cases}
+y(t) = C_1 t + C_2 \\
+z - z^{''} = 0 
+\end{cases} \Rightarrow 
+\begin{cases}
+y(t) = t \\
+z(t) = C_3 \cdot e^t + C_2 \cdot e^{-t} 
+\end{cases}
+\end{align}
+При решении этих уравнений и подстановках получаем экстремали: 
+\begin{equation}
+\begin{cases}
+C_3 = \frac{1}{e^2 - 1} & C_4 = - \frac{e^2}{e^2 - 1} \\
+y(t) = t & \, \\
+z(t) = \frac{1}{e^2 - 1} e^t - \frac{e^2}{e^2 - 1} \cdot e ^ {-t} & \,
+\end{cases}
+\end{equation}
+\item Обобщение уравнения Эйлера (2) Случай производных высоких порядков 
+
+\begin{align}
+F(t, y, y^{'}, y^{''}, \ldots, y^{(n)} ) \\
+F_y - \frac{d}{dt} F_{y^{'}} + \frac{d^2}{dt^2} \cdot F_{y^{'''}} - \frac{d^3}{dt^3} + \ldots (-1) ^ n \frac{d^n}{dt^n} F_{y^{(n)}} = 0 
+\end{align}
+Пример: 
+\begin{align}
+\int_0^1 360 t^2 y - y^{'''^2} dt \\
+\begin{cases}
+y(0) = 0 & y(1) = 0 \\ 
+y^{'} (0) = 1 & y^{'} (1) = 2.5 
+\end{cases}
+\end{align}
+\begin{align}
+F_y - \frac{d}{dt} F_{y^{'}} + \frac{d^2}{dt^2} F_{y^{''}} = 0 \\
+F_y = 360 t ^ 2 \\
+F_{y^{'}} = 0 \,\,\,\,\, F_{y^{''}} = - 2 y^{''} \\
+360 t ^ 2 + \frac{d^2}{dt^2} (-2 y^{''}) = 0 \\
+360 t ^2 - 2 y^{(4)} = 0 \\
+y^{(4)} = 180 t ^ 2 \\
+y^{'''} = 60 t ^3 + C_1 \\
+y^{''} = 15 t ^ 4 + C_1 t + C_2 \\
+y^{'} = 3t^5 + \frac{C_1}{2} t^2 + C_2 t + C_3 \\
+y = \frac{1}{2} \cdot t ^ 6 + \frac{C_1}{6} t^3 + \frac{C_2}{2} t^2 + C_3 t + C_4 
+\end{align}
+Мы не будем сейчас этим заниматься, а выпишем сразу же константы. 
+\begin{align}
+\begin{cases}
+C_1 = \frac{3}{2} & C_2 = - 3\\
+C_3 = 1 & C_4 = 0 
+\end{cases}
+\end{align}
+
+\item Для тренировок 
+
+(1) Найти допустимую экстремаль
+\begin{align}
+\int_0^2 7(y^{'^{3}}) dt \\
+y(0) = 9\\
+y(2) = 11
+\end{align}
+
+(2) Найти допустимую экстремаль 
+\begin{align}
+\int_0^1 \Big( y + y^{'} y + y^{'} + \frac{1}{2} \cdot y^{'^{2}} \Big) dt \\
+y(0) = 2 \\
+y(1) = 5  
+\end{align}
+История актуальна две недели с момента того, как мы её увидели. Как бы фидбек актуален тогда, когда он актуален 
+\end{enumerate}
 \end{otherlanguage*}
 \end{document}

@@ -1,0 +1,110 @@
+\documentclass[9pt]{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\RequirePackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, CheatSheet}}
+\author{\foreignlanguage{russian}{Перепелкин Владимир}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsection*{Полезные формулы}
+\subsubsection*{Матстат}
+\begin{align*}
+&\operatorname{E} (X) = \begin{cases} 
+\sum_{i=1}^n x_i \cdot p_i \\
+\int_{-\infty}^{+\infty} f_x(x) \cdot x dx 
+\end{cases} 
+&\mathbb{D} (X) = \begin{cases} 
+\operatorname{E} \big( (x - \operatorname{E}(x))^2\big) \\
+\operatorname{E}(X^2) - (E(X))^2
+\end{cases} \\
+&\text{corr} = \dfrac{\text{cov} (X, Y)}{\sigma_X \cdot \sigma_Y}
+& \text{Var} (X) = \mathbb{E} (X^2) - \mathbb{E} (X)^ 2 \\
+& \text{cov} (X, Y) = \mathbb{E} \Big( (X - \mathbb{E} (X)) \cdot  (Y - \mathbb{E}(Y)\Big) = \mathbb{E}(XY) - \mathbb{E}(X) \mathbb{E}(Y) \\
+&\text{MSE} = \mathbb{E} ( \hat \theta - \theta) ^ 2 \\
+&\mathbb{D} (X + Y) = \mathbb{D} (X) + 2 \cdot \text{cov} (X, Y) + \mathbb{D} (Y)   \\
+&\mathbb{D} (X \cdot \alpha) = \alpha^2 \cdot \mathbb{D} (X) 
+&\mathbb{E} (X \cdot \alpha) = \alpha \cdot \mathbb{E} (X) \\
+& \text{cov} (X + \alpha, Y + \beta) = \text{cov} (X, Y) 
+& \mathbb{E} (\alpha \cdot X + \beta \cdot Y) = \alpha \mathbb{E} (X) + \beta \mathbb{E}(Y)
+\end{align*} 
+\subsubsection*{Оценки параметров}
+\begin{align*}
+&\hat \mu = \bar{X} = \dfrac{\sum_{i=1}^n X_i}{n}
+&\widehat{\sigma}^2 = \dfrac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X}) ^ 2 
+\\
+&\widehat{\text{cov}} (X, Y) = \dfrac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X}) (Y_i - \bar{Y}) 
+\end{align*}
+\subsubsection*{Для распределений}
+\begin{align*}
+&Z \sim N(0,1 ) 
+&t_k = \dfrac{Z}{\sqrt{\chi^2_k / k}} \\
+&\chi^2_k = Z_1^2 + \ldots + Z_k^2 
+&F(m, n) = \dfrac{\chi^2_m / m}{\chi^2_n / n} \\
+&F(m, n) = \dfrac{1}{F(n, m)}
+\end{align*}
+\subsubsection*{Для оценок}
+\begin{itemize}
+\item Несмещенность: $ \mathbb{E} (\hat \theta) = \theta $
+\item Эффективность: $ \hat \theta_1 $ эффективна в классе $ K $, если 
+
+ $ \text{MSE}_{\theta }({\widehat {\theta }}_{1}-\theta )^{2}\le  \text{MSE}_{\theta }({ \widehat {\theta }}_{i}-\theta )^{2} \,\,\,\,\forall \theta_i \in K$
+\item Состоятельность: $ \hat \theta \rightarrow \theta \,\,\,\, \forall \theta \in \Theta $ при $ n \rightarrow \infty $  
+\end{itemize}
+\subsubsection*{Парная регрессия}
+\begin{itemize}
+\item Общие формулы 
+\begin{align*}
+&\text{TSS} = \sum_{i=1}^n (Y_i - \bar{Y}) ^2 
+&\text{ESS} = \sum_{i=1}^n (\hat{Y_i} - \bar{Y})^2  \\
+&e_i = Y_i - \hat Y_i 
+&\text{RSS} (\hat \beta_0, \hat \beta_1) = \sum_{i=1}^n e_i^2 \\
+& R^2 = \dfrac{ESS}{TSS} = 1 - \dfrac{RSS}{TSS} 
+& \text{MSE} = \frac{\sum_{i=1}^n (\beta_0 + \beta_1 \cdot X_i - Y_i)^2}{n} \rightarrow \min \\
+&\hat y = \hat \beta_0 + \hat \beta_1 \cdot X \\
+&\hat \beta_0 = \bar{Y} - \hat{\beta_1} \cdot X 
+& \hat \beta_0 = \bar{Y} - \dfrac{\widehat{\text{cov}}(x, y)}{\widehat{\text{Var}}(X)} \cdot X \\
+&\hat \beta_1 =\dfrac{\sum_{i=1}^n (X - \bar{X})(Y - \bar{Y})}{\sum_{i=1}^n (X - \bar{X})} &
+\hat \beta_1 = \dfrac{\widehat{\text{cov}}(x, y)}{\widehat{\text{Var}}(X)} = \dfrac{\bar{X  Y} - \bar{X} \cdot \bar{Y}}{\bar{X^2} - (\bar{X})^2}
+\end{align*}
+\item Частные случаи
+
+Если $ \hat y = \beta \cdot X $, то $ \hat \beta = \dfrac{\sum_{i=1}^n X_i \cdot Y_i}{\sum_{i=1}^n X_i^2} $
+\item Оценки 
+\begin{align*}
+&\text{Var}( \hat \beta_1 ) = \dfrac{\sigma_{\varepsilon}^2}{\sum_{i=1}^n (X_i - \bar{X})^2} 
+&\widehat{\text{cov}} ( \hat \beta_0, \hat \beta_1) = \dfrac{\sum X_i}{n \sum (X_i - \bar{X})^2} \cdot \hat \sigma_{\varepsilon}^2 \\
+& \widehat{\text{var} (e)} = \dfrac{\sum_{i=1}^n e_i^2}{n-2}
+\end{align*}
+\item Доверительные интервалы для парной регрессии
+\begin{align*}
+\hat \beta - t_{n-2, \alpha / 2} \cdot \widehat{s.e.} (\hat \beta) \le \beta \le \hat \beta + t_{n-2, \alpha / 2} \cdot \widehat{s.e.} (\hat \beta)
+\end{align*}
+\item Гипотеза $ \beta = \beta^* $
+\begin{align*}
+t_{\text{stat}} = \dfrac{\hat \beta - \beta^*}{\widehat{s.e.}(\hat \beta)} \sim t_{n-2}
+\end{align*}
+\end{itemize}
+\subsubsection*{Множественная регрессия}
+\begin{align*}
+MSE = \dfrac{1}{n} \cdot (X \cdot \beta - y)^T \cdot (X \cdot \beta - y) \\
+\beta =  (X^T \cdot X)^{-1} \cdot X^T \cdot y 
+\end{align*}
+\subsubsection*{Теорема Гаусса-Маркова}
+Оценки $\hat \beta_1, \hat \beta_2 $ оптимальны в классе линейных несмещенных оценок, если:
+\begin{itemize}
+\item Модель данных правильно специфицирована
+\item Все $ X_i$ детерминированы и не все равны между собой
+\item $\mathbb{E} (\varepsilon_i) = 0 \,\,\, \forall i $
+\item Дисперсия ошибок одинакова
+\item $\text{cov} (\varepsilon_i, \varepsilon_j) = 0 \,\,\, \forall i \ne j $
+\end{itemize}
+\end{otherlanguage*} 
+\end{document}

@@ -1,0 +1,598 @@
+\documentclass[fleqn]{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{enumitem}
+\usepackage{epsfig}  
+\usepackage{booktabs}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{lightblue}{rgb}{0.0,0.42,0.91}
+\definecolor{orange}{rgb}{0.99,0.48,0.13}
+\definecolor{grass}{rgb}{0.18,0.80,0.18}
+\definecolor{pink}{rgb}{0.97,0.15,0.45}
+
+\usepackage{listings}
+
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+morekeywords={self, as,},              % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+numberstyle=\color{pink},
+stringstyle=\ttb\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=true
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Макроэкономика-2\\Расчетное задание}}
+\author{\foreignlanguage{russian}{Перепелкин Владимир, БЭК205, Вариант 3}}
+\maketitle
+\begin{otherlanguage*}{russian}
+
+\section*{OLG Model with Endogenous Labor Supply. \\Decentralized Economy.}
+\subsubsection*{Начальные условия}
+\begin{enumerate}
+\item $N_t$ - численность экономических агентов рожденных в периоде $ t $ 
+
+$$ N_{t+1} = (1 + n) \cdot N_t $$
+
+\item Экономические агенты живут два периода 
+\begin{enumerate}
+\item Молодой экономический агент в периоде $ t $ 
+\begin{enumerate}
+\item Потребляет $ c_{1, t}$ - это управляемый параметр. 
+\item Получает зарплату $ w_t $ 
+\item Получает субсидию на трудовые доходы по ставке $ \varsigma \Rightarrow \varsigma \cdot w_t $.
+\item Сберегает величину $ s_{1, t} $  - это управляемый параметр..
+\item Предлагает $ h_t $ единиц труда - это управляемый параметр.
+\end{enumerate}
+\item Пожилой экономический агент в периоде $ t $ 
+\begin{enumerate}
+\item Потребляет $ c_{2, t} $ 
+\item За счет $ s_{t-1} + r_t \cdot s_{t-1} $ 
+\end{enumerate}
+\end{enumerate}
+\item $U$ - Функция суммарной приведенной полезности
+$$ U(c{1, t}, h_t, c_{2, t+1}) = \ln (c_{1, t}) + \psi \cdot \ln (1 - h_t) + \beta \cdot \ln (c_{2, t+1}) $$
+\begin{enumerate}
+\item $ \psi$ - тягость труда  
+\item $ \beta $ - параметр, "показывающий степень нетерпеливости". Только показывает он, на самом деле, обратным образом.
+\item $ h_t $ - количество часов работ в рабочем периоде жизни 
+\end{enumerate}	
+\item $Y_t$ - производственная функция 
+
+$$ Y_t = F(K_t, L_t) = K^\alpha_t \cdot L_t^{1- \alpha}  $$
+\begin{enumerate}
+\item $ \alpha \in (0; 1) $ - эластичность выпуска по капиталу 
+\item $ K_t $ - объём капитала в периоде $ t $ 
+\item $ L_t $ - объём труда в периоде $ t $ 
+\item $ A_0 = 0 $
+\item $ \delta = 0 $ 
+\end{enumerate}
+\item Цены я взял как $ p_t$, затем нормировал к единице их при подстановке чисел.
+\end{enumerate}
+\subsection*{Часть 1. Равновесие в децентрализованной экономике}
+\subsubsection*{Решение задачи потребителя.}
+\begin{enumerate}[label=\alph*), leftmargin=*]
+\item Записать динамические бюджетные ограничения экономического агента, рожденного в периоде $ t $ и вывести межвременном бюджетное ограничение
+
+\begin{itemize}
+\item Динамические бюджетные ограничения экономического агента 
+\begin{align*}
+c_{1, t} + s_t = h_t \cdot w_t \cdot (1 + \varsigma)  \\ 
+c_{2, t+1} = s_t \cdot (1 + r_{t+1}) 
+\end{align*}
+\item Вывод межвременого бюджетного ограничения
+\begin{align*}
+s_t = h_t \cdot w_t \cdot (1 + \varsigma ) - c_{1, t} \\
+c_{2, t+1} = \Big(h_t \cdot w_t \cdot (1 + \varsigma ) - c_{1, t}  \Big) \cdot (1 + r_{t+1}) \\
+c_{1, t} \cdot (1 + r_{t+1}) + c_{2, t+1} = h_t \cdot w_t \cdot (1 + \varsigma) \cdot (1 + r_{t+1})  \\
+c_{1,t} + \dfrac{c_{2,t+1}}{1 + r_{t+1}} = h_t \cdot w_t \cdot (1 + \varsigma) 
+\end{align*}
+\end{itemize}
+\item Записать задачу потребителя, рожденного в периоде $ t $ в дискретном времени 
+\begin{itemize}
+\item Задача потребителя в дискретном времени 
+\begin{align*}
+\begin{cases} 
+U(c_{1,t}, h_t, c_{2, t+1}) = \ln (c_{1, t}) + \psi \cdot \ln (1 - h_t) + \beta \cdot \ln (c_{2, t+1}) \rightarrow \max_{\begin{cases} c_{1, t} > 0 \\ h_t \in (0, 1) \\ c_{2, t+1} > 0 \end{cases}} \\
+c_{1,t} + \dfrac{c_{2,t+1}}{1 + r_{t+1}} = h_t \cdot w_t \cdot (1 + \varsigma) 
+\end{cases} 
+\end{align*}
+\item Ограничения на $ c_{1, t}, \, h_t, \, c_{2, t+1} $ были записаны исходя из того, что, во-первых, потребление не может быть отрицательным, а, во-вторых, под логарифмом должно стоять положительное число. 
+\end{itemize}
+\item Вывести (1) уравнение Эйлера и (2) уравнение, связывающее потребление с количеством предлагаемого труда в периоде $ t $ 
+\begin{enumerate}[label=(\arabic*)]
+\item Вывод уравнения Эйлера
+\begin{itemize}
+\item Исходная функция полезности 
+$$ U(c_{1,t}, h_t, c_{2, t+1}) = \ln (c_{1, t}) + \psi \cdot \ln (1 - h_t) + \beta \cdot \ln (c_{2, t+1})  $$
+\item Межвременное бюджетное ограничение 
+
+$$ c_{1,t} + \dfrac{c_{2,t+1}}{1 + r_{t+1}} - h_t \cdot w_t \cdot (1 + \varsigma) = 0 $$
+\item Лагранж 
+$$
+\mathcal{L} = \ln (c_{1, t}) + \psi \cdot \ln (1 - h_t) + \beta \cdot \ln (c_{2, t+1}) + \lambda \cdot \Big( c_{1,t} + \dfrac{c_{2,t+1}}{1 + r_{t+1}} - h_t \cdot w_t \cdot (1 + \varsigma) \Big) \rightarrow \max_{\lambda, C_{1,t}, C_{2,t+1}, h_t}
+$$
+\item Частные производные первого порядка (так называемый F.O.C.) 
+\begin{align*}
+&\dfrac{\partial \mathcal{L}}{\partial \lambda} = c_{1,t} + \dfrac{c_{2,t+1}}{1 + r_{t+1}} - h_t \cdot w_t \cdot (1 + \varsigma) = 0 
+\\ 
+&\dfrac{\partial \mathcal{L}}{\partial h_t} = - \dfrac{\psi}{1 - h_t} - \lambda \cdot w_t \cdot (\varsigma + 1) = 0 
+\\
+&\dfrac{\partial \mathcal{L}}{\partial C_{1, t}} = U^{'}_{C_{1,t}} + \lambda = 0
+\\
+&\dfrac{\partial \mathcal{L}}{\partial C_{2, t+1}} = \beta \cdot U^{'}_{C_{2,t+1}}  + \dfrac{\lambda}{1 + r_{t+1}} = 0
+\end{align*}
+\item Выразим частные производные по потреблению 
+\begin{align*}
+&\dfrac{\partial \mathcal{L}}{\partial C_{1, t}}  = U^{'}_{C_{1,t}}  + \lambda = 0 \Rightarrow U^{'}_{C_{1,t}} = - \lambda \\ 
+&\dfrac{\partial \mathcal{L}}{\partial C_{2, t+1}} = \beta \cdot  U^{'}_{C_{2,t+1}} + \dfrac{\lambda}{1 + r_{t+1}} = 0 \Rightarrow U^{'}_{C_{2,t+1}}  = \dfrac{-\lambda}{\beta \cdot (1 + r_{t+1})} \Rightarrow \\
+&\Rightarrow  U^{'}_{C_{2,t+1}}  = \dfrac{U^{'}_{C_{1,t}}}{\beta \cdot (1 + r_{t+1})} \Rightarrow \dfrac{U^{'}_{C_{2,t+1}} }{U^{'}_{C_{1,t}} } = \dfrac{1}{\beta \cdot (1 + r_{t+1})} 
+\end{align*}
+\item Вот оно, уравнение Эйлера:
+$$ \dfrac{U^{'}_{C_{1,t}} }{U^{'}_{C_{2,t+1}} } = \beta \cdot (1 + r_{t+1})$$ 
+\end{itemize}
+\item Вывод уравнения, связывающего потребление с количеством предлагаемого труда в периоде $ t $ 
+\begin{itemize}
+\item Выразим нужные переменные через их частные производные 
+\begin{align*}
+&\dfrac{\partial \mathcal{L}}{\partial h_t} = - \dfrac{\psi}{1 - h_t} - \lambda \cdot w_t \cdot (\varsigma + 1) = 0  \Rightarrow 
+\\
+&\Rightarrow  - \psi - \lambda \cdot w_t \cdot (\varsigma +1 ) \cdot (1 - h_t) = 0 \Rightarrow
+\\
+& \Rightarrow - \psi - \lambda \cdot w_t \cdot (\varsigma +1 ) = - h_t \cdot \lambda \cdot w_t \cdot (\varsigma + 1) \Rightarrow 
+\\
+&\Rightarrow h_t = \dfrac{\psi + \lambda \cdot w_t \cdot (\varsigma + 1)}{\lambda \cdot w_t \cdot (\varsigma + 1) } = \dfrac{\psi}{\lambda \cdot w_t \cdot (\varsigma + 1) } + 1
+\\
+&\dfrac{\partial \mathcal{L}}{\partial c_{1, t}} = \dfrac{1}{c_{1, t}} + \lambda = 0 \Rightarrow \lambda = \dfrac{-1}{c_{1, t}} 
+\\
+\end{align*}
+\item Совершим подстановку
+\begin{align*}
+h_t = \dfrac{\psi}{\dfrac{-1}{c_{1, t}} \cdot w_t \cdot (\varsigma +1)} + 1 =  \dfrac{- c_{1,t }  \cdot \psi}{w_t \cdot (\varsigma +1)} + 1
+\end{align*} 
+\item Уравнение, связывающее потребление с количеством предлагаемого труда в периоде $ t $ 
+\begin{align}
+h_t =  \dfrac{- c_{1, t} \cdot \psi}{w_t \cdot (\varsigma +1)} + 1
+\end{align}
+\end{itemize}
+\end{enumerate}
+\item Получить выражения для $ c_{1,t}, \,\, c_{2, t+1}, \,\, h_t $ 
+\begin{itemize}
+\item Сейчас имеется следующая информация:
+\begin{align*}
+&\dfrac{U^{'}_{C_{1,t}} }{U^{'}_{C_{2,t+1}} } = \beta \cdot (1 + r_{t+1}) = \dfrac{c_{2, t+1}}{c_{1, t}} 
+\\
+&h_t =  \dfrac{- c_{1, t} \cdot \psi}{w_t \cdot (\varsigma +1)} + 1 
+\\
+&c_{1,t} + \dfrac{c_{2,t+1}}{1 + r_{t+1}} = h_t \cdot w_t \cdot (1 + \varsigma) 
+\end{align*}	
+\item Запишем систему линейных уравнений
+\begin{align}
+\begin{cases}
+c_{1,t} \cdot \beta \cdot (1 + r_{t+1}) - c_{2, t+1}  = 0 \\
+c_{1, t} \cdot \dfrac{\psi}{w_t \cdot (1 + \varsigma)} + h_t = 1 \\
+c_{1, t} + c_2 \cdot \dfrac{1}{1 + r_{t+1}} - h_t \cdot w_t \cdot (1 + \varsigma) = 0 
+\end{cases} 	
+\end{align}
+\item Запишем в матричном предсталении
+\begin{align*}
+\begin{pmatrix}
+\beta \cdot (1 + r_{t+1}) & -1 & 0
+\\
+\dfrac{\psi}{w_t \cdot (1 + \varsigma)} & 0 & 1 
+\\
+1 & \dfrac{1}{1 + r_{t+1}} & - w_t \cdot (1 + \varsigma) 
+\end{pmatrix}  
+\cdot 
+\begin{pmatrix}
+c_{1, t} \\ c_{2, t+1} \\ h_t 
+\end{pmatrix}
+= 
+\begin{pmatrix}
+0 \\ 1 \\ 0 
+\end{pmatrix}
+\end{align*}
+\item Решим методом крамера. 
+\begin{align*}
+\Delta = (0 + (-1) + 0) - (0 + (-1 \cdot -w_t \cdot (1 + \varsigma) \cdot \dfrac{\psi}{w_t \cdot (1 + \varsigma)}) + \\
++ \beta \cdot (1 + r_{t+1}) \cdot \dfrac{1}{1 + r_{t+1}} \cdot 1) = -1 - \psi - \beta \\
+\Delta_{C_{1, t}} = 
+\begin{vmatrix}
+0 & -1 & 0
+\\
+1  & 0 & 1 
+\\
+0 & \dfrac{1}{1 + r_{t+1}} & - w_t \cdot (1 + \varsigma) 
+\end{vmatrix} 
+= - ( -1 \cdot 1 \cdot -w_t (1 + \varsigma) ) = - w_t \cdot (1 + \varsigma) \\
+\Delta_{C_{2, t+1}} = 
+\begin{vmatrix}
+\beta \cdot (1 + r_{t+1}) & 0 & 0
+\\
+\dfrac{\psi}{w_t \cdot (1 + \varsigma)} & 1 & 1 
+\\
+1 & 0 & - w_t \cdot (1 + \varsigma) 
+\end{vmatrix} = - \beta \cdot (1 + r_{t+1}) \cdot w_t \cdot (1 + \varsigma) \\
+\Delta_{h_t} = 
+\begin{vmatrix}
+\beta \cdot (1 + r_{t+1}) & -1 & 0
+\\
+\dfrac{\psi}{w_t \cdot (1 + \varsigma)} & 0 & 1 
+\\
+1 & \dfrac{1}{1 + r_{t+1}} & 0
+\end{vmatrix} = -1 - \beta \cdot (1 + r_{t+1}) \cdot \dfrac{1}{1 + r_{t+1}} = -1 - \beta 
+\end{align*}
+\item Найдём решения
+\begin{align*}
+c_{1, t} = \frac{\Delta_{C_{1, t}}}{\Delta} = \dfrac{w_t \cdot (1 + \varsigma)}{\beta + \psi + 1} \\
+c_{2, t+1} = \dfrac{\Delta_{C_{2, t+1}}}{\Delta} = \dfrac{\beta \cdot w_t \cdot (1 + r_{t+1}) \cdot (1 + \varsigma)}{\beta + \psi + 1} \\
+h_t = \dfrac{\Delta_{h_t}}{\Delta} = \dfrac{\beta + 1}{\beta + \psi + 1}
+\end{align*}
+\item Ответ: 
+\begin{align*}
+\left\{ c_{1, t} : \frac{w_t \cdot (1 + \varsigma)}{\beta + \psi + 1}, \  c_{2, t+1} : \frac{\beta \cdot w_t  \cdot (1 + r_{t+1}) \cdot (1 + \varsigma) }{\beta + \psi + 1}, \  h_{t} : \frac{\beta + 1}{\beta + \psi + 1}\right\}
+\end{align*}
+\item Объяснение
+
+Количество предлагаемого труда зависит от тягости труда $\psi $ и от фактора субъективного межвременного дисконтирования $\beta  $ . 
+
+Оно находится в обратной связи с  $ \psi $, что намекает на то, что чем тягость труда выше, тем меньше люди будут предлагать труда (кстати, тем меньше будет их суммарная заработная плата, и, следовательно,меньше ресурсов на потребление в любом периоде. Иными словами, большая тягость труда приводит к меньшим бюджетным возможностям). Причем функция $h_t (\psi) $ имеет гиперболический вид и убывает $ \forall \psi > 0 $. Сначала убывает сильне, потом слабее. Т.е. если тягость труда низкая, то при небольшом изменении $ h_t$ упадёт сильнее, чем если бы она была изначально высокой. 
+
+Также количество предлагаемого труда возрастает по $ \beta \,\,\, \forall \beta > 0 $, т.е. по фактору субъективного межвременного дисконтирования . Причем функция $ h_t (\beta) $ имеет логарифмический вид. Если $\beta $ находится на низком уровне, то небольшой прирост фактора субъективного межвременного дисконтирования увеличит количество предлагаемого труда сильнее, чем если бы она изначально находилась на высоком уровне. Чем больше индивид ценит потребление во втором периоде, то, поскольку потребление осуществляется только за счёт его сбережений и накопленных по ним процентов, тем больше времени он будет работать ради увеличения этих сбережений для своего будущего. 
+
+Примечательно, что количество предлагаемого труда не зависит от заработной платы в данной модели (т.е. не является эластичным), а также, в отсутствии шоков одного из этих параметров, будет постоянной.
+\end{itemize}
+\item Получить $ s_t (w_t ) $ 
+\begin{itemize}
+\item Выражение для $ s_t(w_t, c_{1, t})$ 
+
+$ s_t = h_t \cdot w_t \cdot (1 + \varsigma) - c_{1, t} $ 
+\item Подставим ту информацию, которая у нас теперь имеется, в это выражение
+
+\begin{align*}
+&s_t = \dfrac{\beta + 1}{\beta + \psi + 1} \cdot w_t \cdot (1 + \varsigma) - \dfrac{\varsigma w_t  + w_t}{\beta + \psi + 1 } = \dfrac{(\beta_1 + 1) \cdot w_t \cdot (1 + \varsigma) - (1 + \varsigma) \cdot w_t}{\beta + \psi + 1 } = \\
+&= \dfrac{\beta \cdot  w_t \cdot (1 + \varsigma)}{\beta + \psi + 1 } 
+\end{align*}
+\item Ответ
+\begin{align*}
+s_t = \dfrac{\beta \cdot w_t \cdot (1 + \varsigma)}{\beta + \psi + 1}
+\end{align*}
+\item Экономическая интерпретация 
+
+Сбережения зависят от заработной платы $ w_t$, размера субсидии $ \varsigma$, от фактора субъективного межвременного дисконтирования  $ \beta $ и тягости труда $ \psi $. 
+
+От тягости труда $ \psi $ они зависят точно так же, как $ h_t$, т.е. зависимость обратная, поскольку большая тягость труда заставляет меньше трудиться, что приводит к меньшему доходу и меньшим возможностям делать сбережения.
+
+От $ \varsigma $ сбережения зависят прямо. Это значит, что увеличение субсидии должно привести к росту сбережений, что увеличивает бюджетные возможности, а при большие бюджетные возможности позволяют увеличить потребление во втором периоде, что в данной модели осуществляется за счёт сбережений. 
+
+От заработной платы $ w_t $ сбережения зависят прямо, потому что с ней прямо связаны доходы агента. Чем больше агент зарабатывает, тем больше он сможет себе позволить потреблять во втором периоде, а это потребление осуществляется за счёт сбережений. 
+
+От фактора субъективного межвременного дисконтирования $ \beta$ сбережения зависят прямо: чем больше индивид ценит потребление в будущем, тем больше он будет сберегать, поскольку потребление во втором периоде осуществляется за счёт сбережений и накопленных  по сбережениям процентам. 
+\end{itemize}
+\end{enumerate}
+\subsubsection*{Решение задачи фирмы. }
+\begin{enumerate}[label=\alph*), leftmargin=*]
+\item Записать задачу фирмы в дискретном времени 
+\begin{itemize}
+\item Фирма максимизирует прибыль.
+\begin{align*}
+\pi_t = p_t \cdot  K^{\alpha}_t \cdot L_t ^ {1-\alpha}  - w_t \cdot L_t - r_t \cdot K_t \rightarrow \max_{K_t, L_t}
+\end{align*}
+\end{itemize}
+\item Решение задачи фирмы и вывод спроса на труд и спроса на капитал 
+\begin{itemize}
+\item F.O.C.
+\begin{align*}
+&\dfrac{\partial \pi_t}{\partial K_t} =- r_{t} + \frac{K_{t}^{\alpha} L_{t}^{1 - \alpha} \alpha p_{t}}{K_{t}} = 0 
+\\
+&\dfrac{\partial \pi_t}{\partial L_t} = \frac{K_{t}^{\alpha} L_{t}^{1 - \alpha} \cdot  p_{t} \cdot \left( 1 - \alpha\right)}{L_{t}} - w_{t} = 0 
+\\
+\end{align*}
+\item S.O.C. выполнен, поскольк Кобб-Дуглас. 
+\item Выразим ставку процента и заработную плату 
+$$ \left\{ r_{t} : K_{t}^{\alpha - 1} L_{t}^{1 - \alpha} \cdot \alpha \cdot p_{t}, \\ \  w_{t} : K_{t}^{\alpha} \cdot L_{t}^{- \alpha} \cdot p_{t} \left(1 - \alpha\right)\right\} $$
+
+\item Отлично! Это и есть спрос на капитал и на труд.
+\end{itemize}
+\item Производственная функция в интенсивном виде 
+\begin{itemize}
+\item Производственная функция 
+
+$$ F(K_t, L_t) =  K^\alpha_t \cdot L_t^{1 - \alpha} = \frac{K^{\alpha}_t}{L_t^\alpha} \cdot L_t = \Big( \dfrac{K_t}{L_t} \Big) ^\alpha \cdot L_t $$ 
+
+\item Производственная функция в интенсивном виде: 
+\begin{align*}
+f(k_t) = \dfrac{F(K_t, L_t)}{L_t} = \Big( \dfrac{K_t}{L_t} \Big)^ \alpha = k_t^ \alpha
+\end{align*}
+\end{itemize}
+\item Вывести уравнение заработной платы как функцию от капиталовооруженности труда 
+\begin{align*}
+w_t = k^\alpha_t \cdot p_t \cdot (1 - \alpha) 
+\end{align*}
+\item Вывести уравнение для ставки процента как функци от капиталовооруженности труда 
+\begin{align*}
+r_t = \Big(\dfrac{K_t}{L_t} \Big)^{\alpha - 1} \cdot \alpha \cdot p_t = k^{\alpha - 1}_t \cdot \alpha \cdot p_t 
+\end{align*}
+\end{enumerate}
+\subsubsection*{Поиск равновесия}
+\begin{enumerate}[label=\alph*), leftmargin=*]
+\item Вывести уравнение взаимосвязи $ s_t $ и $ k_{t + 1} $ : баланс на рынке капитала
+\begin{itemize}
+\item Имеющяся информация 
+\begin{align*}
+s_t = \dfrac{\beta \cdot w_t \cdot (1 + \varsigma)}{\beta + \psi + 1} \\
+w_t = k^{\alpha}_t \cdot p_t \cdot (1 - \alpha) \\
+h_t = \frac{\beta + 1}{\beta + \psi + 1} \\
+\begin{cases} 
+N_{t+1} = (1 + n) \cdot N_t \\ 
+L_t = h_t \cdot N_t = h_t \cdot \dfrac{N_{t+1}}{1 + n}
+\end{cases} 
+\end{align*}
+\item Найдём $ L_{t+1}, \,\, K_{t+1} $ 
+\begin{align*}
+K_{t+1} = N_t \cdot s_t \Rightarrow K_{t+1} = N_t \cdot s_t \\
+L_{t+1} = h_t \cdot N_t \cdot (1 + n) 
+\end{align*}
+\item Теперь выразим $ k_{t+1} $ через $ s_t $ 
+\begin{align*}
+k_{t+1} = \dfrac{K_{t+1}}{L_{t+1}} = \dfrac{N_t \cdot s_t}{h_t \cdot N_t \cdot (1 + n) }  = \dfrac{s_t}{(1 + n) \cdot h_t}
+\end{align*}
+\end{itemize}
+\item Уравнение динамики капиталовооруженности: $ k_{t+1} (k_t) $ 
+\begin{align*}
+k_{t+1} = \dfrac{\dfrac{\beta \cdot w_t \cdot (1 + \varsigma)}{\beta + \psi + 1 }}{(1 + n) \cdot h_t } = \dfrac{\beta \cdot w_t \cdot (1 + \varsigma )}{(1 + n) (\beta + \psi + 1) \cdot \frac{\beta + 1}{\beta + \psi + 1} } = \\
+= k^{\alpha}_t \cdot p_t \cdot (1 - \alpha) \cdot \dfrac{\beta \cdot (1 + \varsigma)}{(1 + n) \cdot (\beta + 1) } 
+\end{align*}
+\item Запишите условия равновесия 
+\begin{itemize}
+\item Условия Инады, гарантирующие существование равновесия 
+\begin{align*}
+&\lim_{k \rightarrow 0 } f^{'}_k \rightarrow \infty \\
+&\lim_{k \rightarrow \infty} f^{'}_k \rightarrow 0 
+\end{align*}
+\item Подставим наш случай. 
+\begin{align*}
+&f^{'}_k = \dfrac{\partial }{\partial k} \Big( k^{\alpha}_t \Big) = \frac{\alpha k_{t}^{\alpha}}{k_{t}}
+\\
+&\lim_{k \rightarrow 0} f^{'}_k = \lim_{k \rightarrow 0} \alpha k_{t}^{\alpha - 1} = \lim_{k \rightarrow 0} \dfrac{\alpha}{k_t^{1-\alpha}} = \infty
+\\ 
+&\lim_{k \rightarrow \infty} f^{'}_k =\lim_{k \rightarrow \infty} \frac{\alpha k_{t}^{\alpha}}{k_{t}} =  \lim_{k \rightarrow 0} \dfrac{\alpha}{k_t^{1-\alpha}} = 0
+\end{align*}
+\item Вот такие у нас равновесия. Можно заметить, что они выполняются по условию, поскольку $ \alpha \in (0, 1) $ и $ k_t > 0 $ 
+\end{itemize}
+\item Определить стационарное состояние в данной экономике 
+\begin{itemize}
+\item Номер 3, поскольку фамилия начинается с Фамилия: П $ \in $ (M-T), Имя: В $ \in $ (А-Е) 
+\begin{align*}
+&\beta = 0.6 
+&\varsigma = 0.15 \\ 
+&\alpha = 0.5  
+&\psi = 0.3 \\ 
+&n = 0.03 
+& \tilde{\varsigma}  = 0.35 
+\end{align*}
+\item Определение стационарного состояния 
+\begin{align*}
+\dot k = k_{t+1} - k_t = 0 \\
+k_{t+1} - k_t =k^{\alpha}_t \cdot \dfrac{p_t \cdot (1 - \alpha) \cdot \beta \cdot (1 + \varsigma)}{(1 + n) \cdot (\beta + 1) } - k_t = 
+\\
+= k_t \cdot \Big( k^{\alpha - 1}_t \cdot \dfrac{p_t \cdot (1 - \alpha) \cdot \beta \cdot (1 + \varsigma)}{(1 + n) \cdot (\beta + 1) } - 1 \Big) = 0 \Rightarrow \\
+\Rightarrow k^{\alpha - 1}_t \cdot \dfrac{p_t \cdot (1 - \alpha) \cdot \beta \cdot (1 + \varsigma)}{(1 + n) \cdot (\beta + 1) } = 1 \Rightarrow \\
+\Rightarrow k^* = \sqrt[\alpha - 1]{
+\dfrac{(1 + n) \cdot ( \beta + 1) }{p^* \cdot (1 - \alpha) \cdot \beta \cdot (1 + \varsigma )}
+}
+\end{align*}
+\item Выразим другие нужные нам вещи
+\begin{align*}
+&p^* = 1 
+&s^* = k^{*^\alpha} \cdot \dfrac{\beta \cdot (1 + \varsigma )  \cdot p^* \cdot (1 - \alpha)}{\beta + \psi + 1 } \\
+&w^* = k^{*^\alpha}  \cdot p^* \cdot (1 - \alpha) 
+&c_{1}^* = \dfrac{w^* \cdot (1 + \varsigma ) }{\beta + \psi + 1} \\
+&r^* = k^{*^{\alpha - 1}} \cdot \alpha \cdot p^* 
+&c_{2}^* = \dfrac{w^* \cdot \beta \cdot (1 + r^*) \cdot (1 + \varsigma ) }{\beta + \psi + 1}  \\
+\end{align*}
+\textbf{Примечание:} поскольку мы в стационарном состоянии, $ k_{t+1} = k_t \Rightarrow k^{\alpha - 1}_{t+1} = k_t^{\alpha - 1} $, значит $ r_t = r_{t+1} $ 
+\item Воспользуемся этой информацией, чтобы найти $ k^* , s^*, w^*, r^*, c_1^*, c_2^* $. Цены нормируем к единице. (Апроксимирования я поставил на всякий случай, чтобы нельзя было придраться за то, что я не округлил до сотых)
+\begin{align*}
+k^* = \sqrt[-0.5]{
+\dfrac{(1 + 0.03) \cdot ( 0.6 + 1) }{1 \cdot (1 - 0.5) \cdot 0.6 \cdot (1 + 0.15 )}
+} = \sqrt[-0.5]{4.7768} = \\
+=  4.7768^{(1 / -0.5)} = 4.7768^{-2} = 0.044 \approx 0.04
+\\
+s^* = k^{*^{0.5}} \cdot \dfrac{0.6 \cdot (1 + 0.15) \cdot 1 \cdot (1 - 0.5) }{0.6 + 0.3 + 1}= 0.038 \approx 0.04
+\\
+w^* = k^{*^{0.5}} \cdot 1 \cdot (1 - 0.5 ) = 0.105 \approx 0.11
+\\
+r^* = k^{*^{- 0.5}} \cdot 0.5 \cdot 1 = 2.388 \approx 2.39
+\\
+c_1^* =\dfrac{w^* \cdot (1 + 0.15)}{0.6 + 0.3 + 1} = 0.063 \approx 0.06 \\
+c_2^* = \dfrac{w^* \cdot 0.6 \cdot (1 + r^*) \cdot (1 + 0.15)}{0.6 + 0.3 + 1} = 0.129 \approx 0.13
+\end{align*}
+\item Прекрасно, кажется, мы нашли ответ. 
+\end{itemize}
+\end{enumerate}
+\subsection*{Часть 2. Шок. }
+\subsubsection*{Формулы после шока}
+\begin{align*}
+&p^* = 1 
+&s^* = k^{*^\alpha} \cdot \dfrac{\beta \cdot (1 + \tilde \varsigma )  \cdot p^* \cdot (1 - \alpha)}{\beta + \psi + 1 } \\
+&w^* = k^{*^\alpha}  \cdot p^* \cdot (1 - \alpha) 
+&C_{1}^* = \dfrac{w^* \cdot (1 + \tilde \varsigma ) }{\beta + \psi + 1} \\
+&r^* = k^{*^{\alpha - 1}} \cdot \alpha \cdot p^* 
+&C_{2}^* = \dfrac{w^* \cdot \beta \cdot (1 + r^*) \cdot (1 + \tilde \varsigma ) }{\beta + \psi + 1}  \\
+&k^* = \sqrt[\alpha - 1]{
+\dfrac{(1 + n) \cdot ( \beta + \psi + 1) }{p^* \cdot (1 - \alpha) \cdot \beta \cdot (1 + \tilde \varsigma )}
+}
+\end{align*}
+\subsubsection*{Значения}
+\begin{align*}
+&\beta = 0.6 
+&\varsigma = 0.15 \\ 
+&\alpha = 0.5  
+&\psi = 0.3 \\ 
+&n = 0.03 
+& \tilde{\varsigma}  = 0.35 
+\end{align*}
+\subsubsection*{Новые равновесные значения после шока} 
+\begin{align*}
+&k^*_{new}= \Big( \dfrac{(1 + 0.03) \cdot (0.6 + 1)}{(1 - 0.5 ) \cdot 0.6 \cdot (1 + 0.35)} \Big)^{-2} = (4.069)^{-2} = 0.0603 \approx 0.06 \\
+&r^*_{new} = k^{*^{-0.5}}_{new} \cdot 0.5 \cdot 1 = 2.0346 \approx 2.03 \\
+&w^*_{new} = k^{*^{0.5}}_{new} \cdot 0.5 \cdot 1 =  0.123 \approx 0.12 \\
+&s^*_{new} = 0.0524 \approx 0.05 \\
+&c_{1, new}^* =\dfrac{w^*_{new} \cdot (1 + 0.35) }{0.6 + 0.3 + 1}  =0.0873 \approx 0.09\\
+&c_{2, new}^*= \dfrac{w^*_{new} \cdot 0.6 \cdot (1 + r^*_{new}) \cdot (1 + 0.35)}{0.6 + 0.3 + 1}  = 0.1590 \approx 0.16 
+\end{align*}
+\subsubsection*{Импульсные функции реакции ставки процента}
+Скажем, что в периоде $ t = 0 $ все было, как в предыдущем случае. Если шок проиcходит в периоде $ t_{\text{shock}} = 1 $, то значения исследуемых нами переменных $ k, y, c_1, c_2 $, а также $ w $ и $r$, от которых первые могут зависеть, будут меняться так, как показано в таблице 1. 
+\begin{itemize}
+\item Рисунки
+\begin{table*}
+\centering
+\caption{Динамика $k_t, \,\,, y_t, c_{1, t}, c_{2, t}, w_t, r_t $ }
+\begin{tabular}{|l|r|r|r|r|r|r|}
+\toprule
+{} &  $k_t$  &     $y_t$ &    $c_{1, t}$ &   $c_{2, t}$ &      $w_t$ &      $r_t$ \\
+$t$ &        &        &        &        &        &        \\
+\midrule
+0  (before shock) &  0.044 &  0.210 &  0.063 &  0.129 &  0.105 &  2.384 \\
+1  (shock) &  0.044 &  0.210 &  0.075 &  0.129 &  0.105 &  2.384 \\
+2  &  0.052 &  0.227 &  0.081 &  0.151 &  0.114 &  2.202 \\
+3  &  0.056 &  0.236 &  0.084 &  0.155 &  0.118 &  2.117 \\
+4  &  0.058 &  0.241 &  0.086 &  0.157 &  0.120 &  2.075 \\
+5  &  0.059 &  0.243 &  0.086 &  0.158 &  0.122 &  2.055 \\
+6  &  0.060 &  0.245 &  0.087 &  0.158 &  0.122 &  2.045 \\
+7  &  0.060 &  0.245 &  0.087 &  0.159 &  0.123 &  2.040 \\
+8  &  0.060 &  0.245 &  0.087 &  0.159 &  0.123 &  2.037 \\
+9  &  0.060 &  0.246 &  0.087 &  0.159 &  0.123 &  2.036 \\
+10 &  0.060 &  0.246 &  0.087 &  0.159 &  0.123 &  2.035 \\
+$\cdots$ &  $\cdots$ &  $\cdots$ &  $\cdots$ &  $\cdots$ &  $\cdots$ &  $\cdots$ \\
+$n$ (after shock)&  0.060 &  0.246 &  0.087 &  0.159 &  0.123 &  2.035 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+ 
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+ylabel=$k_t$,
+xlabel=$t$, 
+compat=1.5,
+scaled ticks=false,
+ylabel style = {rotate=-90}, 
+ymajorgrids,
+title=Динамика капиталовооруженности $k_t$,
+]
+\addplot[mark=*, color=orange] coordinates {
+(0, 0.044) (1, 0.044) (2, 0.05155) (3, 0.0558) (4, 0.05805) (5, 0.05921) (6, 0.0598) (7, 0.0601) (8, 0.06025) (9, 0.06032) (10, 0.06036) (11, 0.06038)};
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[
+ylabel=$y_t$,
+xlabel=$t$, 
+compat=1.5,
+scaled ticks=false,
+ylabel style = {rotate=-90}, 
+ymajorgrids,
+title=Динамика выпуска на одного работника $y_t$,
+]
+\addplot[mark=*, color=green] coordinates {
+(0, 0.20976) (1, 0.20976) (2, 0.22705) (3, 0.23621) (4, 0.24094) (5, 0.24333) (6, 0.24454) (7, 0.24515) (8, 0.24545) (9, 0.2456) (10, 0.24568) (11, 0.24571)};
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[
+ylabel=$c_t$,
+xlabel=$t$, 
+compat=1.5,
+scaled ticks=false,
+ylabel style = {rotate=-90}, 
+ymajorgrids,
+legend pos=south east,
+title=Динамика потребления $c_t$,
+]
+\addplot[mark=*, color=blue] coordinates {
+(0, 0.06348) (1, 0.07452) (2, 0.08066) (3, 0.08392) (4, 0.0856) (5, 0.08645) (6, 0.08688) (7, 0.08709) (8, 0.0872) (9, 0.08725) (10, 0.08728) (11, 0.08729)};
+\addplot[mark=*, color=red] coordinates {
+(0, 0.129) (1, 0.12888) (2, 0.15129) (3, 0.15498) (4, 0.15693) (5, 0.15794) (6, 0.15845) (7, 0.1587) (8, 0.15883) (9, 0.1589) (10, 0.15893) (11, 0.15895)};
+\addlegendentry{$c_{1, t}$ }
+\addlegendentry{$c_{2,t}$}
+,\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\item Анализ
+
+Все исследуемые переменные зависят от капиталовооруженности. И после шока подстраиваются сообразно тому, как подстраивается капиталовооруженность. Капиталовооруженность -- это назад смотрящая переменная. Исходя из того, чему равен $ k_{t+1}$ -- это функция от $ k_t$, капиталовооруженность не может подстроиться сразу -- она зависит от своего собственного предыдущего уровня. Более того. Сбережения у нас меняются не сразу, и поэтому $ k_{shock} $ и $ c_{2, shock} $ у нас будут равны предыдущим значениям, поскольку они зависят от сбережений предыдущего периода. В связи с этим в новое стационарное  состояние мы сходимся не мгновенно, а постепенно. Сразу после шока у нас будет довольно сильное изменение капиталовооруженности, но затем изменения будут становиться все меньше, и устремятся к нулю по мере прихода в новое стационарное состояние. Аналогично и с $ c_{1, t}, c_{2, t}, y$, которые зависят от $ k_t $. 
+
+\item Объяснение построения
+
+Построение состоит в том, что мы итеративно каждый раз получаем $ k_t$, опираясь на значение $ k_{t-1} $. Для каждого такого $ k_t$ мы можем получить $ w_{t} $ и $ r_{t} $, которые зависят от $ k_t $. Непосредственно в мометн шока $ k_t$ и $ c_{2, t} $ не меняются, поскольку зависят от сбережений в предыдущем стационарном состоянии. И всю эту информацию использовать для получения $ c_{1, t}, \,\, c_{2, t} \,\,,  y_t$. Можно заметить, что постепенно они сходятся к послешоковым значениям, которые мы нашли выше. Конкретная реализация значений такого способа получения указана в коде ниже. Также скажем, что шок позитивный, поскольк приводит к росту всех исследуемых переменных.
+\end{itemize}
+\newpage
+\section*{Приложение}
+\subsubsection*{Код на Python для получения таблицы c данными}
+\begin{python}
+import pandas as pd
+import numpy as np 
+alpha, beta, psi, n = 0.5, 0.6, 0.3, 0.03
+def k_t1(k_t, sigma): 
+    """get k_{t+1} for k_t and sigma"""
+    return (1 - alpha) * k_t ** alpha * beta * \
+           (1 + sigma) / (1 + n) / (beta  + 1)
+iters = 10
+sigmas = np.hstack((np.full(1, 0.15), np.full(iters + 1, 0.35)))
+k_arr = [0.044, 0.044]  # initial k 
+for _ in range(iters):
+    k_arr.append(k_t1(k_arr[-1], sigma=0.35))
+k_arr = np.array(k_arr)
+y_arr = k_arr ** alpha
+w_arr = k_arr ** alpha * (1 - alpha)
+r_arr = k_arr ** (alpha - 1) * alpha 
+c1_arr = w_arr * (1 + sigmas) / (beta + psi + 1)
+c2_arr = w_arr[:-1] * beta * (1 + r_arr[:-1]) *\
+        (1 + sigmas[:-1]) / (beta + psi + 1)
+c2_arr = np.hstack((0.129, c2_arr))
+df = pd.DataFrame(
+    {'k': k_arr, 'y': y_arr, 'c1': c1_arr, 
+     'c2': c2_arr, "w": w_arr, "r": r_arr})
+df.index.names = ['t']
+t_arr = df.index
+print(df.round(3).to_latex())
+\end{python}
+
+\end{otherlanguage*} 
+\end{document}

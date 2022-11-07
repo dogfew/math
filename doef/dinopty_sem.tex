@@ -12,6 +12,7 @@
 \begin{otherlanguage*}{russian}
 \section{\foreignlanguage{russian}{Вариацонное исчисление}}
 Матанализ ; Варисч
+
 переменная $x$ ; $y(t)$ - траекториия
 
 функция $f(x)$ ; функционал $V[y(t)]$ 
@@ -351,8 +352,11 @@ y(0) =0 \\
 y(1) = 2 \\
 \end{cases} \\
 F_y - \frac{d}{dt} F_{y^{'}} = 0 \\
+\end{align}
+Note: $ F $ -  подынтегральное выражение, $ F_y = F^{'}_y$, $ F_{y^{'}} =  F^{'}_{y^{'}}  $. Находится и подставляется в уравнение Эйлера.   
+\begin{align}
 F_y = 0 \,\,\, F_{y^{'}} = 2 y^{'} \\
-0 = - \frac{d}{dt} (2 y ^{'}) = 0 \Rightarrow y^{'} = 0 \\
+0 = - \frac{d}{dt} (2 y ^{'}) = 0 \Rightarrow y^{''} = 0 \\
 y^{'} = C_1 \\
 y = t C_1 + C_2 \\ 
 y(0) = C_2 = 0; \,\,\, y(1) = C_1 + 0 - 2 \Rightarrow \begin{cases}
@@ -547,6 +551,573 @@ y(0) = 2 \\
 y(1) = 5  
 \end{align}
 История актуальна две недели с момента того, как мы её увидели. Как бы фидбек актуален тогда, когда он актуален 
+\end{enumerate}
+\section{\foreignlanguage{russian}{Простая портфельная задача}}
+\begin{enumerate}
+\item Предпосылки
+
+$ S(t) $ - остаток на анковском счету 
+
+$ r_s (t) $ - процент на остаток 
+
+$ \dfrac{d}{dt} S(t) = r_s (t) \cdot S(t) - CF(t) $ 
+
+$ CF(T) > 0 \Rightarrow $ снимаем денег 
+
+$ CF(T) < 0 \Rightarrow $ вносим деньги  
+
+$ S(t) > 0 $ - депозит 
+
+$ S(t) < 0 $ - кредит 
+
+Для простоты будем считать, что $ r_s(t) = r_L(t) $ 
+
+$ NPV = \sum_{t=0}^\infty \frac{CF_t}{(1 + \delta)^t}$ 
+
+$ \delta $ - дисконт-фактор $ t \in [0, T] $
+
+Надо вспомнить второй замечательный предел:
+
+\begin{equation*}
+\lim_{\alpha \rightarrow 0 } (1 + \alpha) ^ {\dfrac{1}{\alpha}} = e 
+\end{equation*}
+
+\begin{align*}
+NPV = \int_0^T \dfrac{CF(t)}{(1 + \delta)^t} dt = \int_0^T CF(t) (1 + \delta) ^{- \dfrac{\delta t}{\delta} } dt = \\ = \int_0^T CF(t) e^{-\delta t} dt 
+\end{align*}
+
+\item Формулировка задачи
+
+\begin{align*}
+\int_0^T CF(t) \cdot e ^{-\delta t} dt \rightarrow \max_{CF(t)} \\
+\dfrac{d}{dt} S(t) = r_s (t) \cdot S(t) - CF(t) \\
+CF(t) = r_s(t) \cdot S(t) - \dfrac{d}{dt} S(t) \\
+\int_0^T \Big( r_s (t) \cdot S(t) - \dfrac{d}{dt} S(t) \Big) \cdot e^{-\delta t} dt \rightarrow \max_{S(t)} 
+\end{align*}
+\item Решение задачи
+
+Уравнение Эйлера: $ F_s - \dfrac{d}{dt} F_{s^{'}} = 0$
+
+\begin{align*}
+F_s = r_s (t) \cdot e ^{-\delta t } \\
+F_{S^{'}} = -e^{\delta t} \\
+r_s (t) e^{-\delta t} - \dfrac{d}{dt} (- e ^ {-\delta t} ) = 0 \\
+r_s (t) \cdot e ^ {-\delta t} - \delta \cdot e ^{-\delta t} = 0 \\
+r_s(t) = \delta 
+\end{align*} 
+Тогда $ CF(t) $ и $ S(t) $ любые.
+
+\begin{equation*}
+\begin{cases}
+r_s (t) > \delta & S(t) \rightarrow + \infty \\
+r_s(t) < \delta & S(t) \rightarrow - \infty 
+\end{cases}
+\end{equation*}
+
+\item Что будет, если изменить предположения? 
+
+$ \delta $ - была задана как константа, но её можно задать как функцию от времени $ \delta (t) $ 
+
+\item  Тогда задача поменяется с момента выписывания уравнения Эйлера 
+
+\begin{align*}
+r_s (t) e^{-\delta (t) t} - \dfrac{d}{dt} ( - e^{- \delta (t) t} ) = 0  \\
+r_s (t) \cdot e ^{-\delta (t) t } - \delta (t) \cdot e ^{-\delta (t) t} - t \delta^{'} (t) e^{- \delta (t) t} = 0 \\
+r_s (t) = \delta (t) + t \cdot \delta ^{'} (t) 
+\end{align*}
+
+\item Следующая модификация в модели: комиссия
+
+$ \operatorname{Co} (t) = \alpha (S^{'} (t) ) ^ \beta \\ $
+
+$ \alpha, \beta $ - параметры 
+
+\begin{align*}
+\dfrac{d}{dt} S(t) = r_s(t) \cdot S(t) - CF(t) - \operatorname{Co}(t) \\
+\int_0^T (r_s (t) \cdot S(t) - S^{'} (t) - \alpha ( S^{'} (t) ) ^ \beta ) \cdot e ^{-\delta t} dt  \rightarrow \max_{S(t)} \\
+F_s - \dfrac{d}{dt} F_{s^{'}} = 0 \\
+r_s (t) \cdot e ^{-\delta t} - \dfrac{d}{dt} \Big( -e ^{-\delta t} - \alpha \beta (S^{'} (t) ) ^ {\beta - 1} \cdot e ^ {-\delta t} \Big) = 0 \\
+r_s (t) \cdot e ^{ - \delta t} - \delta e ^ {-\delta t} + \alpha \beta ( \beta -1 ) \cdot (S^{'} (t) ) ^{\beta -2} \cdot S ^{''} (t) \cdot e ^{ - \delta t} - \alpha \beta (S^{'} (t) ) ^{\beta - 1} \cdot e ^{-\delta t} \delta = 0 \\
+r_s(t) - \delta + \alpha \beta (\beta - 1) (S^{'} (t) ) ^{\beta - 2} \cdot S ^{''} (t) - \alpha \beta (S ^{'} (t) ) ^{\beta - 1} \cdot \delta = 0 
+\end{align*}
+
+\item Подставим какие-то параметры
+
+\begin{equation*}
+\begin{cases}
+r_s (t) \delta = 0.1 \\ 
+\alpha = \frac{1}{2} \\
+\beta = 2 
+\end{cases}
+\end{equation*}
+Если подставить, то будет следующая история
+
+\begin{align*}
+S^{''} (t) - 0.1 S^{'} (t) = 0 
+\end{align*}
+
+Решим дифур. 
+\begin{align*}
+\lambda_1 = 0, \,\,\,\, \lambda_2 = 0.1 \\
+S(t) = C_1 \cdot e ^{0 \cdot t } + C_2 \cdot e ^{0.1 \cdot t} \\
+S(t) = C_1 + C_2 e ^{0.1 \cdot } \\
+S(0) = S_0 \\
+S(t) = S_T  
+\end{align*}
+\item Подставим какие-то другие параметры 
+
+\begin{equation*}
+\begin{cases}
+r_s= 0.125 \\
+\delta = 0.1 \\
+\alpha = \dfrac{1}{2} \\
+\beta = 2 
+\end{cases}
+\end{equation*}
+
+\begin{align*}
+\ldots \ldots \\ 
+0.025 + S^{''} (t) - 0.1 S^{'} (t) = 0 \\
+S_0 (t) = C_1 + C_2 e^{0.1 \cdot t} \\ 
+S_r (t) = A \cdot e ^{0 \cdot t} \cdot t = A \cdot t \\ 
+S^{'}_r (t) = A \\ 
+S^{''}_r (t) = 0 \\
+0.025 + 0.1 \cdot A = 0 \Rightarrow A = 0.25 \\
+S(t) = C_1 + 0.25 \cdot t + C_2 \cdot e ^{0.1 \cdot t} \\
+S(0) = S_0 \,\,\,\,\, S(T) = S_T 
+\end{align*}
+
+\item Ещё одна модификация
+
+Валютный счёт. Введем переменную $ w(t) $ -- валютный курс
+
+\begin{align*}
+\dfrac{d}{dt} S_{\$} = r_{\$} (t) \cdot S_{\$} (t) - CF_{\$} (t)  \\
+\int_0^T w(t) \cdot (r_{\$} (t) \cdot S_{\$} (t) - S^{'} (t) ) \cdot e ^{- \delta t} dt \\
+\ldots \ldots \ldots 
+\end{align*}
+Если решить 
+
+$ r_{\$} = \delta + \dfrac{w^{'} (t) }{w(t) }$ 
+\end{enumerate}
+\section{\foreignlanguage{russian}{Условие трансверсальности}}
+\begin{align*}
+[ F - y^{'} \cdot F_{y^{'}} ]_{t = T} \cdot \Delta T + [ F_{y^{'}} ]_{t=T} \cdot \Delta y = 0 \\
+\begin{cases}
+y(0) = y_0 \,\,\,\, y(T) = y_T
+\end{cases}
+\end{align*}
+и либо не знаем $ T $, но знаем $ y_T$ , либо наоброот. 
+
+\begin{enumerate}
+\item Задача 1 
+
+\begin{align*}
+\int_0^{\dfrac{3}{2} \pi} y^{'^{2}} + 4 y \cos t - 8 y \sin t dt \\
+y(0) = 1 \\
+y(\dfrac{3}{2} \pi) = y_T  \\
+[\ldots ] \cdot \Delta T + [\ldots] \cdot \Delta y_t = 0 \\
+\end{align*}
+$ \Delta T = 0  $ -- так как он нам известен это константа
+
+$ \Delta y_T $ -- это не константа, оно нам неизвестно.
+
+В таком случае первое слагаемое у условия трансверсальности зануляется 
+
+Перепишем условие трансверсальности: 
+
+\begin{align*}
+ [ F_{y^{'}} ]_{t=T} \cdot \Delta y = 0 \Rightarrow [ F_{y^{'}} ]_{t=T} = 0 
+\end{align*}
+
+Уравнение Эйлера:  $ 4 \cos t - 8 \sin t - 2 y ^ {''} = 0 $ 
+
+\begin{align*}
+y^{''} = 2 \cos t - 4 \sin t \\ 
+y^{'} = 2 \sin t + 4 \cos t + C_1 \\ 
+y = - 2 \cos t + 4 \sin t + C_1 t +  C_2  
+\end{align*}
+Проверка ограничений
+
+$ y(0) = - 2 \cos 0 + 4 \sin 0 + C_1 \cdot 0 + C_2 = 1 \Rightarrow C_2 = 3 $
+
+$ [ 2 y^{'} ]_{t =  3/2 \pi} = 0 $ 
+
+$ 2 \cdot (2 \sin t + 4 \cos t + C_1 )_{t = 3 /2 \pi } = 0 $  
+
+$ -4 + 2 C_1 = 0 \Rightarrow C_1 = 2 $ 
+
+Ответ получается, когда мы подставим константы $ C_1, C_2 $ в формулу для $y$
+
+$ y = -2 \cos t + 4 \sin t + 2 t + 3 $ 
+
+\item Задача Больца 
+
+\begin{align*}
+\int_1^2 t^2 y^{'^{2}} dt - 2 y(1) + y^2(2) \rightarrow \operatorname{extr} 
+\end{align*}
+Условие трансверсальности:
+
+\begin{align*}
+\begin{cases}
+[F_{y^{'}}]_{t=1} = G_{y(1)} \\
+[F_{y^{'}} ]_{t=2} = - G_{y(2)} 
+\end{cases}
+\end{align*}
+
+где $ F $ - это подынтегральное выражение, а $ G $ - терминант, добавка (в данном случае, $ -2y(1) + y^2(2) $ 
+
+Уравнение Эйлера: 
+
+$ 2y^{'} t^2 = C_1  \Rightarrow y^{'} = \dfrac{C_2}{t^2} \Rightarrow y = \dfrac{-C_2}{t} + C_3$ 
+
+давайте теперь решать эту систему
+
+\begin{align*}
+\begin{cases} 
+[2y^{'} t ^ 2]_{t=1} = G_{y(1)} = -2 \\
+[2y^{'} t^2]_{t=2} = -2 y (2) 
+\end{cases} 
+\end{align*}
+
+* $ G_{y(1)} = \dfrac{\partial G}{\partial y(1)}$ 
+
+Подставляем, в $ t $, поскольку мы имеем уже $ y(t) = - \dfrac{C_2}{t} + C_2 $ и $ y^{'} = \dfrac{C_2}{t^2} $ 
+
+\begin{align*}
+\begin{cases}
+[2 \cdot \dfrac{C_2}{t^2} \cdot t ^ 2 ]_{t=1} = -2  \\
+[2 \cdot \dfrac{C_2}{t^2} \cdot t^2 ]_{t=2} = -2 \cdot \Big( \dfrac{-C_2}{2} + C_3 \Big)
+\end{cases} \Rightarrow
+\begin{cases}
+C_2 = -1 \\
+C_3 = \dfrac{1}{2}
+\end{cases} 
+\end{align*}
+
+Ответ: $ y(t) = \dfrac{1}{t} + \dfrac{1}{2} $ 
+
+\item Достаточные условия. Условия чего? Предварительная подготовка к сюжету. 
+
+Вопрос заключается в следующем: является ли полем семейство кривых?
+
+\begin{enumerate}
+
+\item $ y = c \cdot e ^ t, \,\,\,\, t^ 2 + y ^ 2 \le 1 $ 
+
+Эскпоненты, любую точку достигают, поскольку не пересекаются и т.д., тогда поле образуют.
+
+\item $ y = (c + t ) ^ 2, \,\,\,\, t^ 2+ y^2 \le 1 $ 
+
+Эти параболы пересекаются, поэтому не подходят нам, да ещё и не достигают некоторых точек на окружности, поле не образуют. 
+
+\item $ y = c \cdot t \,\,\,\, t > 0 $ 
+
+На области, которая нам интересна, они не пересекаются 
+
+\end{enumerate}
+
+Собственное поле 
+\begin{enumerate}
+\item Через любую точку области можно провести кривую семейства 
+
+\item Кривые семейства на этой области не пересекаются 
+\end{enumerate}
+
+Центральное поле 
+\begin{enumerate}
+\item Через любую точку области можно провести кривую семейства 
+
+\item  Все кривые семейства пересекаются в некотором центре и больше нигде. 
+\end{enumerate}
+
+Достаточные условия экстремали 
+
+$ y(t) $ -- слабый $ \min ( \max ) $ если $ y(t) $:
+\begin{enumerate}
+\item Является решением уравнения Эйлера и удовлетворяет ограничению 
+
+\item $ y(t) $ можно включить в поле экстремалей 
+
+\item Удовлетворяет условию Лежандра (усиленному) 
+
+$ \begin{cases} 
+F_{y^{'}, y^{'}} > 0 \rightarrow \min \\
+F_{y^{'}, y^{'}} < 0 \rightarrow \max \\
+\end{cases}
+$ на рассматриваемой $ y(t) $ 
+\end{enumerate}
+
+$ y(t) $ -- сильный $ \min ( \max ) $ если $ y(t) $:
+\begin{enumerate}
+\item Является решением уравнения Эйлера и удовлетворяет ограничению 
+
+\item $ y(t) $ можно включить в поле экстремалей 
+
+\item Удовлетворяет условию Лежандра (не усиленному) 
+
+$ \begin{cases} 
+F_{y^{'}, y^{'}} \le 0 \rightarrow \min \\
+F_{y^{'}, y^{'}} \ge 0 \rightarrow \max \\
+\end{cases}
+$ $\forall y^{'} в некоторой окрестности (t, y) $ 
+\end{enumerate}
+\end{enumerate}
+
+\begin{align*}
+\int_0^2 t \cdot y ^{'} + y ^{'^{2}} dt \\ 
+y(0) = 1 \\ 
+y(2) = 0 
+\end{align*}
+
+Уравнение Эйлера: 
+
+\begin{align*}
+F_{y^{'}} = C_1 \\ 
+t + 2 y^{'} = C_1 \\ 
+y^{'} = \dfrac{C_1}{2} = C_1 \\ 
+y^{'} = \dfrac{C_1}{2} - \dfrac{t}{2} \\
+y(t) = \dfrac{C_1}{2} t - \dfrac{t^2}{4} + C_2 \\ 
+C_1 = 0 \,\,\,\, C_2 = 1 \\
+С_1 = 0; \,\,\,\, y(t) = - \dfrac{t^2}{4} + C_2 
+\end{align*}
+
+То, что мы предложили $ y(t) = - \dfrac{t^2}{4} + C_2 $ -- это собственное поле, но не центральное. Значит, допустимую экстермаль можно включить в поле экстремалей $y(t) = - \dfrac{t^2}{4} + C_2 $ 
+
+Последнее, что нам остаётся, это проверить усиленное условие Лежандра. 
+
+$ F_{y^{'}, y^{'}} = 2 > 0 \rightarrow \min $ (слабый и сильный тоже)  
+\subsubsection*{Задачи из КР}
+\begin{enumerate}
+\item Задача 6. 
+Кто-то за 24 месяца максимизирует приведенную стоимость своих активов
+\begin{align*}
+\text{Сюжет следующий: } \int_0^{24} CF(t) \cdot e ^{-\delta \cdot t} dt \rightarrow \max \\
+\text{Дисконт фактор} : e^{- \delta t} \\
+\text{Начальный момент времени} S_{dollar} (0) = 20 dollar \\
+\text{Стоимость компании} Q(0) = 3 \cdot 10^6 \text{руб} \\
+\text{Курс платины} P(0) = 1500 \text{грам} \\
+S_{dollar} (24 ) = 0 \\ 
+Q(24) = 5 \cdot 10^6 \text{руб} \\
+P(24) = 0 \\
+\text{курс доллара  } w_{doll} \\
+\text{курс платины  } \rho 
+\end{align*}
+\begin{align*}
+\text{Доходы/убытки от всяких штук  }  w_{doll} (t) \cdot \dfrac{d}{dt } S_{doll} (t) + \dfrac{d}{dt} Q(t) + \rho (t) \dfrac{d}{dt} P(t) =\\
+=  w_{doll} \cdot r_{doll} (t) \cdot S_{doll} (t) + g(t) \cdot Q(t) - CF(t) - C_0 (t) 
+\end{align*}
+Агент несёт издержки в друг формах 
+\begin{align*}
+& f_1 (x) = \ln x \\
+& f_2 (x) = x^{\beta} \\
+& \text{Издержки   } Co(t) = w_{doll} (t) \ln S^{'}_{doll} (t) + Q^{'} (t)^\beta 
+\end{align*}
+Подставляем в интеграл 
+\begin{align*}
+\int_0^24 (w (t) \cdot r(t) \cdot S(t) + &\\ g(t) \cdot Q(t)  - w(t) \cdot \ln S^{'} (t) - Q^{'} (t) ^ \beta - & \\ w(t) \cdot S^{'} (t) - Q^{'} (t) - \rho (t) \cdot P^{'} (t) )\\ \cdot e ^ {- \delta \cdot t} dt \rightarrow \max _{S(t) , Q(t), P(t)} 
+\end{align*}
+Решаем Эйлера 
+\begin{align*}
+F_s = w(t) \cdot r(t) \cdot e^{-\delta t} \\
+F_{s^{'}} = \Big( - \dfrac{w(t)}{s^{'}(t)} - w(t) \Big) \cdot e ^ {- \delta t} \\
+F_Q = g(t) \cdot e^{- \delta t} \\
+F_{Q^{'}} = ( - \beta \cdot Q^{'} (t) ^{\beta - 1} - 1 ) \cdot e ^ {- \delta t } \\
+F_P = 0 \\
+F_{P^{'}} = - \rho (t) \cdot e ^{- \delta t} 
+\end{align*}
+\end{enumerate}
+\subsection*{Принцип максимума Понтрягина}
+\begin{enumerate}
+\item Формулировка задачи 
+\begin{align*}
+\int_0^T F(t, y, u ) dt \rightarrow \max 
+\end{align*}
+\item Максимум ищется так 
+\begin{align*}
+y^{'} = f(t, y, u) \\
+u(t) \in \mathcal{U} \\
+y(0) = y_0 
+\end{align*}
+\item Переменные управления и состояния 
+\begin{align*}
+&u(t) \rightarrow \text{переменная управления} \\
+&y(t) \rightarrow \text{переменная состояния}
+\end{align*}
+\item Что нас интересует на выходе? При каждом из состояний переменной управления у нас как-то будет реагировать переменная состояния. 
+\item Как определить максимум в такой задаче? 
+\begin{enumerate}
+\item Надо построить так называемый гамильтониан.. $ H = F(t, y, u ) + \lambda \cdot f(t, y, u) $. Где $\lambda(t) $ --- двойственная переменная, а $ f(t, y, u) = y^{'}  $
+\item $ \max_{u \in \mathcal{U}} H $ --- найти максимум этого гамильтониана.
+\item $ - \dfrac{\partial H}{\partial y} = \lambda^{'} $ --- первая часть канонической системы
+\item $ \dfrac{\partial H}{\partial \lambda} = y^{'} $ --- вторая часть канонической системы 
+\item  $ \lambda(T) = 0 $  --- пока что берём на веру, но в следующих сериях мы узнаем, откуда эта штука берется. 
+\end{enumerate}
+\item Задача 1. 
+\begin{align*}
+\int_0^2 (y - u^2) dt \rightarrow \max \\
+y^{'} = u \\
+u(t) \in \mathcal{R} \\
+y(0) = 0 
+\end{align*}
+
+Выражение гамильтониана
+\begin{align*}
+H = y - u ^ 2 + \lambda \cdot u \rightarrow \max_{u \in \mathcal{R}} \\
+\end{align*}
+
+Поиск максимума 
+\begin{align*}
+\dfrac{\partial H}{\partial u}  = - 2 u + \lambda = 0 \Rightarrow u = \dfrac{\lambda}{2} 
+\end{align*}
+
+Каноническмие уравнения 
+\begin{align*}
+\begin{cases}
+- \dfrac{\partial H}{\partial y}  = \lambda^{'} =  -1 \\
+\dfrac{\partial H}{\partial \lambda} = y^{'} = u  
+\end{cases} 
+\end{align*}
+
+Выразим лямбду. Из первого уравнения системы.
+\begin{align*}
+\lambda^{'} = -1 \Rightarrow \lambda = -t + C_1 \\ 
+\lambda(T) = 0 \\
+\lambda(2) = - 2 + C_1 = 0 \Rightarrow C_1 = 2 \\
+\lambda(t) = -t  + 2 
+\end{align*}
+
+Выразим из второго уравнения системы $ y(t) $ 
+
+\begin{align*}
+&y^{'} = \lambda /2  = - \dfrac{t}{2}  + 1 \\
+&y(t) = - \dfrac{t^2}{4} + t + C_2 \\
+&y(0) = 0 \Rightarrow C_2 = 0 \\
+&y(t) =  - \dfrac{t^2}{4} + t 
+\end{align*}
+
+Итоговый ответ такой :
+
+\begin{align*}
+&y(t) = - \dfrac{t^2}{4} + t \\
+&u(t) = - \dfrac{t}{2} + 1 \\
+&\lambda (t) = - t + 2 
+\end{align*}
+
+\item Задача 2. 
+
+Условия:
+\begin{align*}
+\int_{-1}^2 (3 y - 9 u ) dt \rightarrow \max_{u} \\
+y^{'} = 3 u + y \\
+y(-1) = 0 \\
+u(t) \in [0; 1] 
+\end{align*}
+Решение:
+\begin{align*}
+H = 3 y - 9 u + \lambda (3 u + y ) \rightarrow \max_{u \in [0;1] } \\
+H = 3 y + \lambda y + u ( 3\lambda - 9 ) \\
+u = \begin{cases} 
+0 & \lambda < 3 \\
+[0; 1] & \lambda = 3 \\
+1 & \lambda > 3 
+\end{cases} \\
+\begin{cases} 
+- \dfrac{ \partial H}{\partial y} = \lambda^{'} = - 3 - \lambda \\
+\dfrac{\partial H}{\partial \lambda} = y ^{'} = 3 u + y \\
+\end{cases} \\
+\lambda^{'} + \lambda = - 3 \Rightarrow \lambda (t) = C_1 \cdot e ^{-t} - 3 \\
+\lambda (T) = 0 \\
+\lambda(2) = C_1 \cdot e ^{-2} - 3 = 0 \\
+C_1 = 3 \cdot e ^ 2 \\
+\lambda = 3 e ^{2 - t } - 3 \\
+t^* \text{находится так: (это точка в котор. у u нюансы происходят) } 3 = 3 \cdot e ^ {2 - t ^* } - 3 \\
+e ^{2 - t ^* } = 2 \Rightarrow t^* = 2 - \ln 2 \\
+u^* = \begin{cases}
+0 & t \in 2 - \ln 2; 2 ] \\
+[0; 1]  & t = 2 - \ln 2 \\ 
+1 & t \in [-1; 2 \ln 2) 
+\end{cases} 
+\end{align*}
+
+Разберёмся со вторым уравнением нашей системы. 
+
+$$ \dfrac{\partial H}{\partial \lambda} = y ^{'} = 3 u + y \\$$
+
+
+\begin{align*}
+\text{Первый случай }\\
+u^* = 0, \,\,\,  t \in (2 - \ln 2 ; 2 ] \\
+y^{'} = y = C_3 \cdot e ^ t 1 \\
+\text{Второй случай}\\
+u^*  = 1 \,\,\,\, t \in [-1; 2 - \ln 2 ] \\
+y^{'} = 3 + y \\
+y = C_4 - 3 \\
+y = 3 e^{t+1} - 3 \\
+y(-1) = 0 \\
+y = C_4 \cdot e ^{-1} - 3 = 0 \Rightarrow C_4 = 3 e \\
+\text{Третий случай} \\
+C_3 e^{t^*} = 3 e^{t^* + 1} - 3 \\
+C_3 = \dfrac{3 e ^{t^* + 1}}{e^{t^*}}
+\end{align*}
+
+В первом случае мы не можем найти констнату, нам надо приравнять $ y $ из второго и третьего случая.
+\begin{align*}
+\text{Ответ} 
+\text{(1) } \\
+y = \dfrac{3 e ^{t^* + 1} - 3 }{e^{t ^*}} \cdot e ^ t \,\,\, t^* = 2 - \ln 2 \\
+u(t)  = 0 \\
+\text{2} \\
+y(t) = 3e ^{t+1} - 3 \\
+u = 1 
+\end{align*}
+\item Задача 3. 
+\begin{align*}
+\int_0^4 3 y dt \rightarrow \max \\
+y^{'} = y + u \\
+y(0) = 5 \\
+u \in [0;2 ] 
+\end{align*}
+\begin{align*}
+H = 3 y + \lambda (t) \cdot (y + u ) \rightarrow \max_{u \in [0;2]} \\
+u = \begin{cases}
+2 & \lambda(t) > 0 \\
+0 & \lambda (t) < 0 \\
+[0; 2] & \lambda (t) = 0 
+\end{cases}
+\end{align*}
+\begin{align*}
+\dfrac{- \partial H}{\partial y} = -3 - \lambda(t) = \lambda^{'} (t) \\
+\lambda = C_1 \cdot e ^{-t} - 3 \\
+\lambda (2) = C_1 \cdot e ^{-4} - 3 = 0 \\
+\dfrac{C_1}{e^4} = 3 \Rightarrow C_1 = 3 \cdot e ^ 4 \\ 
+\lambda = 3 \cdot e ^{4 - t}  - 3 \\ 
+\dfrac{\partial H}{\partial \lambda} = y + u = y ^{'} 
+\end{align*}
+\begin{align*}
+\lambda  = 3 \cdot e ^{4 - t} - 3 = 0 \\
+e^{4 - t} = 1 \\
+\ln 1 = 4 - t \Rightarrow t = 4 \\
+u^* = \begin{cases}
+2 & t \in [0; 4) \\
+[0; 2] & t = 4 
+\end{cases} \\
+\text{Если t} \in [0; 4] \\
+y^{'} - y = 2 \\
+y = C_4 \cdot e^t - 2 \\
+y(0) = C_2 - 2 = 5 \Rightarrow C_2 = 7 \\
+y = 7 \cdot e ^ t -2  \\
+\end{align*}
+
+А дальше давайте поразмышляем. На самом деле, чтобы $ y $ сохранялся непрерывным, ничего кроме 2 там получиться не может. Если в самой точке непонятно, мы смотрим в окрестности, а всегда ведет как двойка и т.д. Т.е. мы хотим, чтобы эти два уравнения совпали. они совпадают только при $ u_1 = 2 $. 
+
+\begin{align*}
+\text{Ответ} 
+\begin{cases} 
+u = 2 \\
+y = 7 \cdot e^t - 2
+\end{cases}
+\end{align*}
 \end{enumerate}
 \end{otherlanguage*}
 \end{document}

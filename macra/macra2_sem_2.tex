@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Макра-2 Семинар 2}}
+\maketitle
+\begin{otherlanguage*}{russian}
+
+\begin{enumerate}
+\item Задача 1. “Рикардианская эквивалентность (Ricardian Equivalence)”
+\begin{enumerate}
+\item Условия
+\begin{align}
+Y_1 - C_1 = S_1 + A_1 \\
+\,\,\,\,(S_1 + A_1) (1 + r) = (S_1 + A_1) + S_1 \cdot r \\
+S_1 \cdot r = (S_1 + A_1) \cdot r \cdot \tau + \big( (1 - r) \cdot (S_1+ A_1) \cdot r \big)
+\end{align}
+\begin{equation}
+S_1 + S_1 \cdot r (1 - \tau) = S_1 ( 1 + r (1 - \tau)) 
+\end{equation}
+
+\item a) межвременное бюджетное ограничение потребителя, связывающее $C_1$ , $C_2$, $Y_1$ , $Y_2$ , r и $\tau$
+
+\begin{align}
+\begin{cases}
+C_1 + \frac{C_2}{1 + r (1 - \tau)} = A_1 + Y_1 + \frac{Y_2}{1 + r ( 1 - \tau) } & C_1 < A_1 + Y_1 \\
+C_1 + \frac{C_2}{1 + r} = A_1 + Y_1 + \frac{Y_2}{1 + r} & \operatorname{else} 
+\end{cases}
+\end{align}
+
+\item б) $\check{C_1} < Y_1 + A_1 $. Какой налог получит правительство?
+
+
+$ T_2 = \check{S_1} \cdot r \cdot \tau  = (Y_1 - \check{C_1} + A_1) \cdot r \cdot \tau $ 
+
+\item c) Аккордный налог 
+
+Выводим $ T_1 $ из идеи, что взятие $ T_1 $ или $ T_2 $ должно быть безразлично  
+\begin{align}
+T_2 = (Y_1 + A_1 - \check{C_1}) \cdot r \cdot \tau \\
+T_1 = \frac{T_2}{1 + r} = \frac{(Y_1 + A_1 - \check{C_1}) \cdot r \cdot \tau }{1 + r }
+\end{align}
+Изменится ли приведенная стоимость реальных располагаемых доходов потребителя? 
+
+\begin{align}
+\check{C_1} + \frac{\check{C_2}}{1 + r (1 - \tau)} = A_1 + Y_1 + \frac{Y_2}{1 + r (1 - \tau)} \\
+\check{C_2} = (A_1 + Y_1 - \check{C_1}) (1 + r (1 - \tau)) +  Y_2 \\
+C_1 + \frac{C_2}{1 + r} = A_1 + Y_1 + \frac{Y_2}{1 + r} - T_1 \\
+T_1 = \frac{(Y_1 + A_1 - \check{C_1}) \cdot r \cdot \tau}{1 + r} \\
+C_2 = \Big( A_1 + Y_1 - \frac{Y_1 + A_1 - \check{C_1} \cdot r \cdot \tau }{1 _ r} - C_1 \Big) (1 + r) + Y_2
+\end{align}
+Проверим. Пусть $C_1$ при аккордном налоге равняется $\check{C_1}$
+
+\begin{align}
+C_2 = \Big( A_1 + Y - \check{C_1} \Big) (1 + r) - (Y_1 + A_1 - \check{C_1}) \cdot r \cdot \tau + Y_2 \\
+C_2 = (A_1 + Y_1 - \check{C_1}) (1 + r (1 - \tau) ) + Y_2 
+\end{align}
+
+Почему мы для простоянных величин используем обозначения оценок??? 
+
+\item d) Как отразится на выборе оптимального потребления переход к новой системе налогообложения?
+
+(график 1) 
+
+\pgfmathdeclarefunction{f_1}{1}{%
+  \pgfmathparse{3 + -  1 * #1}%
+}
+\pgfmathdeclarefunction{u}{2}{%
+  \pgfmathparse{#2 + 0.2 / #1}%
+}
+\begin{tikzpicture}
+\begin{axis}[
+ no markers, 
+  domain=0:3, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$C_1$,
+  ylabel=$C_2$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=8cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+]
+\addplot[] coordinates {
+(0, 2)
+(0.5, 1.5)
+(1, 0)};
+ \addplot[only marks] coordinates {
+(0, 3)
+(1.5, 0)};
+\addplot[mark = none] coordinates {
+( 0.5, 0 )
+( 0, 3 )};
+
+\node[below] at (axis cs:0.6, 2.3)  {$ (1 + Y_1) (1 + r (1 - \tau)) + Y_2$};
+\node[below] at (axis cs:1.11,  0)  {$ A_1 + Y_1 + \frac{Y_2}{1+r}$}; 
+\node[below] at (axis cs:0.5, 0)  {$ A_1 + Y_1$}; 
+\end{axis}
+\end{tikzpicture}
+
+
+
+Note: 
+
+Слуцкий: это когда вам доступен старый набор
+
+Хикс: Касание со старой кривой безразличия   
+
+
+\begin{align} 
+\Delta C_1^{IE} = \Delta C_1^{SE} + \Delta C_1^{TE} \\
+\Delta C_2^{IE} = \Delta C_2^{SE} + \Delta C_2^{IE} 
+\end{align} 
+
+Мораль: потребителю не стало хуже. 
+\end{enumerate}
+
+\item Задача 2. “Различные способы финансирования государственного долга
+
+Условия..
+\begin{enumerate}
+\item  Финансирование долга за счёт профицита госбюджета
+По условию $ \beta = \frac{1}{1 + r}$  
+\begin{align}
+\beta = \frac{1}{1 + \rho} \\
+\begin{cases}
+U = \ln C_1 + \beta \ln C_2 \rightarrow \max \\
+C_1 + \frac{C_2}{1 + r} = A_1 + Y_1 + \frac{Y_2}{1 + r}
+\end{cases} \\
+MRS_{1,2} = \frac{\frac{\partial U}{\partial C_1}}{\frac{\partial u}{\partial C_2}} = \frac{P_1}{P_2} \Rightarrow \frac{1 / C_1}{\beta / C_2} = \frac{1}{1 / (1 + r)} \\
+\frac{C_2}{C_1} = (1 + r) \cdot \frac{1}{1 + r} = 1 \\ 
+\end{align}
+Выразим $C_1^*$
+\begin{align}
+C_2 = C_2 \\ 
+C_1 + \frac{C_1}{1 + r} = A_1 + Y_1 + \frac{Y_2}{1 + r } \\
+C_1 (\frac{2 + r }{1 + r} ) = Y_1 + \frac{Y_2}{1 + r} \\
+C_1^* = \frac{Y_1 (1 + r) + Y_2}{2 + r} \\
+S_1^* = Y_1 - C_1^* = \frac{Y_1 (2 + r) - Y_1 ( 1 + r) - Y_2}{2 + r} \\
+S_1^* = \frac{Y_1 - Y_2}{2 + r }
+\end{align}
+
+Лирическое отступление 
+
+$ S_1^* = \frac{Y_1 - Y_2}{2 + r }$ - эту сумму займёт государство в $t_1$ 
+
+за 1 год накапают проценты. 
+
+$ S_1 (1 + r) = \frac{1 + r }{2 + r} (Y_1 - Y_2) \rightarrow BS$ (Budget Surplus) 
+
+\item Финансирование долга за счёт налогообложения (Debt financing through tax system)
+
+\begin{align}
+\begin{cases} 
+U = \ln C_1 + \beta \ln C_2 \rightarrow \max_{C_1, C_2 \ge 0 } \\ 
+\begin{cases}
+C_1 + \frac{C_2}{1 + r(1 - \tau)} = Y_1 + \frac{Y_2}{1 + r (1 - \tau)} & A_1 + Y \ge C_1 \\
+C_1 + \frac{C_2}{1 + r} = Y_1 + \frac{Y_2}{1 + r} & A_1 + Y_1 < C_1 
+\end{cases}
+\end{cases}
+\cdots \\
+\frac{C_2}{C_1} = \beta (1 + r (1 - \tau)) \\ 
+C_2 = \beta (1 + r (1 - \tau )) C_1 
+\end{align}
+Подставляем $ C_2 $ в БО и решаем всё это
+\begin{align}
+C_1 + \frac{\beta (1 + r (1 - \tau) ) \cdot C_1}{1 + r (1 - \tau)} = Y_1 + \frac{Y_2}{1 + r (1 - \tau)} \\
+C_1 (1 + \beta) = Y_1  + \frac{Y_2}{1 + r  (1 - \tau)} \\
+C_1^* = \frac{Y_1 + \frac{Y_2}{1 + r (1 - \tau)}}{1 + \beta} \\
+C^*_2 = \frac{\beta (1 + r (1 - \tau))}{1 + \beta} \Big( Y_1 + \frac{Y_2}{1 + r (1 - \tau)}\Big)
+\end{align} 
+\end{enumerate}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

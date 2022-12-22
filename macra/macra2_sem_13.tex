@@ -1,0 +1,150 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 4 М2}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\begin{align*}
+\pi^e = \pi^* + \dfrac{\beta}{\alpha} \cdot (u_n - u^* ) \\
+\mathbb{E} ( \pi) = \pi^e = \dfrac{\alpha}{\alpha + \beta ^ 2 } \cdot \pi^* + \dfrac{\beta}{\alpha + \beta^2} \cdot (u_n - u^* ) + \dfrac{\beta^2}{\alpha + \beta ^ 2} \cdot \pi ^ e \\
+\Big( 1 - \dfrac{\beta ^ 2 }{\alpha + \beta ^ 2 }\Big) \pi^ e = \dfrac{\alpha }{\alpha + \beta ^ 2 } \cdot \pi^* + \dfrac{\beta}{\alpha + \beta^2} (u_n - u^*) \\
+\ldots \ldots \ldots \\
+\pi = \dfrac{\alpha }{\alpha + \beta^2} \cdot \pi^* + \dfrac{\beta}{\alpha + \beta^2} ( u_n - u^* ) + \dfrac{\beta ^ 2 }{\alpha + \beta ^ 2} \pi^* + \dfrac{\beta}{\alpha} \cdot \dfrac{\beta ^ 2 }{\alpha + \beta ^ 2} (u_n - u^* ) \\
+\pi = \pi^* + \dfrac{\beta (\alpha + \beta^2) }{(\alpha + \beta^2 ) \alpha} = \pi^e + \dfrac{\beta}{\alpha} \cdot (u_n - u^* ) \\
+\pi = \pi^e = \pi^* + \dfrac{\beta}{\alpha} \cdot (u_n - u^* ) \\
+\text{Discretion: } 
+\begin{cases}
+u = u_n \\
+\pi = \pi^e = \pi^* + \dfrac{\beta}{\alpha} (u_n - u^* ) \\
+L^{discretion}_{soc} = \dfrac{1}{2} \Big( u - u^* \Big)^ 2 + \dfrac{1}{2} \cdot \alpha (  \pi - \pi^* ) = \dfrac{1}{2} (u_n - u^*) ^ 2 + \dfrac{1}{2} \alpha \cdot \dfrac{\beta ^ 2 }{\alpha ^ 2 } (u_n - u^* ) ^ 2 = \\ = \dfrac{1 }{2} \cdot ( \dfrac{\beta ^ 2 }{\alpha}  + 1) (u_n - u^* ) ^ 2 
+\end{cases} \\
+\end{align*}
+\begin{align*}
+\text{First Best} \rightarrow \text{минимум функции потерь (теоретический) }  \\
+L = \dfrac{1}{2} (u - u^* )^ 2 + \dfrac{1}{2} \alpha (\pi - \pi^* ) ^ 2 \\
+L_{FB} = 0 \\
+\text{Commitment (Обещаем)} \rightarrow \text{все верят} \rightarrow \text{Discretion (обманываем)} \\
+\pi^* - \pi^e = \dfrac{1}{\beta} \cdot (u_n - u^*) \Rightarrow \\ \pi^e = \pi^* - \dfrac{1}{\beta} \cdot (u_n - u^* ) \\
+\text{Second Best} \rightarrow \text{Policy rules }  
+\end{align*}
+\begin{align*}
+& \text{commitment: (политик обещает)} \pi = \pi^e - \dfrac{1}{\beta} \cdot (u_n - u^* ) \\
+& \text{все верят: (все верят т.е.) }  \pi^e = \pi^* - \dfrac{1}{\beta} (u_n - u^* ) < \pi^* \\
+& \text{а по факту : } \pi = \pi^* \Rightarrow u = u ^* 
+\end{align*}
+Один из способов решения проблем несогласованности
+\begin{itemize}
+\item Делегирование -- передача полномочий другому агенту
+\item Репутация из периода в период
+\item Контракт -- должны непрекословно соблюдаться определенные условия 
+\item Наказание политика за отклонение 
+\end{itemize}
+\begin{align*}
+\bar{y} \rightarrow \text{естественный уровень выпуска} 
+\end{align*}
+\begin{align*}
+\begin{cases}
+L_{pol} \rightarrow \min \\
+s.t. y = \bar{y} + \beta(\pi - \pi^e) \\
+\end{cases} \rightarrow L_{soc}  = (\text{выбор политика}) \\
+\text{Функция потерь политика} \\
+\pi = \dfrac{c}{c + b^2} \pi^* + \dfrac{b}{c + b ^ 2 } (y ^* - \bar{y}) + \dfrac{b^2}{c + b ^2 } \pi^e \\
+\dfrac{\partial \pi}{\partial c} < 0 \,\,\, \forall \pi^e \ge \pi^* \\
+\dfrac{\partial \pi}{\partial c} > 0 \,\,\, \forall \pi^e < \pi^*  \\
+\pi^e = \pi^{eq} = \pi^* + \dfrac{b}{c} (y^* - \bar{y}) \\
+L_{soc} = \dfrac{1}{2} \cdot (u - u^* ) ^2 \cdot (1 + \dfrac{b^2}{c^2} \alpha)  
+\end{align*}
+\subsubsection*{Задача про облигации}
+\begin{itemize}
+\item  
+$ B_{-1} $ -- это типа предыдущий долг 
+\begin{align*}
+\dfrac{B_0}{P_1} = S_1 \\
+B_{-1} = P_0 \cdot S_0 + Q_0 \cdot B_0 \\
+Q \rightarrow \text{цена облигации } \\
+Q_0 = \dfrac{1}{1 + i_0} \Rightarrow FV \text{нормиован к 1} \\
+\text{уравнение Фишера: } (1 + i_0) = (1 + r_0) \cdot (1 + \pi^e_0 ) \\
+\pi^e_0 = \mathbb{E} (\dfrac{P_1}{P_0} ) \\
+Q_0 = \dfrac{1}{1 + i_0} = \dfrac{1}{(1 + r_0) (1 + \pi^e_0) } = \dfrac{1}{(1 + r_0) \cdot \mathbb{E}_0(\dfrac{P_1}{P2})} = \dfrac{1}{R \cdot F_0(\dfrac{P_1}{P_0})}\\
+\text{где } \begin{cases}
+1 + \pi^e_0 = F_0 ( \dfrac{P_1}{p_2}) \\
+1 + r_0 = R 
+\end{cases} \\
+Q_0 = \dfrac{1 \cdot P_0}{R \cdot \mathbb{E}_0 (P_1) } \\
+B_{-1} = P_0 \cdot S_0 + Q_0 + B_0 = P_0 \cdot S_0 + \dfrac{P_0}{R \cdot \mathbb{E}(P_1)} \cdot B_0 \\
+\Big( \dfrac{B_0}{P_1} = S_1 \rightarrow P_1 = \dfrac{B_0}{S_1} \Big) \\
+B_{-1} = P_0 \cdot S_0 + \dfrac{P_0 \cdot B_0}{R \cdot \mathbb{E} (B_0 / S_1)} = P_0 \cdot S_0 + \dfrac{P_0 \cdot \mathbb{E} (S_1)}{R \cdot B_0 } \cdot B_0 \\
+B_{-1} = P_0 \cdot S_0 + \dfrac{P_0 \cdot \mathbb{E} (S_1)}{R} \rightarrow \dfrac{B_{-1}}{P_0} = S_0 + \dfrac{1}{R} \mathbb{E} (S_1) \\
+P_1 = \dfrac{B_0}{S_1} \\
+P_0 = \dfrac{B_{-1} }{S_0 + \dfrac{1}{R} \cdot \mathbb{E} (S_1)} \\
+\end{align*}
+\item 
+\begin{align*}
+B_0 \uparrow \uparrow \Rightarrow \hat B_0 =  2 B_0  \\
+S_1 \rightarrow \text{не меняем} \\
+\hat{P_1} = \dfrac{2 B_0}{S_1}  = 2 \dfrac{B_0}{S_1} = 2 P_1 \\
+P_0 \text{ не меняется, оно не зависит от измененных параметров} 
+\end{align*}
+\item  Пусть ЦБ таргетирует уровень цен $ P_1 = P^*_1 = \dfrac{B_0}{S_1} \Rightarrow B_0 = P^*_1 \cdot  S_1 $. 
+\begin{align*}
+\uparrow B_0 = S_1 \uparrow 
+\end{align*}
+\item Пусть правительство следует фискальным правилам... $ S_0 = \text{const} $. $ B_{-1} \rightarrow \text{fixed } $.
+\begin{align*}
+P_1^* = \dfrac{B_0 \uparrow}{S_1 \uparrow} \Rightarrow P_0 \downarrow
+\end{align*}
+\end{itemize}
+\subsection*{Семинар 4, Задача 2.}
+\subsubsection*{Unpleasent monetary arithmetic }
+\begin{itemize}
+\item Условия 
+
+$$ M_T - M_{T-1} + B_T + P_T \cdot t_T = ( 1 + i_{T-1} ) B_{T - 1} + P_t \cdot g_T $$
+
+\item Найти значение $ B_T $ 
+\begin{align*}
+B_T = 0  \leftrightarrow \text{NPG (условие отсутствие игр понци)}
+\end{align*}
+
+\item 
+\begin{align*}
+M_{T-1} \cdot 0 + 0 + P_{T} \cdot t_T = 11 + P_t \cdot g_T \\
+P_{T-1} = 1 \Rightarrow P_T = ? \\
+M_T = 21 - 9 P_t \Rightarrow M_T = 12 \\
+\pi_0 = \rightarrow P_t = P_{T-1} = 1 \\
+S = \dfrac{M_T - M_{T-1}}{P_T} = 2 \\
+\end{align*}
+\item $ M_T = 12 $, но теперь $ t_T - g_T = 8 $. Надо подставить новые цифры. 
+\begin{align*}
+12 - 10 + 0 + P_T \cdot t_T = 11 \cdot 10 + P_t \cdot g_t  \\
+2 + P_t \cdot t_T = 11 + P_t \cdot g_T \\
+P_t \cdot (t_T - g_T ) = 9 \Rightarrow P_t = 1.125 \Rightarrow \pi = 0.125 \\
+\dfrac{M_T - M_{T-1}}{P_T} = \dfrac{2}{1.125} = \dfrac{2}{9/8} = \dfrac{16}{9} < 2 
+\end{align*}
+\item 
+\begin{align*}
+(1 + i_{t-1} ) \cdot \dfrac{B_{T-1}}{P_t} = P_T (t_T - g_T) + \dfrac{M_T - M_{T-1}}{P_T} \\
+\text{Мы должны залатить } = \text{Сколько мы зарабатываем} \\
+\text{Если подставить} \\
+11 \ne 10 
+\end{align*}
+\item Проанализируйте сценарии и ответьте на вопро какова роль фискальных властей. 
+
+Смысл такой: у нас в первом пункте были цены абсолютно гибкие. Но нам сказали, что у нас инфляция нулевая. Раз инфляции нету, мы выбираем просто столько, сколько нам нужно сеньоража. 
+
+В пункте B вам дан какой-то профициит, он нужен чтобы погашать долг который накопился. У вас инфляции нет, для погашения долга печатаются деньги.
+
+В пункте С сократилась величина профицита, старого сеньоража не хватит. В данном случае нужно что-то делать и будут меняться цены, потому что денежная масса ффиксированная. А профицитаа недостаточно чтобы погасить долг. Из-за этого и меняются цены.
+
+В последнем пункте уровень цен не может меняться и дденег не хватает, чтобы погасить долг. У 
+\end{itemize}
+\end{otherlanguage*} 
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Дзюба Конса}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section*{Задача. Устойчивость фиксальной политики}
+\begin{itemize}
+\item Условия 
+\begin{align*}
+G(t); T(t) \\
+\dot D(t) = r(t) \cdot D(t) + G(t) - T(t) \\ 
+d(t) = \dfrac{D(t) }{Y(t)}; g_Y > 0 \\ 
+r^{'}(\ldots) > 0 \\ 
+r^{''} > 0  \\
+a = \dfrac{\dot D(t)}{Y(t)} \,\,\, \text{операционный} 
+\end{align*}
+\item Решение
+\begin{align*}
+\dot d (t) = \Big( \dfrac{D(t)}{Y(t)}\Big) = \dfrac{\dot D(t) \cdot Y(t) - D(t) \cdot \dot Y(t) }{Y(t)^2}  = \dfrac{\dot D(t)}{Y(t)} - g_y \cdot d(t) = \\
+= \dfrac{r(t) \cdot D(t) + G(t) - T(t) }{Y(t)} - g_y \cdot d(t)= r(t) \cdot d(t) + g(t) - \tau(t) - g_Y \cdot d(t) = a - g_Y \cdot d(t)  \\
+\dot d(t) = 0 \Rightarrow \begin{cases} 
+d^* = \dfrac{a}{g_y} \\ 
+\end{cases} 
+\end{align*}
+\item Небольшая модификация
+\begin{align*}
+& \text{Первичный дефицит } \dfrac{G(t) - T(t) }{Y(t)} = a \\
+& \dot d(t) = r(t) \cdot d(t) + \dfrac{G(t) - T(t) }{Y(t)} - g_Y \cdot d(t) = \\
+& \dot d(t) = d(t) \cdot \Big( r(t)  (d(t)) - g_Y \Big) + a \\
+& \text{F.O.C.: } \dot d(t)^{'}_{d(t)} = (u \cdot v)^{'} = r(t) - g_Y + d(t) \cdot r^{'} (t)  \rightarrow \text{Рассматриваемая штука, знак зависит от a. } \\
+& \text{S.O.C. : } = \dfrac{\partial ^ 2 \dot  d(t)}{\partial d(t) ^ 2}=  r^{'} (t) + r^{'} (t) + d(t) \cdot r^{''} (t)  > 0 \\
+& \dot d(t) = r(t) \cdot d(t) +  a - g_Y \cdot d(t) 
+\end{align*}
+\subsubsection*{Задача}
+\begin{align*}
+\text{Б.О.: } \sum_{t=0}^\infty \dfrac{T_t}{(1 + r)^t} = \sum_{t=0}^\infty \dfrac{G_t}{(1 + r)^t} + D_0 
+\end{align*}
+Издержки искажения: издержки, которые растут в связи с тем, что мы выбрали неоптимальную налоговую ставку. 
+\begin{align*}
+\sum_{t= 0 } ^\infty  \dfrac{Y_t f(\dfrac{T_t}{Y_t})}{(1 + r)^t} \rightarrow \min_{T_t} \\
+Y_t = \text{const} = 7000 \\ 
+r^* = 0.04 \\
+G_t = 500; \,\,\, G_{t+1} = 250 \\
+D_0 = 800 \\
+800 + \dfrac{500}{(1 + 0.04)^0} + 250 \cdot \sum_{t=1}^\infty \dfrac{1}{(1 + 0.04)^t} = \sum_{t=0}^\infty \dfrac{T_t}{(1 + 0.04)^t} = \\
+\text{Сумма бескконечно убывающей геометрической прогрессии: } b_1 = \dfrac{1}{1.04} \\
+q_1 = \dfrac{1}{1.04} \Rightarrow S_n  = \dfrac{1}{0.04} = 25 \\
+\begin{cases}
+1300 + \dfrac{250 \cdot 1}{0.04} = \sum_{t=0}^\infty \dfrac{T_t}{(1.04)^t} \\
+\sum_{t=0}^\infty \dfrac{Y_t \cdot \dfrac{T_t^2}{Y_t^2}}{(1 + r)^t} 
+\end{cases}  \\
+\mathcal{L} = \sum_{t=0}^ \infty \dfrac{(\dfrac{T_t}{Y_t})^2 \cdot Y_t}{(1 + r)^t} + \lambda \Big(\sum_{t=0}^\infty \dfrac{T_t}{(1 + r)^t} - \dfrac{G_t}{(1 + r)^t} - D_0\Big) \\
+\dfrac{\partial \mathcal{L}}{\partial T_t} = \dfrac{2 \cdot T_t}{Y_t} \cdot \dfrac{1}{(1 + r)^t} - \dfrac{\lambda_t}{(1 + r)^t} = 0 \Rightarrow \lambda_t = \dfrac{2 T_t}{Y_t} \Rightarrow \\
+\Rightarrow \dfrac{T_t}{Y_t}  = \dfrac{\lambda}{2} = \tau (\text{постоянна и не меняется во времени}) \Rightarrow T_t = \tau \cdot Y_t  \\
+7550 = Y_t \cdot \tau \sum_{t=0}^\infty \dfrac{1}{(1 + r)^t} \\
+7550 = \tau \cdot 7000 \cdot 25 \\
+\tau = \dfrac{7550}{7000 \cdot 25}
+\end{align*}
+\item Держите в голове что отложенная мобилизация может быть сглаживание может быть первый семинар может быть сегодняшняя третья задача может быть. Единственное что вы знаете у вас точно не будет IS LM. 
+\end{itemize}
+
+\end{otherlanguage*} 
+\end{document}

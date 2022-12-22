@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Модель Рамсея}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\begin{enumerate}
+\item Равновесие в децентрализованной экономике
+\begin{align*}
+C_t + S_t = w_t + (r_t + \delta) k_t \\
+K_{t+1} = (1 - \delta) K_t + \frac{I_t}{L_t} \,\,\,\, L_{t+1} = (1 + n) L_t \\
+(1 + n) k_{t+1} = (1 - \delta) k_r + i_t \\ 
+i_t = (1 + n) k_{t+1} - (1 - \delta) k_t \\ 
+C_t + S_t = C_t + (1 + n) k_{t+1} - (1 - \delta) k_t = w_t + (r + \delta) k_t \\
+(1 + n) k_{t+1} = w_t + (r_t + \delta) k_t + (1 - \delta) k_t - C_t  \\
+\begin{cases}
+Y_t = w_t + (r_t + \delta) k_t 
+\end{cases}
+\end{align*}
+Выписали бюджетное ограничение, далее -- Лагранж
+\begin{align*}
+\Lambda = \sum U + \sum \lambda_t \Big( w_t + (r_t + \delta) k_t + (1 - \delta) k_t - C_t - (1+n) k_{t+1} \Big) \rightarrow \max_{C_t, C_{t+1}, \lambda} \\
+\frac{u^{'}(C_t)}{u^{'}(C_{t+1})} = \frac{(1 + r_{t+1})}{(1+n) (1 + \rho)} \\
+U = \frac{C_t^{1 - \theta} - 1 }{1 - \theta} \\
+U^{'}_{C_t} = C_t^{-\theta} \\
+\frac{\dot{C(t)}}{C(t)} = \frac{1}{\theta} \Big( r^{'}_{h_{t+1}} - n -\rho - \delta \Big) \\
+\pi = P \cdot Y - W_t \cdot L_t - (r_t + \delta) K_t \rightarrow \max_{L_t, K_t} \\
+\ldots \\
+w_t = f(k_t) - f^{'}_h \cdot k_t \\ 
+r_t = f^{'}_h - \delta \rightarrow (r_t + \delta) = f^{'}_h \rightarrow \max_{C_t, C_{t+1}, \lambda_t} \\
+(1 + n) h_{t+1} = f(h_t) - f^{'}_h \cdot h_t + f^{'}_h \cdot h_t + (1 - \delta) h_t - C_t \\
+(1 + n) = k_{t+1} = f(h_t) + (1 - \delta) h_t - C_t \\
+\ldots \\
+k(t) = f(h(t)) - C(t) - (n + \delta) k_t 
+\end{align*}
+\begin{align*}
+\begin{cases}
+\frac{\dot{C(t)}}{C(t)} = \sigma \Big( f(h_{t+1})^{'} - \delta - n - \rho \Big) = 0 \\
+\dot{h(t)} = f(h_t) - C_t - (n + \delta) h_t = 0 
+\end{cases}
+\end{align*}
+Локусы (точки, которые удовлетворяют словию) 
+\begin{align}
+f(h_{t+1})^{'} = n + \rho + \delta \\
+C_t = f(h_t) - (n + \delta) h_t \\
+L_{t+1} = (1 + n) L_t 
+\end{align}
+(график) 
+\item Фискальная политика в децентрализованной экономике
+
+В задаче подразумевается, что нет темпов прироста населения. Следовательно $ n = 0 $. 
+
+В итоге $ C_t + S_t = w_t + (r_t + \delta) k_t - \tau_t $, где $\tau_t$ - акордный налог на душу населения. Уравнение Эйлера, записанное ранее, не меняется, потому что $\tau_t$ -- константа, на взятие производной не влияет 
+
+Тогда Локусы поменяются
+\begin{align*}
+\begin{cases}
+\frac{\dot{C(t)}}{C(t)} = \sigma \Big( f(h_{t+1})^{'} - \delta - \rho \Big) = 0 \\
+\dot{h(t)} = f(h_t) - C_t - ( \delta) h_t - \tau (t) = 0 
+\end{cases} \\
+f(h_{t+1})^{'} = \rho + \delta \\
+C_t = f(h_t) - (\delta) h_t - \tau(t) \\
+L_{t+1} = (1) L_t 
+\end{align*}
+Картинка. Там парабола, она сдвигается вниз 
+
+Вводится налог на зарплату это НДФЛ. Это будет чуть посложнее. 
+\begin{align*}
+w_{net} = (1 - \tau_L ) \cdot w_{gross} \\
+x_t = w_t \cdot \tau_L 
+\end{align*}
+Там везде $ w_t \cdot (1 - \tau_L) $ 
+
+\begin{align}
+C_t + S_t = w_t (1 - \tau_L) + (r_t + \delta) k_t + x_t \\
+x_t = w_t \cdot \tau_L 
+\end{align}
+Это все пихается в Эйлера. Стоит заметить, что при взятии производной это константы, Эйлер не меняется. 
+
+Только когда мы думаем как Social Planner и думаем о всей экономике, мы можем селать замену как $ x_t = w_t \cdot \tau_L$. И все сократится короче, ресурсное ограничение не изменится. Картинка не изменится. 
+
+В модели Рамсея предполагается, что труд гомогенный. Д/х не решают, сколько им работать, они предлагают весь труд, который есть. Это предпосылка модели, из которой следует, что налог ни на что не влияет. 
+
+Ладно, не будем вас задерживать, последний пункт решим следующий раз.
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

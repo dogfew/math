@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Дзюба, семинар 3-4}}
+\maketitle
+\begin{otherlanguage*}{russian}
+
+\begin{enumerate}
+\item Некоторый базис для задач из предыдущего семинара 
+
+\begin{align}
+(1 + n ) k_{t + 1} = w_t + (1 + r_t) \cdot k_t - C_t \\
+\dfrac{\dot{C(t)}}{C(t)} = \dfrac{1}{\theta} ( r(t) - n - \delta ) \\
+r(t) = f^{'} (k(t)) - \delta \\ 
+w(t)= f (k(t)) - f ^{'} (k(t)) k(t) 
+\end{align} 
+
+\item Найти уравнение динамики капиталовооруженности
+
+1 способ
+\begin{align*}
+k_{t+1} + n k_{t+1} = w \cdot t + k_{t} + r_t \cdot k_t - c_t + (\delta k_t - \delta k_t) \\
+k_{t+1} - k_t = w_t + (r_t + \delta) k_t - c_t - n \cdot k_{t+1} - \delta k_t \\
+\begin{cases}
+k_{t+1} - k_t = \dot{k} \\
+\end{cases} \\
+\dot{k} = w(t) + \Big( r(t) + \delta \Big) k(t) - C(t) - (n + \delta) \cdot k(t) \\ 
+\dot{k} = f (k(t)) - f ^{'} (k(t)) k(t) + \Big(  f^{'} (k(t)) - \delta + \delta \Big) \cdot k(t) - C(t) -  (n + \delta) \cdot k(t) = \\
+\dot{k} = f (k(t)) - C(t) - (n + \delta) \cdot k(t) 
+\end{align*}
+
+2 способ 
+\begin{align*}
+\dot{k} = \dot{(\dfrac{K}{L})} = \dfrac{\dot{K(t)} \cdot L(t) - K(t) \cdot \dot{L(t)}}{L(t)^2} = \dfrac{\dot{K(t)} \cdot L(t)}{L(t)  ^ 2} - \dfrac{K(t)}{L(t)} \cdot \dfrac{\dot{L(t)}}{L(t)} = \dfrac{\dot{K(t)}}{L(t)} - k(t) \cdot n \\
+K_{t+1} - (1 - \delta) K_t = I_t \\
+K_{t+1} = I_t - (1 - \delta) \cdot K_t \\
+I_t = S_{t} \\
+\dot{K(t)} = mps \cdot Y(t) - \delta \cdot K(t) \Rightarrow \dot{K(t)} = S - \delta \cdot K(t) \\
+S = Y^D - C \\
+\dfrac{Y(t) - C(t) - \delta K(t)}{L(t)} - n \cdot k(t) = y(t) - c(t)  - (\delta + n) k(t) \\
+\dot{k} = f(k(t)) - c(t) - (\delta + n) k(t) 
+\end{align*}
+
+\item Найти динамическое потребление на душу населения 
+
+\begin{align*}
+\dfrac{\dot{C(t)}}{C(t)} = \dfrac{1}{\theta} \Big( r(t) - n - \rho \Big)\\
+r(t) = f^{'} (k(t)) - \delta \\ 
+\dfrac{\dot{C(t)}}{C(t)} = \dfrac{1}{\theta} \Big( f^{'} (k(t)) - \delta  - n - \rho \Big) \\
+\end{align*}
+
+\item Определение стационарного состояния
+
+\begin{align*}
+\dot{k} \Rightarrow k^* = k^{SS} = k(t) \\
+\dot{C} = 0 \Rightarrow C^* = C^{SS} = C(t) \\
+\dfrac{\dot{C(t)}}{C(t)} = \dfrac{1}{\theta} \Big( f^{'} (k(t)) - \delta  - n - \rho \Big) = 0 \Rightarrow f^{'} \Big( K(t) \Big) = \delta + \rho + n \\
+\Rightarrow  f^{'} (k^*) = \delta + \rho + n \\
+k^* = (f^{'} ( \delta + \rho + n) ) ^{-1}  
+\end{align*}
+На графике это вертикальная прямая в точке $ k^ * $ 
+
+\begin{align*}
+\dot{k} = f \Big( k(t) \Big) - C(t) - ( n +  \delta) k(t) = 0 \\
+C(t) = f \Big( k(t) \Big) - ( n + \delta ) \cdot k(t) \\
+C^* = f(k^*) - ( n + \delta ) k^* 
+\end{align*}
+
+(История про фазовый портрет из 3 лекции.) 
+
+\begin{align*}
+\dot{C} = 0 \\ 
+f^{'} (k ^*) > \rho + n + \delta 
+\end{align*}
+\item Появляются фискальные власти и вводится предположение о сбалансированном бюджете. 
+\begin{align*}
+T_{X_t} = G_t \\ 
+K_{t+1} = w_t \cdot L_t + (1 +  r_t) \cdot K_t -T_{X_t} - C (t)  \,\,\, | : L_t\\
+(1 + n) \cdot k_{t+1} = w_t + k_t + r_t \cdot k_t - t_{X_t} - c(t) \\
+\dfrac{K_{t+1}}{L_t} \cdot \dfrac{L_{t+1}}{L_{t+1}} = \dfrac{1 + n}{k_{t+1}} \\
+L_{t+1} = L_t \cdot (1 + n) \\
+\end{align*}
+F.O.C. 
+\begin{align*}
+\dfrac{\partial Z}{\partial C_t}; \,\,\, \dfrac{\partial Z}{\partial C_{t+1}} \,\,\, \dfrac{\partial Z}{\partial k_{t+1}} \\
+\dfrac{\dot{C(t)}}{C(t)} = \Big( r(t) - \rho - n \Big) \\
+\dot{k} = \Big( \dfrac{K}{T}\Big) = \dfrac{\dot{K(t)}}{L(t)} - n \cdot k(t)= \\
+= \dfrac{Y(t) - T(t) - C(t) - \delta K (t)}{L(t)} - n \cdot k (t) = \\ 
+= f(k(t)) - tx (t) - c(t) - (n + \delta ) \cdot k(t) \\
+\dot{k} = 0 \Rightarrow C^* = f(k^*) - g - (n + \delta ) \cdot k ^ * 
+\end{align*}
+
+По графику мы сдвинемся параллельно вниз 
+
+\item Налог, который возвращается в виде трансфертов. 
+
+$ X_t$ - трансферты, $ X_t = \tau_L \cdot w_t $ 
+\begin{align*}
+C_t + K_{t+1} - K_t = (1 - \tau_L) \cdot w_t \cdot L_t + r_t \cdot K_t + X_t \\ 
+(1 + n) \cdot k_{t+1} = (1 - \tau) \cdot w_t \cdot L_t  + (1 + r_t) \cdot k_t + x_t - C_t \\ 
+\dot{k} = (1 - \tau_L) w(t) + (1 + r(t)) \cdot k(t) + x(t) - c(t) + (n + \delta ) \cdot k(t) \\
+w(t) = f(k(t)) - f ^{'} (k(t)) \cdot k(t) \\
+r(t) = f^{'} (k(t)) - \delta \\ 
+\ldots \ldots \ldots \\
+\dot{k} = \tau_L \cdot (\ldots) + f(k(t)) - c(t) + x(t) - (n + \delta) \cdot k(t) 
+\end{align*}
+$ \dot{k} $ получается как предыдущее 
+
+
+\item Как считать предельную склонность к потреблению и сбережению (это что-то что самим нужно сделать) 
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

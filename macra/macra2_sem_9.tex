@@ -1,0 +1,136 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 9}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section*{Предпосылки задачи}
+\begin{align*}
+M_t \rightarrow \text{military goods} \\ 
+N_t \rightarrow \text{non-military goods} \\ 
+i = \{1, \ldots, K \} \\
+\alpha_i \rightarrow \text{i-ый индивид} \\
+\alpha_i \in \{ 0; 1\} \\
+V_i = \alpha_i \cdot \sqrt{M_t} + (1 - \alpha) \cdot \sqrt{N_t} \\
+\alpha_i = 0 \rightarrow V_i = \sqrt{N_t} \rightarrow \text{пацифист} \\ 
+\alpha_i = 1 \rightarrow V_i = \sqrt{M_t} \rightarrow \text{милитарист} \\ 
+W \rightarrow \text{welfare} \rightarrow \text{благосостояние} \\
+D \rightarrow \text{debt} 
+\end{align*}
+Ещё важные нюансы: 
+\begin{itemize}
+\item Избирательная система бинарная, варианты только 0 и 1 
+\item Выборы происходят по принципу абсолютного большинства 
+\item выбор соответствует $ \alpha_t^{\text{med}}$
+\item $ V_i^{\text{voter}} = V_i^{\text{political}} $
+\end{itemize}
+\subsubsection*{Задача 2. }
+\begin{align*}
+\mathcal{\pi} \rightarrow \text{Вероятность  переизбраиния милитариста в } t = 2 \\ 
+\end{align*}
+Подход решения к этой задаче: backward induction, решение с конца. 
+
+Пусть мы оказались в периоде $t = 2$
+
+$D$ пришёл из $t = 1$
+
+В периоде $ t = 1 $
+\begin{align*}
+\begin{cases} 
+\alpha^{\text{med}}_{t=2} = 1 \\
+V_{i, t=2} = \alpha_i \cdot \sqrt{M_2} + (1 - \alpha_i) \cdot \sqrt{N_2} \rightarrow \max_{N_2, M_2} \\
+\text{s.t. } M_2 + N_2 = W - D \ge 0 \\
+M_2 = W - D; \,\, N_2 = 0 
+\end{cases}
+\begin{cases}
+\alpha^{\text{med}}_{t=2} = 0 \\
+V_{i, t=2} = \alpha_i \cdot \sqrt{M_2} + (1 - \alpha_i) \cdot \sqrt{N_2} \rightarrow \max_{N_2, M_2} \\
+\text{s.t. } M_2 + N_2 = W - D \ge 0 \\
+N_2 = W - D; \,\, M_2 = 0 
+\end{cases} 
+\end{align*}
+
+\begin{align*}
+&\begin{cases}
+\alpha_{t=1}^{\text{med}} = 1 \rightarrow \text{милитарист пришёл к власти} \\
+V_{i, t=1} = \mathbb{E} \Big( \sum_{t=1}^2 \alpha_i \cdot \sqrt{M_t} + (1 - \alpha_i) \cdot \sqrt{N_t} \Big) = \alpha_i \cdot \sqrt{M_1} + (1 - \alpha_i) \cdot \sqrt{N_1} + \\ +  \pi \cdot \Big( \alpha_i \cdot \sqrt{M_2} + (1 - \alpha_i) \cdot \sqrt{N_2} \Big)  +  (1 - \pi)  \cdot \Big( \alpha_i \cdot \sqrt{M_2} + (1 - \alpha_i) \cdot \sqrt{N_2}  \Big) \\
+\text{s.t. } \begin{cases} 
+M_1 + N_1 \le W + D \\
+M_2 + N_2 \le W - D 
+\end{cases}  \Rightarrow - W \le D \le W \\
+\text{Подстановка. Зануляем лишнее}.\\
+V_{i, t=1} = \sqrt{M_1} + \sqrt{N_1} + \pi \cdot \sqrt{M_2} = \sqrt{W + D} + \pi \cdot \sqrt{W - D} \\
+V = \sqrt{W + D} + \pi \sqrt{W - D} \rightarrow \max_{D} \\
+\frac{\partial V}{\partial D} = \dfrac{1}{2 \sqrt{W + D}} - \dfrac{\pi}{2 \sqrt{W - D}} = 0 \\ 
+D^* = \dfrac{(1 - \pi)^2}{(1 + \pi^2)} \cdot W \\
+M^*_1 = W  + \dfrac{(1 - \pi^2)}{(1 + \pi^2)} \cdot W 
+\end{cases} \\
+&\begin{cases}
+\alpha_{t=1}^{\text{med}} = 0 \rightarrow \text{пацифист пришёл к власти} \\
+V = \sqrt{N_1} + (1 - \pi) \cdot \sqrt{N_2} \rightarrow \max_{D} \\ 
+\dfrac{\partial W}{\partial D}  = \dfrac{1}{2 \sqrt{W + D}} - \dfrac{(1 - \pi)}{2 \sqrt{W - D}} = 0  \\
+D^*_1 = \dfrac{(1 - (1 - \pi)^2)}{(1 + (1 - \pi)^2)} \cdot W 
+\end{cases}
+\end{align*}
+\subsubsection*{Задача 3}
+\begin{align*}
+& L \rightarrow \text{labour} \\ 
+& K \rightarrow \text{capitalist} \\
+& U_L^{\text{outside}} = U_K^{\text{outside}} = 0 \\
+& F(X \le x) \\ 
+& \Pi \sim \mathcal{U} [A; B] \\
+& W = \text{const} = 300 \\ 
+& T = \text{const} = 150 \\
+& x \in (0; T) \rightarrow \text{величина налога, которую платят капиталисты} \\
+& U_L  = W - (T - x) \rightarrow \text{располагаемый доход рабочих} \\ 
+\end{align*}
+\begin{align*}
+CDF: F( \Pi \le \pi) = \begin{cases} 0 & \pi \le A \\ \dfrac{\pi - A}{B - A} & \pi \in (A; B) \\ 1 & \pi \ge B \end{cases} \\
+P (\Pi \ge \pi) = 1 - P( \Pi \le \pi) 
+\end{align*}
+\begin{enumerate}
+\item Условие проведения реформы: $ \Pi - x \ge U^{\text{outside}}_K = 0 $ 
+
+\begin{align*}
+\Pi \ge x \\
+P(\Pi \ge \pi = x) = 1 - P ( \Pi \le \pi = x) = 1 - \begin{cases} 0 & x \le A \\ \dfrac{x - A}{B - A} & x \in (A; B) \\ 1 & x \ge B \end{cases} = \\
+= \begin{cases} 1 &  x \le A \\ \dfrac{x - A}{B - A} & x \in (A; B) \\ 0 & x \ge B \end{cases} 
+\end{align*}
+\item Записать выигрыш рабочего как функцию от предлагаемого капиталистом платежа 
+
+\begin{align*}
+V_L = P ( \Pi \ge X) \cdot (W - T + X) + (1 - P( \pi \ge X)) \cdot U^{\text{outside}}_L = ( U^{\text{outside}}_L = 0 ) = \\
+= (W - T + X) \cdot \begin{cases} 
+1 & x \le A \\ 
+\dfrac{B - X}{B - A} & X \in (A, B) \\
+0 & X \ge B 
+\end{cases} = \begin{cases} W - T + X & X \le A \\ \dfrac{(B - X)(W - T + X) }{B - A} & X \in (A, B) \\ 0 & X \ge B \end{cases} = \\
+= \begin{cases} W - T + X & X \le A \\ \dfrac{(B - X) (W - T + X)}{B - A} & X \in (A, B) \\ 0 & X > B \end{cases} \\
+\dfrac{\partial V_L}{\partial X} = \begin{cases} 
+1 & X \le A \\ 
+\frac{- B - T + W + 2 X}{A - B} = 0  & X \in (A, B) \\
+0 & X \ge B 
+\end{cases} \\
+\dfrac{\partial ^ 2 V_L}{\partial X^2} = \Big(\dfrac{B - (W - T) - 2 X}{B - A} \Big) = \dfrac{2}{A - B} < 0 \rightarrow 
+\text{concave} \\
+\Rightarrow X^* = \dfrac{B - (W - T) }{2} \le A \\
+\end{align*}
+\begin{align*}
+X^* = \begin{cases} A & 2 A \ge B - (W - T) \\ \dfrac{B - (W - T)}{2}& \text{else} \end{cases} 
+\end{align*}
+Дальше подставить, не знаю зачем
+\begin{align*}
+X^* = \begin{cases} 100 & 200 \ge T \\ \dfrac{T}{2} & \text{else} \end{cases}  \\ \text{Если } T = 150 \text{, смотрим на } F(\ldots) \text{ выше } \rightarrow P^* = 1 \\
+\text{Если } T = 300 \Rightarrow X^* = 150  \rightarrow P^* = 0.75
+\end{align*}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

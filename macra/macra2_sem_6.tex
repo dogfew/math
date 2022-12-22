@@ -1,0 +1,125 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 6}}
+\maketitle
+\begin{otherlanguage*}{russian}
+
+\begin{enumerate}
+
+\item Задача 3
+\begin{enumerate}
+\item  Условия
+
+\begin{align*}
+q_t = 1 + C^{'} (I_t) \\ 
+\dot q (t) = rq (t) - MRP_k \Big( K(t) \Big) \\
+MRP_k (K(t)) = a - b K (t) \\ 
+C(I_t) = 0.5 \alpha I^2_t 
+\end{align*}
+
+\item Уравнение динамики капитала в непрерывном времени 
+
+$ \dot q_t$ - это динамика стоимости акций 
+
+\begin{align*}
+C^{'}_{I_t} = \alpha I_t \\
+q_t = 1 + \alpha I_t \Rightarrow \alpha I_t = q_t - 1 \\
+I_t = \dfrac{1}{\alpha} (q_t - 1) \\
+\dot K = N \cdot I_t = \dfrac{N}{\alpha} (q_t - 1) \\
+\dot K = \dfrac{N}{\alpha} (q(t) - 1) 
+\end{align*}
+
+Мы вывели уравнение общений динамики капитала в экономике в непрерывном времени
+$ N \cdot I_t $ - инвестиции всех фирм 
+
+\item Уравнение динамики непрерывного $q$-тобина
+
+Подставляем $ MRP_k$ в $\dot q $ 
+\begin{align*}
+\dot q (t) = r \cdot q (t) - a + b \cdot k (t) 
+\end{align*}
+
+\item Определить стационарное состояние для этой экономики
+
+мы должны взять из этой штуки систему приравнять к нулю системки и получить локусы
+
+\begin{align*}
+\dot K = \dfrac{N}{\alpha} \Big( q(t) - 1 \Big) = 0 \rightarrow q ^* = 1 \Big( \dot K = 0 \Big) \\
+\dot q(t) = r \cdot q (t) - a + b \cdot k (t) = 0  \rightarrow q(k) = \dfrac{a}{r} - \dfrac{b}{r} \cdot K  \Big( \dot q = 0 \Big)
+\end{align*}
+
+Далее график с локусами. 
+
+Найти пересечение двух этих локусов
+\begin{align*}
+\text{SS}: 1 = \dfrac{a}{r} - \dfrac{b}{r} \cdot K \\
+r = a - b \cdot K \\ 
+b \cdot K = a - r \\ 
+K^*_1 = \dfrac{a - r}{b}
+\end{align*}
+
+\item Предположим, что перманентно снизилась ставка процента. ШОК $r \downarrow$!
+
+$r_1 > r_2 $ 
+
+Найдём новый равновесный $ K $ 
+
+$ K^* = \dfrac{a - r_2}{b} $
+
+Там меняется седловая траектория, траектория сводящая к равновесию. 
+
+У вас безрисковая ставка упала, соотвественно выгоднее стало инвестировать в акции фирм, спрос на акции растёт. Когда растёт спрос на акции растёт цена акции, цена акции (это $ q_t$), оно растёт скачком 
+
+$ MRP_k$ -- это дивиденд. В каком смысле? Представьте себе, что покупая одну акцию, то есть отдавая пушку, вы имеет право владеть единичкой капитала. Тогда получается, что если вы заплатили за акцию $ q$ вы как бы имеете право собственности на одну единичку капитала, а значит вы имеете право требовать на эту одну единичку капитала $ MRP_k $, дивиденд.
+\end{enumerate}
+\item Задача 2. Гибкий акселератор инвестиций
+
+\begin{align*}
+I = \Delta K = \lambda (K^* - K), \, \, \, \lambda > 0 \\ 
+\end{align*}
+
+$ K_1 $ - начальный запас капиталаа
+
+$ K^* > K_1 $ желаемый запас капиталаа
+
+$ \lambda = 0.5 $ 
+
+Предположение:  $$ I_n = coef \cdot (K^*_{K_1}) $$ и $ coef < 0.01 \Rightarrow I_n = 0 $  
+
+\begin{align*}
+I_1 = \lambda (K^* - K_1) \\
+K_2 = K_1 + I_1 = K_1 + \lambda (K^* - K)1) = (1 - \lambda) \cdot K_1 + \lambda K^* \\
+I_2 = \lambda (K^* - K_2 ) = \lambda (K^* - (1 - \lambda) K_1 - \lambda K^ * ) = \\
+ \lambda \Big( (1 - \lambda) K^* - (1 - \lambda ) \cdot K_1 \Big) \\
+ = \lambda (1 - \lambda ) (K^* - K_1) \\
+ K_3 = K_2 + I_2 = (1 - \lambda) K_1 + \lambda K^* + \lambda (1 - \lambda  ) (K^* - K_1) = \\
+ \lambda K^ * + \lambda ( 1 - \lambda) K^* + (1 - \lambda) \cdot K_1 - \lambda (1 - \lambda) K_1 =  (2 - \lambda) \lambda K^ * + (1 - \lambda)^ 2 K_1 \\
+ I_3 = \lambda ( K^* - K_2) = \cdots = \lambda (1 - \lambda) ^ 2 (K^* - K_1) \\
+I_t = \lambda ( 1 - \lambda)^{t-1} (K^* - K_1) \\
+K_{t+1} = K_1 + \sum_{\tau=1}^t I_\tau = K_1 + \sum_{\tau}^t \lambda (1 - \lambda)^{\tau - 1} (K^* - K_1) 
+\end{align*}
+
+\item Запишем сначала по пиху формулу
+
+\begin{align*}
+C = \dfrac{r}{1 + r } \cdot \Big( A_1 +  \sum_{\tau = 0}^\infty \dfrac{Y_{t + \tau}^d}{(1 + r) ^ \tau} \Big) \\
+C = \dfrac{r}{1 + r} \cdot \Big( A_1 + \dfrac{1 + r}{r} \cdot  Y  \Big) \\
+C = \dfrac{r}{1 + r} A_1 + Y \\
+\Delta C = \dfrac{r}{1 + r} \Delta A + \Delta Y 
+\end{align*}
+
+Если подставить 
+\begin{align*}
+\Delta Y = 10 / 1.1 = 9.(09) 
+\end{align*}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

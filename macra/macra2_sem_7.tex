@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 7}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section*{Задача 1. “Фундаментальная стоимость акций. Шоки и диаграммы.
+(Fundamental Price of Stocks. Shocks and diagrams”}
+Запишите выражение для фундаментальной стоимости акции в непрерывном времени. Проанализируйте математически следующие шоки, а также изобразите графики переходной динамики (impulse response graphs) дивидендов и стоимости акции. 
+\begin{itemize}
+\item $ d(\tau)$ - дивиденды в момент времени $ \tau $ 
+\end{itemize}
+\subsubsection*{Часть 1. Ожидаемое временное изменение дивидендов}
+\begin{itemize}
+\item Фундаментальная стоимость акций 
+\begin{align*}
+q(t) = \mathbb{E}_t \int_t^{+\infty} d(\tau) \cdot e^{-r(\tau - t)} d \tau \\
+d(t_i) = \begin{cases}
+d_0, & t_i \le t < t_1 \\
+d_1 & t_1 \le t < t_2 \\
+d_0 & t \ge t_2
+\end{cases}
+\end{align*}
+\item До момента $ t_{info} $ мы считаем, что дивиденд всегда будет 0 и видим мир именно таким. В момент $ t_{info} $ мы получаем информацию и преисполняемся в познании нашего мира. 
+\begin{enumerate}
+\item $ t < t_{info} \Rightarrow d = d_0 $ 
+\begin{align*}
+q(t) = \mathbb{E}_t \int_t^{+\infty} d(\tau) \cdot e^{-r(\tau - t)} d \tau 
+\end{align*}
+Нам известны следующие нюансы: 
+\begin{enumerate}
+\item Нет неопределенности $ \Rightarrow \mathbb{E}_t (\ldots) = (\ldots) $. На кр надо взять среднее м.о. если указаны ввероятности. Вилка ну выпоняли. 
+\item $ e^{-r (\tau - t)} = e^{-r \tau} \cdot e^{rt} $ 
+\item $ d(\tau) = d_0 $ 
+\end{enumerate}
+\begin{align*}
+&q(t) = \int_t^{+\infty} d_0 \cdot e^{-r \cdot \tau} \cdot e^{r \cdot t}  d \tau = d_0 \cdot e^{r \cdot t} \int_t^{+\infty} e^{-r \cdot \tau} d \tau = d_0 \cdot e^{r \cdot t} \cdot \Big( - \dfrac{e^{-r \cdot \tau}}{r} \Big)_{t}^{\infty} = \\
+&= d_0 \cdot e^{r \cdot t} \cdot (-\dfrac{1}{r}) \Big( e^{-r \cdot \tau}_{\tau \rightarrow \infty} - e^{-r \cdot t} \Big) = \dfrac{d_0}{r} \rightarrow \text{perpetulity} 
+\end{align*}
+\item $ t_{info} \le t \le t_1 $ у нас ещё есть информация, но дивиденд ещё $ d_0$, а затем $ d_1 $, а затем $ d_0 $. Интеграл разобьётся таким образом на три интеграла 
+\begin{align*}
+&q(t) = \int_{t}^{t_1} d_0 \cdot e^{-r(\tau - t)} d \tau +  \int_{t_1}^{t_2} d_1 \cdot e^{-r(\tau - t)} d \tau + \int_{t_2}^{+\infty} d_0 \cdot e^{-r(\tau - t)} d \tau = \\
+&= d_0 \cdot e ^ {r \cdot t} \int_{t}^{t_1}   e^{-r \cdot \tau} d \tau +  d_1 \cdot e ^ {r \cdot t} \cdot \int_{t_1}^{t_2}  e^{-r \cdot \tau} d \tau  + d_0 \cdot e ^ {r \cdot t} \int_{t_2}^{+\infty} e^{-r \cdot \tau} d \tau = \\
+&= d_0 \cdot e^{r \cdot t} \cdot \dfrac{-1}{r} \Big( e^{-r \cdot t_1} - e^{-r \cdot t}\Big) +  d_1 \cdot e^{r \cdot t} \cdot \dfrac{-1}{r} \Big( e^{-r \cdot t_2} - e^{-r \cdot t_1}\Big) +  d_0 \cdot e^{r \cdot t} \cdot \dfrac{-1}{r} \Big( e^{-r \cdot t}_{t \rightarrow \infty} - e^{-r \cdot t_2}\Big) = \\
+&= \dfrac{d_0}{r} - \dfrac{d_0}{r} \cdot e ^{-r \cdot (t_1 - t)} + \dfrac{d_1}{r} \cdot e ^{-r (t_1 - t)} - \dfrac{d_1}{r} \cdot e ^{-r (t_2 - t)} + \dfrac{d_0}{r} \cdot e ^{-r (t_2 - t)} = \\
+&= \dfrac{d_0}{r} + \dfrac{d_1 - d_0}{r} \cdot e ^{-r \cdot (t_1 - t)} + \dfrac{d_0 -d_1}{r} \cdot e ^{-r \cdot (t_2 - t)} 
+\end{align*}
+Также можно считать выпуклость вогнутость. 
+итого наш скачок выглядит вот так: 
+
+$$ \dfrac{d_1 - d_0}{r} \cdot e^{-r \cdot t_1} - \dfrac{d_1 - d_0}{r} \cdot e ^{-r \cdot t_2}  $$
+
+Интересный нюанс: $$ q^{''}_{tt} > 0 \rightarrow \text{convex} $$
+\item $ t_1 \le t < t_2 \Rightarrow d = d_1 $, а затем $ d = d_0 $ 
+
+\begin{align*}
+&q(t) = \int_{t}^{t_2} d(\tau) \cdot e^{-r(\tau - t)} d \tau + \int_{t_2}^{\infty} d(\tau) \cdot e^{-r(\tau - t)} d \tau = \ldots = \\
+&= d_1 \cdot e^{r \cdot t} \cdot \dfrac{-1}{r} \cdot  \Big( e^{-r \cdot t_2} - e^{-r \cdot t} \Big) + d_0 \cdot e ^{r \cdot t } \cdot \dfrac{-1}{r} \cdot \Big( e^{-r \cdot t}_{t \rightarrow \infty} - e^{-r \cdot t_2} \Big) = \\
+&= \dfrac{d_1}{r} - \dfrac{d_1}{r} \cdot e ^{-r \cdot (t_2 -t)} + \dfrac{d_0}{r} \cdot e ^{-r \cdot (t_1 - t)} = \dfrac{d_1}{r} + \dfrac{d_0 - d_1}{r} \cdot e ^ {-r \cdot (t_2 - t)} 
+\end{align*}
+Подсказка лайфхак как вы можете себя чекить $ \dfrac{d_0 - d_1}{r} \cdot e^{-r \cdot (t_2 - t)} $. Этот кусок вот эта фигня и вон та фигня (2) и (3) в итоговых ответах.У вас она должна быть одинакова. Если та штука равна этой штуке, то у вас нет скачка. Второй факт, что вы подсчитали верно интегралы.
+\item $ t \ge t_2 $ 
+\begin{align*}
+q(t) = \int_{t}^{\infty} d_0 \cdot e^{-r(\tau - t)} d \tau = \dfrac{d_0)}{r}
+\end{align*} смотреть (1) 
+\item Итого
+\begin{align*}
+q(t) = \begin{cases} 
+d_0 / r  & t < t_{info}  \\
+d_0 / r + \dfrac{d_1 - d_0}{r} \cdot e^{-r \cdot (t_1 - t) } + \dfrac{d_0 - d_1}{r} \cdot e ^{-r \cdot (t_2 - t) } & t_{info} \le t < t_1\\
+d_1 / r + \dfrac{d_0 - d_1}{r} \cdot e ^ {-r \cdot (t_2 - t)} & t_1 \le t < t_2 \\
+d_0 / r  & t \ge t_2
+\end{cases}
+\end{align*}
+\end{enumerate}
+\end{itemize}
+\subsubsection*{Часть 2. Анализ графика динамики Фундаментальной стоимости акции}
+\subsubsection*{Часть 3. Неожиданное НЕизменение дивидендов}
+\subsubsection*{Задача 4. Фундаментальная стоимость акции}
+\end{otherlanguage*} 
+\end{document}

@@ -1,0 +1,215 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 6 М2}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsubsection*{Оптимальная консервативность центрального банка}
+Условия задачи:
+\begin{align*}
+\text{Функция совокупного предложения: } \\
+y = \bar{y	} + b \cdot (\pi - \pi^e) \quad b > 0 \\
+\text{функцияя общественного благосостояния: } \\
+W_{soc} = y - \dfrac{1}{2} a \cdot \pi^2  \quad a > 0 \\
+\text{Целевая функция политика: } \\
+W_{pol} = y -  \dfrac{1}{2} a \cdot c \cdot \pi^ 2 \quad a, c > 0 
+\end{align*}
+\begin{enumerate}
+
+\item Интерпретировать коэффициенты
+
+$b$ - это чувствительной кривой лукаса к инфляционному сюрпризу
+
+$a$ - это насколько общество не любит инфляцию
+
+$c$ - это как относится политик относительно общества к инфляции
+
+\item Волатильность выпуска вывести
+
+\begin{align*}
+W_{pol} = y - \dfrac{1}{2} a \cdot c \cdot \pi^ 2 \rightarrow \max_{\pi, y} \\
+W_{pol} = \bar{y} + b \cdot \pi - b \cdot \pi^e - \dfrac{1}{2} \cdot a \cdot c \cdot \pi^2 \rightarrow \max_{\pi} \\
+\dfrac{\partial W_{pol}}{\partial \pi} = b - a \cdot c \cdot \pi = 0 \Rightarrow \pi  = \dfrac{b}{a \cdot c} \\
+\dfrac{\partial^2 W_{pol}}{\partial \pi^2} = - a \cdot c < 0 \Rightarrow \quad \text{concave} 
+\end{align*}
+\item Какую инфляцию будут ожидать люди
+
+\begin{align*}
+\mathbb{E} (\pi) = \mathbb{E} (\dfrac{b}{a \cdot c} ) = \dfrac{\bar{b}}{a \cdot c} \\
+\end{align*}
+\item Записать ожидаемое общественное благосостояние
+\begin{align*}
+W^e_{soc} = \mathbb{E} (W_{soc} ) = \mathbb{E} (y - \dfrac{1}{2} a \cdot \pi^2) = \mathbb{E} (\bar{y} + b \cdot \pi - b \cdot \pi^e - \dfrac{1}{2} \cdot a \cdot \pi^2 ) =  \\
+\pi \quad \text{здесь является случайной величиной}  \\
+= \bar{y} + \mathbb{E} ( b \cdot \pi ) - \mathbb{E} (b \cdot \pi^e) - \mathbb{E} (\dfrac{1}{2} \cdot a \cdot \pi^2 ) = \\
+= \bar{y} + \mathbb{E} (\dfrac{b^2}{a \cdot c} ) - \mathbb{E} (b \cdot \dfrac{\bar{b}}{a \cdot c }) - \mathbb{E} (\dfrac{1}{2} \cdot \dfrac{b^2}{a^2 \cdot c ^ 2 }) = \\
+b \rightarrow \text{случайная величина для общества, но неслучайнаая для политика}  \\
+= \bar{y} + \dfrac{1}{a \cdot c} \cdot \mathbb{E} (b^2) - \dfrac{\bar{b}}{a \cdot c} \cdot \mathbb{E} (b) - \dfrac{1}{2 \cdot a \cdot c ^ 2} \cdot \mathbb{E} (b^2) \\
+\text{Лирическое отступлени, надо найти } \mathbb{E} (b^2) 
+b \sim (\bar{b}, \sigma^2_b) 
+\mathbb{E} (b) = \bar{b} \\
+\mathbb{D} (b) = \sigma^2_b \\
+\mathbb{D} (b) = \mathbb{E} (b^2) - \mathbb{E} (b)^2 \\
+\mathbb{E} (b^2) = \sigma^2_b + \bar{b}^2 \\
+W^e_{soc} = \bar{y} + \dfrac{\sigma^2_b + \bar{b}^2}{a \cdot c} - \dfrac{\bar{b}^2}{a \cdot c} - \dfrac{\sigma^2_b + \bar{b}^2 }{2 a \cdot c ^ 2 } = \\ = \bar{y} + \dfrac{\sigma^2_b}{a \cdot c } - \dfrac{\sigma^2_b + \bar{b}^2}{- 2 a \cdot c }
+\end{align*}
+Вот мы и записали ожидаемое общественное благосостояние 
+
+\item Определите оптимальный для общества уровень $ c $. 
+
+\begin{align*}
+W^{soc}_{e} = \bar{y} + \dfrac{\sigma^2_b}{a \cdot c} - \dfrac{\sigma^2_b + \bar{b}^2}{2 \cdot a \cdot c ^2} \rightarrow \max_{c} \\
+\dfrac{\partial W^{soc}_{e}}{\partial c} = - \dfrac{\sigma^2_b \cdot b}{a \cdot c ^ 2} + \dfrac{\sigma^2_b + \bar{b}^2}{2 \cdot a \cdot c ^ 3}  \cdot 2 = 0 \Rightarrow \\
+\Rightarrow c^* = \dfrac{\sigma^2_b + \bar{b}^2}{\sigma^2_b} = 1 + \dfrac{\bar{b}^2}{\sigma^2 \cdot b}
+\end{align*}
+\end{enumerate}
+\subsection*{Шоки в модели IS-LM}
+\subsubsection*{Часть 1. Стабилизация выпуска и денежной массы.}
+Когда мы подставляем $ \bar{i} $ или $ \bar{m} $ это значит что мы их таргетируем. Это замечаательно
+
+Условия:
+
+\begin{align*}
+\text{Вид кривой IS: } \\
+y = a - b \cdot i + \varepsilon_{IS} \quad a > 0 \quad b > 0 \\
+\text{Вид кривой LM: } \\
+m - p = k \cdot y - hi \quad k > 0 \quad h > 0 \quad \\
+\varepsilon_{IS} \sim N(0, \sigma^2_{IS} ) \\
+\varepsilon_{LM} \sim N(0, \sigma^2_{LM} ) 
+\end{align*}
+\begin{enumerate}
+\item Предположим, ЦБ рассматривает политику таргетирования номинальной ставки процента на
+уровне. Выведите аналитически волатильность выпуска в данном случае
+
+\begin{align*}
+p = \bar{p} \\
+i = \bar{i} \\
+m - \bar{p}  = k \cdot y - h \cdot i + \varepsilon_{LM} \\
+y = a - b \cdot \bar{i} + \varepsilon_{IS} \\
+\mathbb{D} (y) = \mathbb{D} (a - b \cdot \bar{i} + \varepsilon_{IS} ) = \mathbb{D} (\varepsilon_{IS} ) = \sigma^2_{IS} 
+\end{align*}
+\item Предположим, ЦБ рассматривает политику таргетирования денежной массы на уровне. Выведите аналитически волатильность выпуска в данном случае
+
+\begin{align*}
+m = \bar{m} \\
+\begin{cases}
+\bar{m} - \bar{p} = k \cdot y - h \cdot i + \varepsilon_{LM} \\
+y = a - b \cdot i + \varepsilon_{IS} 
+\end{cases}\Rightarrow b_i = a - y + \varepsilon_{IS} 
+\Rightarrow i = \dfrac{a}{b} - \dfrac{1}{b} \cdot y + \dfrac{1}{b} \cdot \varepsilon_{IS} \\
+\bar{m} - \bar{p} = k \cdot y - \dfrac{a \cdot h}{b} + \dfrac{h}{b} \cdot y - \dfrac{h}{b} \cdot \varepsilon_{IS} + \varepsilon_{LM} \\
+\text{Всё это время мы приравнивали IS и LM  } 
+\end{align*}
+
+\begin{align*}
+\Big( \dfrac{k \cdot b + h}{b}\Big) y = \dfrac{a \cdot h }{b} + ( \bar{m} - \bar{p} ) + \dfrac{h}{b} \cdot \varepsilon_{SS} - \varepsilon_{LM} \\
+y = \dfrac{a \cdot h }{k \cdot b + h} + \dfrac{b}{k \cdot b + h} (\bar{m} - \bar{p} ) + \dfrac{h}{k \cdot b + h }  \cdot \varepsilon_{IS} - \dfrac{b}{k \cdot b + h} \cdot \varepsilon_{LM} \\
+\mathbb{D} (y) = \Big( \dfrac{h}{k \cdot b + h }\Big) \cdot \sigma^2_{IS} + \Big(\dfrac{b}{k \cdot b + h} \Big)^2 \cdot \sigma^2_{LM} 
+\end{align*}
+\item Пусть только шоки товарного рынка (IS) $ \varepsilon_{LM} = 0 $ 
+
+\begin{align*}
+\mathbb{D} (y)|_{i= \bar{i}} = \sigma^2_{IS} \quad \text{vs} \quad  \mathbb{D} (y)|_{m = \bar{m} } = \Big(\dfrac{h}{k \cdot b + h} \Big)^2 \cdot \sigma^2_{IS} 
+\end{align*}
+Левая часть уравнения всегда больше, очевидно, потому что $ \dfrac{h}{k \cdot b + h} < 1 $ 
+
+\item Пусть только шоки денежного рынка (LM) $ \varepsilon_{IS} = 0 $ 
+
+\begin{align*}
+\mathbb{D} (y)|_{i= \bar{i}} = 0 \quad \text{vs} \quad  \mathbb{D} (y)|_{m = \bar{m} } = \Big(\dfrac{h}{k \cdot b + h} \Big)^2 \cdot \sigma^2_{LM} 
+\end{align*}
+
+\item Если в экономике наблюдаются только шоки товарного рынка, существует ли какая-то иная политика, которая позволяет достичь волатильности меньше, чем в случае таргетирования ставки процента или таргетирования денежной массы?
+
+Таргетируйте выпуск. Таргетируем $ y = \bar{y} $ 
+
+\begin{align*}
+\bar y = a - b \cdot i + \varepsilon_{IS} \\
+m - \bar{p} = k \cdot \bar{y} - h \cdot i + \varepsilon_{LM} \\
+\Rightarrow i = \dfrac{a}{b} - \dfrac{1}{b } \cdot \bar{y} + \dfrac{1}{b} \cdot \varepsilon_{IS} \\
+m = \bar{p} + k \cdot \bar{y} - \dfrac{a \cdot h}{b} + \dfrac{h}{b} \cdot \bar{y} - \dfrac{h}{b} \cdot \varepsilon_{IS} 
+\end{align*}
+\end{enumerate}
+\subsubsection*{Часть 2. Политика стабилизации денежной массы}
+Условия: 
+
+Глава страны, политик «Y», поручил ЦБ проработать две политики: таргетирование номинальной
+ставки процента и таргетирование выпуска. При этом сам ЦБ стремится минимизировать
+волатильность денежной массы с учетом шоков, которым подвержена экономика.
+
+То есть задача политика выглядит вот так: 
+\begin{align*}
+\mathbb{D} (m) \rightarrow \min \\
+\end{align*}
+\begin{enumerate}
+\item Предположим, ЦБ прорабатывает политику таргетирования номинальной ставки процента на
+уровне $ i = \bar{i} $ . Выведите аналитически волатильность денежной массы 
+
+\begin{align*}
+i = \bar{i} \\
+y = a - b \cdot \bar{i} + \varepsilon_{IS} \\
+m - \bar{p} = k \cdot y - h \cdot i + \varepsilon_{LM} \\
+m - \bar{p} = k \cdot a - b \cdot k \cdot \bar{i} + k \cdot \varepsilon_{IS} - h \cdot \bar{i} + \varepsilon_{LM} \\
+m = \bar{p} + a \cdot k - (h + b \cdot k ) \cdot \bar{i} + k \cdot \varepsilon_{IS} + \varepsilon_{LM} \\
+\mathbb{D} (m) = k^2 \cdot \sigma^2_{IS} + \sigma^2_{LM} \rightarrow \text{дисперсия денежной массы} 
+\end{align*}
+
+Шоки денежного рынка оказывают влияние на волитальность денежной массы, потому что она должна подстраиваться под эти шоки. Аналогично с шоками товарного рынка.
+\item Предположим, ЦБ прорабатывает политику таргетирования выпуска на уровне $ y = \bar{y} $ . Выведите аналитически волатильность денежной массы
+\begin{align*}
+y = \bar{y} \\
+\bar{y} = a - b \cdot i + \varepsilon_{IS} \rightarrow i_{IS} = \dfrac{a}{b} - \dfrac{1}{b} \cdot \bar{y} + \dfrac{1}{b} \cdot \varepsilon_{IS} \\
+m - \bar{p} = k \cdot \bar{y} - h \cdot i + \varepsilon_{LM} \Rightarrow \\
+\Rightarrow m = \bar{p} + k \cdot \bar{y} - \dfrac{a \cdot h}{b} + \dfrac{h}{b} \cdot \bar{y} - \dfrac{h}{b} \cdot \varepsilon_{IS} + \varepsilon_{LM} \\
+\mathbb{D} (m) |_{y = \bar{y}} = \dfrac{h^2}{b^2} \sigma^2_{IS} + \sigma^2_{LM} 
+\end{align*}
+\item Главное бюро статистики и анализа страны обнаружило, что экономика подвержена только
+шокам товарного рынка. Какую из двух политик оптимально проводить ЦБ в таком случае 2 ?
+Докажите это аналитически
+
+\begin{align*}
+\varepsilon_{LM} = 0 \Rightarrow \sigma^2_{LM} = 0 \\
+k > \dfrac{h}{b} \\
+\mathbb{D} (m)|_{i = \bar{i}} = k^2 \cdot \sigma^2_{IS} + \sigma^2_{LM} \quad \text{vs} \quad  \mathbb{D} (m) |_{y = \bar{y}} = \dfrac{h^2}{b^2} \\
+\text{левая часть по условию больше чем правая}
+\end{align*}
+
+\item Главное бюро статистики и анализа страны обнаружило, что экономика подвержена только
+шокам денежного рынка. Какую из двух политик оптимально проводить ЦБ в таком случае?
+Докажите это аналитически и объясните интуитивно
+\begin{align*}
+\varepsilon_{IS} = 0 \Rightarrow \sigma^2_{IS} = 0 \\
+\mathbb{D} (m)|_{i = \bar{i}}  = \sigma^2_{LM} \quad \text{VS} \quad \mathbb{D} (m) |_{y = \bar{y}} = \sigma^2_{LM} \\
+\text{Они одинаковы, значит без разницы какую политику брать } 
+\end{align*}
+
+\item Если в экономике наблюдаются только шоки денежного рынка, существует ли какая-то иная
+политика, которая позволяет достичь волатильности меньше, чем в случае таргетирования
+ставки процента или таргетирования выпуска? Если да, то докажите это и выведите правило для
+ставки процента, в соответствии с которым данная политика будет достигаться. Если нет, то
+опровергните.
+
+\begin{align*}
+\varepsilon_{IS} = 0 \\
+\sigma^2_{IS} = 0 \\
+\mathbb{D} (m) \rightarrow \min \Rightarrow m = \bar{m} \\
+y = a - b \cdot i \\
+\bar{m} - \bar{p} = k \cdot y - h \cdot i + \varepsilon_{LM} \\
+\bar{m} - \bar{p} = k \cdot (a - b \cdot i) - h \cdot i + \varepsilon_{LM} \\
+(k \cdot b + h ) \cdot i = a \cdot k - ( \bar{m} - \bar{p} ) + \varepsilon_{LM} \\
+i = \dfrac{a \cdot k}{k \cdot b + h}  - \dfrac{\bar{m} - \bar{p}}{k \cdot b + h } + \dfrac{1}{k \cdot b + h } \cdot \varepsilon_{LM} 
+\end{align*}
+Ответ. В этом случае, нам надо таргетировать денежную масссу. 
+\begin{align*}
+\end{align*}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

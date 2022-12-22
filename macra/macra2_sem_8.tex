@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 8}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section*{Задача 1. Денежный мультипликатор; таргетирование денежной массы,
+таргетирование ставки процента}
+\begin{align*}
+\dfrac{M}{P} = \dfrac{\text{mult}(r)}{P} \cdot H \\
+M \rightarrow \text{денежная масса} \\
+\text{mult} (r) \rightarrow \text{денежный мультипликатор} \\
+H \rightarrow \text{Денежная база} \\
+\end{align*}
+\begin{enumerate}
+\item Как зависит денежный мультипликатор от ставки процента? 
+\begin{align*}
+\Big( \dfrac{M}{P} \Big) ^ D = k \cdot Y - r \cdot i  \\
+\text{Предлоение денег} = \text{const} \\
+\end{align*}
+Спрос зависит отрицательно от ставки процента, значит предложение положительно (прелестная логика) 
+
+\begin{align*}
+&\text{mult} (r) = \dfrac{1 + \text{cr}}{cr + \text{rr}_{\text{required}} + \text{rr}_{\text{excessive}}} \\
+&\text{rr}_{\text{required}} \rightarrow \text{ЦБ задаёт экзогенно, значит от ставки процента не зависит} \\
+& \text{cr} = \dfrac{C}{D} \\
+& r \uparrow \Rightarrow D \uparrow \Rightarrow C \downarrow \Rightarrow \text{cr} \downarrow 
+\end{align*}
+$ \text{rr}_{\text{excessive}} $ зависит отрицательно от ставки процента. Почему? Потому что. Избыточные резервы это резервы которые коммерческие банки держат сверх требуемой нормы. Если ставка процента выросла, вам меньше надо резервов держать, то есть связь отрицательная.
+\item Пусть ЦБ таргетирует денежную массу. Проанализируйте последствия увеличения
+выпуска в экономике. Покажите графически
+
+(графики можно потом вставить)
+
+\begin{align*}
+\Big( \dfrac{M}{P}\Big)^D = L\Big(Y (+), i (-)\Big)
+\end{align*} 
+\subsection*{Задача 2. Динамика отношения государственного долга к ВВП}
+\begin{align*}
+b_{yt} = \text{отношение госдолга к ввп } \\
+b_{y, t+1} = (b_{y, t} + d_{y, t} - S_{y, t}) \cdot \dfrac{1 + r}{1 + g} \\
+r = 0.02 \\
+g = 0.05  \\
+d_{y, t} = d_{y} = 0.05  \\
+S_{y, t} = 0.5 \cdot d_{y, t} 
+\end{align*}
+Пусть сеньораж покрывает долю $ \alpha $  от дефицита, тогда 
+\begin{align*}
+S_{y, t} = \alpha \cdot d_{y,t} \\
+d_{y, t} - s_{y, t} = (1 - \alpha) \cdot d_{y, t} 
+\end{align*}
+К чему будет стремиться госдолг в долгосрочной перспективе? 
+\begin{align*}
+b_{y, t+ 2} = ( b_{y, t+1} + d_{y, t+1} - s_{y, t+1}) \cdot \dfrac{1 + r}{1 + g} \\
+b_{y, t+2} = b_{y, t} \cdot \Big( \dfrac{1 + r}{1 + g} \Big)^2 + (d_{y, t} - s_{y, t}) \cdot \Big( \dfrac{1 + r}{1 + g} \Big)^2  + (d_{y, t+1} - s_{y, t+1} \Big) (\dfrac{1 + r}{1 + g}) \\
+b_{y, 1 + n} = b_{y, t} \cdot \Big( \dfrac{1 + r}{1 + g}\Big)^n + (d_{y, t} - s_{y, t}) \cdot (\dfrac{1 + r}{1 + g}) + \ldots + (d_{y, t+ n- 1} - s_{y, t + n - 1}) \cdot (\dfrac{1 + r}{1 + g})
+\end{align*}
+Но мы всегда с помощью сеньоража покрываем фиксированную долю от дефицита 
+\begin{align*}
+b_{y, 1 + n} = b_{y, t} \cdot ( \dfrac{1 + r}{1 + g})^n + (1 - \alpha) \cdot d_y \cdot (\dfrac{1 + r}{1 + g})^n + \ldots + (1 - \alpha) \cdot d_y \cdot (\dfrac{1 + r}{1 + g}) = \\
+=  b_{y, t} \cdot \Big( \dfrac{1 + r}{1 + g} \Big)^n  + (1 - \alpha) \cdot d_y \cdot \sum_{\tau = 1}^n (\dfrac{(1 + r}{1 + g})^\tau \\
+N \rightarrow + \infty \\
+\lim_{N + \infty} b_{y, t + n}  = \lim_{n \rightarrow \infty} b_{y, t} \cdot \Big( \dfrac{1 + r}{1 + g} \Big)^n + (1 - \alpha) \cdot d_y \cdot \sum_{\tau = 1}^\infty \Big( \dfrac{1 + r}{1 + g} \Big) ^ \tau 
+\end{align*}
+$  \sum_{\tau = 1}^\infty \Big( \dfrac{1 + r}{1 + g} \Big) ^ \tau  $ --- 
+это бесконечно убывающая геометрическая прогрессия. Также известн что $ r < g $. Короче, первое слагаемое стремится к нулю. А второе, которое с геометрической прогрессией. По формуле
+\begin{align*}
+\dfrac{b_1}{1 - q} = (\text{подстановка} )= \dfrac{\dfrac{1 + r}{1 + g}}{1 - \dfrac{1 + r}{1 + g}} = \dfrac{1 + r}{g- r}
+\end{align*}
+\begin{align*}
+\lim_{n \rightarrow \infty} b_{y, t + n} = (1 - \alpha ) \cdot d_y \cdot \dfrac{1 + r}{g - r} 
+\end{align*}
+Дальше это надо всё подстаить. 
+
+А ещё есть лайфхак как решать это быстро. Изи вариант. 
+
+\begin{align*}
+b_{y, t+1} = (b_{y, t} + d_{y, t} - s_{y, t}) \cdot \dfrac{1 + r}{1 + g} \\
+\text{В равновесии} r < g, \,\,\, b_{y, t+1} = b_{y, t} = b_{y, t} = b_y, \\ \text{То есть госдолг в смежных периодах будет одинаковый} \\
+b_y = (b_y + d_y - s_y) \cdot \dfrac{1 + r}{1 + g} \\
+\dfrac{1 + g}{1 + r} \cdot b_y - b_y = d_y - s_y \\
+\dfrac{g - r}{1 + r} \cdot b_y = d_y - s_y \rightarrow (s_y = \alpha \cdot d_y) \rightarrow \\
+\rightarrow b_y = \dfrac{1 + r}{g - r} (1 - \alpha) \cdot d_y
+\end{align*}
+
+\subsubsection*{Устойчивость фискальной политики}
+\begin{align*}
+\dot D (t) = r (t) \cdot D(t) + G(t) - T(t) \rightarrow \text{Вторичный дефицит}\\
+G(t) - T(t) \rightarrow \text{Первичный дефицит} \\
+r(t) - D(t) \rightarrow \text{проценты по госдолгу} \\ 
+\dot D(t) \rightarrow \text{Изменение госдолга во времени равно вторичному дефициту}
+\end{align*}
+\begin{align*}
+&  d(t) = \dfrac{D(t) }{Y(t) } \\
+& \dfrac{\dot Y}{Y} = g \\
+& r(t) = r \Big( (t) \Big) = r \cdot \dfrac{D(t) }{Y(t) } \\
+& r^{'}_{d(t)} > 0  \,\,\, r^{''}_{dd} > 0 ( \text{convex}) \\
+& \lim_{d \rightarrow \infty}  r \Big( d(t) \Big) > g \\
+& \lim_{d \rightarrow - \infty}  r \Big( d(t) \Big) < g 
+\end{align*}
+Пусть правительство поддерживает отношение операционного1 дефицита бюджета к
+ВВП на постоянном уровне $ \alpha >  0$. Выразите $ \dot d (t) $ через $ \alpha, g, d(t) $. Изобразить график зависимости $ \dot d (t) $ от $ d(t) $ . 
+\begin{align*}
+\dfrac{\dot D(t) }{Y(t)} = \alpha \rightarrow \text{Операционный дефицит} \\
+\dot d (t) = \ldots \\
+d(t) = \dfrac{D(t)}{Y(t)} = \dot{\Big( \dfrac{D(t)}{Y(t) }\Big) } = \dfrac{\dot D \cdot Y - D \cdot \dot Y }{Y^2} = \dfrac{\dot D }{Y}  - \dfrac{D}{Y} \cdot \dfrac{\dot Y}{Y} = \\
+=  (\text{подставляем}) = \\
+\dot d (t) = \alpha - d(t) \cdot g (t) \rightarrow \text{уравнение динамики} 
+\end{align*}
+Приращение долга по времени зависит от долга. Тогда стационарное состояние $ \dot d = 0 \Rightarrow d(t) =  \dfrac{a}{g} $.
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

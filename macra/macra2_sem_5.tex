@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Модель Рамсея}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\begin{enumerate}
+\item Есть 4 периода. 3 периода работает, 1 на пенсии, но пенсию не получает
+\begin{align*}
+\begin{pmatrix}
+\, & y_t & c_t & s_t & a_t \\
+t = 1 & 30 & 45 & -15 & 0  \\
+t = 2 & 60 & 45 & 15 &-15 \\
+t= 3 & 90 & 45 & 45 & 0  \\
+t = 4 & 0 & 45 & -45 & 45  \\
+\end{pmatrix}
+\end{align*}
+\begin{align*}
+c_i = \sum_{i=1}^n y_i / n = \bar{	y} \\
+C_1 + \dfrac{C_2}{(1+r)} + \dfrac{C_3}{(1+r)^2} + \dfrac{C_4}{(1 + r)^3} = 
+y_1 + \dfrac{y_2}{(1+r)} + \dfrac{y_3}{(1+r)^2} + \dfrac{y_4}{(1 + r)^3} + a_1\\ 
+\end{align*}
+Подставляем
+\begin{align*}
+r = 0; a_1 = 0 \\
+C_1 + C_2 + C_3 + C_4 = y_1 + y_2 + y _3 \Rightarrow c^* = 45  \\
+r = 0 \\
+\rho > 0 \\
+a_t = a_{t-1} + s_{t-1}
+\end{align*}
+Дальше эта штука перерисовывается. 
+
+\begin{enumerate}
+
+\item Ограничение ликвидности $ \Rightarrow $ нельзя брать кредиты 
+ 
+$ C_1 = 30 $ 
+
+$ C_2 + C_3 + C_4  = 150 \Rightarrow C^* = 50 $ 
+
+\item Если есть начальное богатство, то просто меняется таблица а дльше решается аналогично 
+\end{enumerate}
+
+\item Сумма бесконечно убывающей геометрической прогрессии
+
+$ \alpha > 0 $ 
+
+$ b_1 + b_1 \cdot q ^{-\alpha} + \cdots $ 
+
+$ S_{geom} = \dfrac{b_1}{1 - q} $
+PIH предполагает что $ r = \rho $
+
+\begin{align*}
+PIH: \\
+\sum_{\tau = 0} ^ \infty \dfrac{C_{t+\tau}}{(1 +r)^\tau} = A_t + \sum_{\tau = 0}^\infty \dfrac{Y_{1+t}^d}{(1+r)^\tau} \\
+r = \rho > 0 \rightarrow \dfrac{u^{'}(C_t)}{u^{'}(C_{t+1})} \\
+C \cdot \sum_{\tau=0}^\infty \dfrac{1}{(1+r)^\tau} = A_t + \sum_{\tau = 0}^\infty \dfrac{Y_{1+t}^d}{(1+r)^\tau}  \\
+S_{\operatorname{geom}} = \dfrac{1}{1 - 1 /(1+r)} = \dfrac{1+r}{r} \\
+\dfrac{1+r}{r} \cdot C = A_t + \sum_{t = 0}^\infty \dfrac{Y^d_{t+\tau}}{(1+r)^\tau} \\
+C = \dfrac{r}{1 + r} \cdot \Big( A_t + \sum_{\tau=0}^\infty \dfrac{Y_{t+\tau}^d}{(1+r)^\tau}\Big)
+\end{align*}
+
+\begin{align*}
+Y_{t+\tau} = Y_t - T_t \\
+C = \dfrac{r}{1+r} [ A_t + (Y_t - T_t) + \dfrac{Y_{t+1} - T_{\tau +1}}{(1+r)} + \cdots ] \\
+Y^d = Y - T \\
+\Delta C = \dfrac{1}{1 + r} \cdot \Big( \Delta A_t + ((\Delta Y_t - \Delta T_t) + \dfrac{\Delta Y_{t+1} - \Delta T_{t+1}}{1 +r} + \cdots \Big) \\
+\end{align*}
+
+\begin{enumerate}
+\item $ \Delta T < 0 $ 
+
+\begin{align*}
+\Delta C = \dfrac{r}{1 + r} (-1) \cdot \dfrac{\Delta T_{t+1}}{1 + r} = -\dfrac{\Delta T}{(1+r)^2} \cdot r > 0
+\end{align*}
+
+\item 
+
+\begin{align*}
+\Delta C = \dfrac{r}{1 + r} \cdot \Big( - \dfrac{\Delta T}{1 + r} - \dfrac{\Delta T}{1+r}\Big) =  \dfrac{r}{(1+r)^2} \cdot \Delta T [ 1 + \dfrac{1}{1 + r} + \cdots ] \\
+\Delta C = \dfrac{-\Delta T}{1 + r }
+\end{align*}
+
+\item 
+
+\begin{align*}
+\Delta C = \dfrac{r}{1+r} \dfrac{1}{(1+r)^2} \Delta Y_{t+2} = \dfrac{r}{(1+r)^3} \Delta Y_{t+2} 
+\end{align*}
+\end{enumerate}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

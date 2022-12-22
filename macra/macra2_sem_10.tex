@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{amsfonts}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Михайлов, семинар 3 М2}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\section*{Две душные модели}
+\subsubsection*{Модель множественного равновесия и дефолта}
+\begin{align*}
+& L_f = \alpha \cdot q^2, \,\, \alpha > 0 \\
+& q = \dfrac{T}{Y} \,\,\, \text{налоги к ВВП}  \\
+& d = \dfrac{D}{Y} \,\,\, \text{долг к ВВП} \\
+& L_d = \dfrac{\alpha  \cdot q^2 }{L_f} + d \cdot h ^ 2 + LL_d \\
+& h \rightarrow \text{доля долга, которая НЕ будет погашена} \\
+& LL_d \rightarrow \text{аккордные издержки дефолта типа отрицательного кредитного рейтинга} \\
+& (1 - h) \rightarrow \text{доля погашенного долга} \\ 
+& (1 - h) \cdot d \rightarrow \text{величина погашенного долга} \\
+\end{align*}
+\begin{enumerate}
+\item Дефолт
+\begin{align*}
+\begin{cases}
+L_d = \alpha \cdot q ^2 + d h^2 + LL_d \rightarrow \min_{h, q \le \hat q} \\
+\text{s. t.  } q = (1 - h) \cdot d \le \hat q 
+\end{cases} \\
+\hat q \rightarrow	\text{верхнее ограничение на }  q \\
+\text{если } q^* \le \hat q \rightarrow \text{берём } q^* 
+\text{иначе берём } \hat q \\
+L_d = \alpha \cdot (1 - h) ^ 2 \cdot d ^2 + d h^2 + LL_d \rightarrow \min_h \\
+(L_d)^{'}_h = 2 \cdot d (1 - h) (-1 ) d ^2 + 2 d h = 0 \rightarrow \\
+\rightarrow ( \alpha (1 - h) (-1) d + h = 0 \rightarrow h = \alpha d (1 - h) = \alpha d - \alpha d h \\
+(1 + \alpha d) h = \alpha d \\
+h^* = \dfrac{\alpha d}{1 + \alpha d}
+\end{align*}
+\begin{align*}
+(1 - h^*) = \dfrac{\alpha d}{1 + \alpha d} \\
+q^* = \dfrac{d}{1 + \alpha d } \\
+q^* = \dfrac{d}{1 + \alpha d} \le \hat q \\
+d \le \hat q + \hat q \alpha d \\
+d (1 - \alpha \hat q) \le \hat q \rightarrow  d \le \dfrac{\hat q }{1 - \alpha \hat q }
+\end{align*}
+\begin{align*}
+h^* = \begin{cases} 
+\dfrac{\alpha d}{1 + \alpha d} & d \le \dfrac{\hat q }{1 - \alpha \hat q} \\ 
+1 - \dfrac{\hat q}{d}& \text{else} 
+\end{cases}  \\
+(1 - h^*) = \begin{cases}
+\dfrac{1 }{1 + \alpha d} & d \le \dfrac{\hat q }{1 - \alpha \hat q} \\
+\dfrac{ \hat q }{d}& \text{else}
+\end{cases} \\
+q^* = \begin{cases}
+\dfrac{d}{1 + \alpha d } & d \le \dfrac{\hat q }{1 - \alpha \hat q} \\
+\hat q & \text{else} 
+\end{cases}
+\end{align*}
+Похорошему надо пощетать вторую производную но я этого неделаю потому что я нехочу. Она будет больше нуля. 
+\item Подставить это всё в функцию потерь. 
+\begin{align*}
+L_d = \alpha \cdot q^2 + h ^2 \cdot d + LL_d \\
+L_d = \alpha \cdot \dfrac{d^2}{(1 + \alpha d)^2} + d \cdot \dfrac{(\alpha \cdot d)^2}{(1 + \alpha \cdot d)^2} + LL_d \\
+\dfrac{\alpha \cdot d ^ 2 + \alpha ^ 2 \cdot d ^ 3}{(1 + \alpha \cdot d)^ 2} + LL_d = \dfrac{\alpha \cdot d ^2 (1 + \alpha d)}{(1 + \alpha \cdot d) ^ 2 } + LL_d = \dfrac{\alpha \cdot d ^2}{1 + \alpha d} + LL_d \\ 
+L_d = \alpha \cdot \hat q ^ 2 + \dfrac{(d - \hat q)^ 2}{d^2} \cdot d + LL_d = \dfrac{\alpha \cdot \hat q ^2 \cdot d + d ^ 2 - 2 d \cdot \hat q + \hat q ^ 2 }{d}  + LL_d \\
+L_d = \begin{cases}
+\dfrac{\alpha \cdot d ^2}{1 + \alpha d } + LL_d & d \le \dfrac{\hat q }{1 - \alpha \cdot \hat q } \\
+\dfrac{\alpha \cdot \hat q ^2 \cdot d + d ^ 2 - 2 d \cdot \hat q + \hat q ^ 2 }{d}  + LL_d  & \text{else} 
+\end{cases}
+\end{align*}
+\item Пусть $ \alpha = 1, LL_d = 0.135 $. Предположим что $ d_{\text{default}} \le \hat q $ 
+Потери бывают разные. Надо понять когда они равны чтобы понять ситуацию, когда нам безразлично, какое решение принимать. 
+\begin{align*}
+L_f \rightarrow \text{полное погашение долга} \\
+L_d \rightarrow \text{объяввить дефолт и выплатить часть}  \\
+L_f = L_d \rightarrow \text{решение } d_{\text{default }} \\
+\text{В первом случае брать } L_d \text{т.к. сказано что } d_{\text{default}} \le \hat q \\
+L_f = \alpha \cdot q ^2 = L_d = \dfrac{\alpha \cdot d ^2}{1 + \alpha d} + LL_ d \\
+\text{когда мы говорим про потери от полного погашения мы подставляем вместо} q \rightarrow d \\
+\alpha \cdot d ^ 2 = \dfrac{\alpha \cdot d ^2}{1 + \alpha d} + LL_d \\
+LL_d = \dfrac{\alpha ^2 d ^ 3}{1 + \alpha d} \\
+\alpha ^ 2 \cdot d ^ 3 = LL_d + 2 d \cdot LL_d \rightarrow \alpha ^ 2 d ^3 - \alpha LL_d \cdot d - LL_d = 0 
+\end{align*}
+\item $ d_{\text{default}} < \hat q $ 
+\begin{align*}
+\alpha = 1 \\
+LL_d = 0.135 \\ 
+d ^ 3 - 0.135 d - 0.135 = 0 \\
+d_{\text{default}} \rightarrow \text{switch point} = 0.6 \\
+\hat q = 0.5 
+\end{align*}
+Решать либо по теореме Безу, либо по схемее Горнера
+
+стратегия следующая: 
+
+полное погашение если $ d < d_{\text{default}} $
+
+частичное погашение $ d \ge d_{\text{default}} $ 
+\item $ \hat q = 0.5 \rightarrow d_{\text{default}} \text{не достижим} $ 
+$ \hat d_{\text{default}} = \hat q = 0.5 $
+\item Изобразите график динамики погашенного (выплаченного) долга в зависимости от текущего накопленного долга
+
+\begin{align*}
+(1 - h ^* ) \cdot d = \dfrac{d}{1 + \alpha \cdot d } = \dfrac{d}{1 + d}\\
+\text{F.O.C. } \dfrac{1 + d - d }{(1 + d) ^ 2 } > 0 \\
+\text{S.O.C. } \dfrac{-2}{(1 + d)^3} < 0 
+\end{align*}
+\end{enumerate}
+\subsubsection*{Модель 2}
+
+\end{otherlanguage*} 
+\end{document}

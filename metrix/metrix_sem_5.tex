@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 8}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsection*{Множественная регрессия и F-тесты}
+\subsubsection*{Задача на множественную регрессию}
+\begin{align*}
+X^T \cdot X = \begin{pmatrix}
+10 & 0 & 1 \\ 
+0 & 20 & 2 \\
+1 & 2 & 5
+\end{pmatrix} \\
+X^T \cdot y = \begin{pmatrix}
+90 \\ 50 \\ -10 
+\end{pmatrix} \\
+y^T \cdot y = 1155 
+\end{align*}
+Напоминание: вид матрицы $ X $:
+\begin{align*}
+\begin{pmatrix}
+1 & X_{11} & X_{21} \\
+\ldots & \ldots & \ldots \\ 
+1 & \ldots & X_{2n}
+\end{pmatrix}
+\end{align*} 
+Тогда можно заметить, насчет этой $ X^T \times X $:
+\begin{align*}
+X^T \cdot X = \begin{pmatrix}
+n & \sum X_{1i} & \sum X_{2i} \\
+\ldots & \ldots & \ldots 
+\end{pmatrix}
+\end{align*}
+\begin{align*}
+X^T \times y = \begin{pmatrix}
+\sum y_i \\
+50 \\
+-10 
+\end{pmatrix} \\
+y^T \times y = \sum y_i ^ 2 
+\end{align*}
+\begin{align*}
+\hat \beta = (X^T \times X)^{-1} \times X^T \times y \\
+(X^T \times X) ^{-1} = \dfrac{1}{det (X^T X)} \times A^T
+\end{align*}
+Дальше всё это благополучно считается на компьютере и получаются ответы для $ \hat \beta $ 
+\begin{align*}
+\hat \sigma^2_{\varepsilon} = \dfrac{RSS}{n-3} \\
+RSS = (y - X \times \hat \beta)^T \times (y - X \times \hat \beta ) = Y^T - Y^T \times X \times \hat \beta - \hat \beta^T \times X^T \cdot y + \hat \beta^T \times X^T \times X \times \hat \beta 
+\end{align*}
+Правило транспонирования, которое следует помнить $ (A \times B)^T = B^T \times A^T  $
+
+Дальше всё подставить и посчитать. 
+\begin{align*}
+\dfrac{RSS}{n-3} = \dfrac{100}{10-3} \approx 14.3 
+\end{align*}
+\begin{align*}
+R^2 = \dfrac{ESS}{TSS} = 1 - \dfrac{RSS}{TSS} \\
+TSS = \sum (y_i - \bar y)^ 2 = y^T \times y - 2 \bar y \cdot \sum y_i + \bar{y}^2 = \sum y_i^2 - n \cdot (\bar y ) ^ 2
+\end{align*}
+Дальше посчитать, вся необходимая информация имеется. 
+
+Проверка значимости коэффициентов, всё это делается через т-статистику 
+
+\begin{align*}
+t_{\text{stat}} = \dfrac{\hat \beta - 0 }{\sigma_{\hat \beta} } \\
+\widehat{\text{var} (\hat \beta)} = (X^T \times X)^{-1} \cdot \hat \sigma^2_{\varepsilon} = \ldots	= (X^T \times X ) ^{-1} \cdot \dfrac{RSS}{n-3} = \text{Дальше просто посчитать} 
+\end{align*} 
+Дальше найти критические значения статистики. 
+\begin{align*}
+t_{\text{crit}} = t_{n-3; \dfrac{0.05}{2}} 
+\end{align*}
+Их надо сравнить с расчётными значениями статистики. Они попадут левее и правее в хвосты. Итого модель такая: 
+\begin{align*}
+\hat y_i = 10 + 3 \cdot X_{1i} - 5 \cdot X_{2i} 
+\end{align*}
+Это надо как-то интерпретировать и т.д. 
+\subsubsection*{F-тесты}
+\begin{align*}
+y_i = \beta_0 + \beta_1 \cdot X_{1i} + \ldots + \beta_{k} \cdot X_{ki} + \varepsilon_i 
+\end{align*}
+\begin{align*}
+H_0: \begin{cases}
+\beta = \ldots \\
+\ldots \\
+\beta_i = \ldots  
+\end{cases}
+H_1 : \begin{bmatrix}
+\beta_1 \ne \ldots \\
+\ldots \ldots \\
+\beta_i \ne \ldots 
+\end{bmatrix} \text{Хотя бы одно из условий не выполняется} \\
+\text{Альтернативная форма записи:} \\
+H_\alpha : \sum | \beta_i - \hat \beta | = 0 
+\end{align*}
+
+\subsubsection*{Алгоритм решения подобной задачи}
+\begin{enumerate}
+\item Оценить изначальную модель без ограничений $ \rightarrow RSS_{ur} $ 
+\item Оценить модель с ограничениями из $ H_0 $. $ \rightarrow RSS_{R} (\text{restricted}) $ 	
+\item $ F_{\text{расч.}} = \dfrac{(RSS_R - RSS_{ur}) / q}{RSS_{ur} / (n - k - 1)} $, где $ \begin{cases} q \rightarrow  \text{количество знаков '='} \\ k \rightarrow \text{количество переменных} \\ k+1 \rightarrow \text{количество переменных плюс константа} \end{cases} $
+\item $
+F_{\text{crit}} = F_{q; n-k-1; \alpha} 
+$
+
+\item Все что справа от $F_{\text{crit}} $ отвергается. 
+\begin{align*}
+TSS_{R, UR}  = \sum (Y_i - \bar{Y}) ^ 2 \\
+F_{\text{расч}} = \dfrac{\Big( RSS_R / TSS - RSS_{UR} / TSS \Big) / q}{RSS_{UR} / (TSS \cdot (n - k - 1) )}  = \dfrac{\Big( (1 - R^2_R) - (1 - R^2_{ur})\Big) /q}{(1 - R^2_{ur} ) / (n - k - 1) } \\
+\end{align*}
+\subsubsection*{Подвид F-теста. Гипотеза об адекватности регрессии. (Или гипотеза о совместной значимости коэффициентов)  }
+\begin{align*}
+&y_i = \beta_0 + \beta_1 \cdot x_{1i} + \ldots + \beta_k \cdot x_{ki} + \varepsilon \\ 
+&H_0 : \begin{cases}
+\beta_1 = 0 \\
+\beta_2 = 0 \\
+\ldots \ldots \\ 
+\beta_k = 0 
+\end{cases} \Rightarrow \beta_1 = \beta_2 = \ldots = \beta_k = 0 \\
+&H_1: \sum_{i=1}^k \beta_j^2 > 0 
+\end{align*}
+\begin{align*}
+&F_{\text{стат}}  = \dfrac{(RSS_R - RSS_{UR}) / k}{RSS_{UR} / (n - k - 1) } \\
+&\text{Restricted}: Y_i = \beta_0 + \varepsilon_i \Rightarrow \hat y_i = \hat \beta_0 \\
+&\beta_0 = \bar{Y} \\
+&RSS_{R} = \sum (Y_i - \hat \beta_0 ) ^ 2 = \sum (Y_i - \bar{Y} ) ^ 2 = TSS_{R, UR} \Rightarrow RSS_{R} = TSS  
+\end{align*}
+\begin{align*}
+F_{\text{стат}} = \dfrac{(RSS - RSS_{UR}) / q }{RSS_{UR} / (n - k -1 ) } =  \dfrac{ESS_{UR}  / k }{RSS_{UR} / (n - k -1 ) } 
+\end{align*}
+\item Для парной регрессии: 
+\begin{align*}
+y_i = \beta_0 + \beta_1 \cdot X_i + \varepsilon \\ 
+H_0: \beta_1 = 0 \rightarrow \begin{cases}
+\text{F-тест} \\
+\text{t-тест} \rightarrow \begin{cases} t_{cr} = t_{n-2; \alpha / 2} \\ (t_{n-2})^2 = F_{1; n-2} \end{cases}
+\end{cases}
+\end{align*}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

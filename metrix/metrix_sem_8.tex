@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 11?}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsection*{$R^2$ adjusted? }
+\subsubsection*{Используется для сравнения моделей}
+\begin{align*}
+R^2_{adjusted} = 1 - \dfrac{RSS / (n - k - 1) }{TSS / (n - 1) } = 1 - \dfrac{RSS}{TSS} \cdot \dfrac{n-1}{n-k-1} \\
+\text{добавляем регрессор } k \uparrow \Rightarrow \begin{cases} 
+R^2 \uparrow & \text{почти всегда} \\
+R^2 = \text{const} & \text{t-stat} = 0 \\
+R^2_{\text{adj}} \uparrow & |\text{t-stat}| > 1 \\
+R^2_{\text{adj}} \text{const} & |\text{t-stat}| =  1 \\
+R^2_{\text{adj}} \downarrow & |\text{t-stat}| < 1 \\
+\end{cases}
+\end{align*}
+\subsubsection*{Преобразование Бокса-Кокса}
+Это не степени это типа какие-то преобразования
+\begin{align*}
+y^{(\lambda)} = \begin{cases} 
+\dfrac{y^{\lambda} - 1 }{\lambda} & \lambda \ne 0 \\
+\ln y & \lambda = 0 
+\end{cases} \\
+X_j^{(\theta_j)} = \begin{cases} 
+\dfrac{X_j^{\theta_j} - 1}{\theta_j} & \theta_j \ne 0 \\
+\ln X_j & \theta_j = 0 
+\end{cases} \\
+y^{(\lambda)} = \beta_0 + \langle \beta, X \rangle + \varepsilon \\
+\varepsilon \sim N(0, \sigma^2) \\
+\mathcal{L} = \prod_{i=1}^n  \varepsilon_i \rightarrow \max_{\theta, \lambda, \beta} \\
+\end{align*}
+\subsubsection*{Ошибка спецификации}
+\begin{itemize}
+\item Недоопределенность (выкинули важные переменные) 
+\begin{align*}
+\hat \beta \text{становятся смещенными и несостоятельными} \Rightarrow \text{мы получаем неверную интерпретацию} 
+\end{align*}
+\item Переопределенность (добавили лишние переменные) 
+\begin{align*}
+\hat \beta \rightarrow \text{неэффективные, но все равно состоятельные и несмещенные} \Rightarrow \text{Var} (\hat \beta) \uparrow \Rightarrow \\
+\Rightarrow \text{t-stat} \downarrow \Rightarrow \text{мы чаще будем принимать гипотезу о незначимости} 
+\end{align*}
+\end{itemize}
+\subsubsection*{Почему недоопределенность это страшно и т.д.}
+\begin{align*}
+& \text{Данные генерируются так: } y_i = \beta_0 + \langle \beta, X \rangle + \varepsilon_i \\
+& \text{Оценили без } X_k \Rightarrow \varepsilon^* = \varepsilon + \beta_k \cdot X_k \\
+& \hat \beta = (X^T  \times X) ^{-1} \times X^T \times y \\
+& E ( \hat \beta ) = (X^T X) ^{-1} X^T \cdot E(X \beta + \varepsilon^*) = \\
+& = (X^T X) ^ { -1} X^T X \beta + (X^T X ) ^{-1} X^T \cdot E ( \varepsilon^* ) 
+\end{align*} 
+Если раньше $ E(\varepsilon) = 0 $, то теперь не факт. 
+Смещения может не быть, если 
+\begin{enumerate}
+\item $ \beta_k = 0 \Rightarrow \varepsilon^* = \varepsilon +( \beta_k X_k = 0) = \varepsilon $
+\item если $ X_k $ никак не связан с другими переменными 
+\subsubsection*{Ошибка спецификации, задача. }
+\begin{align*}
+\text{Настоящая модель: } \text{bonus} = 30 - 2 \cdot \text{missed} + 5 \cdot \text{talents} + \varepsilon \\
+\text{cov} ( \text{missed}, \text{talents}) = 2 \\
+\text{var} (\text{missed}) = 4 \\
+\widehat{\text{var}} (\text{talents}) = 9 \\
+\text{непонятно как оценивать талант, поэтому выкидываем его из модели} \\
+\widehat{\text{bonus}} = \hat \beta_0 + \hat \beta_1 \cdot \text{missed} \\
+\text{Найти смещение } \hat \beta_1 \\
+\hat \beta_1 = \dfrac{\bar{XY} - \bar{X} \cdot \bar{Y} }{\bar{X^2} - (\bar{X}) ^ 2} = \dfrac{\text{cov} (b, m) }{\text{var}(m) } \\
+\hat{\text{cov}} (b, m ) = \hat{\text{cov} } (30 - 2 \cdot M + 5 \cdot T + \varepsilon, M ) =  -2 \hat D (M) + 5 \widehat{\text{cov}} (M, T) \\
+\text{cov} (B, M) = \dfrac{-2 \text{var} (M) + 5 \text{cov} (M, T)}{\text{var}(M)} = - 2 + 5 \cdot \dfrac{\text{cov} (M, T) }{\text{var}(M)} \\
+\text{plim} \hat  \beta_1 = -2  + 5 \dfrac{\text{cov} (M, T) }{\text{var}(M)} = -2 + 5 \cdot \dfrac{1}{2} = 0.5 
+\end{align*} 
+Вспомнить конструкцию эту вот 
+\begin{align*}
+\lim_{n \rightarrow \infty} P(| \hat{\beta} - \text{plim} \,\, \hat \beta | > \varepsilon ) = 0 \\
+\text{plim} \, \hat \beta \rightarrow \text{что-то типа матожидания} 
+\end{align*}
+\end{enumerate}
+\subsubsection*{Оценка коэффициента в модели  пропущенными переменными для парной регресси в общем виде}
+\begin{align*}
+ \hat \beta_1 = \beta_1 + \beta_2 \cdot \dfrac{\text{cov} (X_1, X_2)}{\text{var}(X_1) }
+\end{align*}
+\subsubsection*{RESET тест Рамсея}
+Он может сказать, что вы не включили полиномы и т.д. в модель, хотя их мб стоило бы включить 
+\begin{align*}
+\text{Оцениваем } y_i = \beta_0 + \langle \beta, X_i \rangle + \varepsilon_i \rightarrow \text{получаем } \hat{y_i} \\
+\text{вставляем } \hat{y} \text{ в модель и заново оцениваем } \\
+y_i = \beta_0 + \beta_1 \cdot X_{1, i} + \ldots + \beta_K + X_{k, i} + \gamma_1 \cdot \hat{y_i} ^2 + \gamma_2 \cdot \hat{y_i}^3 + \ldots + \gamma_n \cdot \hat{y_i}^n + \varepsilon^*_i \\
+\text{F-test на совместную незначимость всех } \gamma: \\
+H_0: \gamma_1 = \gamma_2 = \ldots = \gamma_m = 0 \Rightarrow \text{в изначальной модели нет пропущенных полиномов} 
+\end{align*}
+\end{otherlanguage*} 
+\end{document}

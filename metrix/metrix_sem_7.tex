@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 10?}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsection*{Категориальные переменные}
+\subsubsection*{Пример}
+\begin{align*}
+\text{сезон} = 
+\begin{cases} 
+1 & \text{зима} \\ 
+2 & \text{весна} \\ 
+3 & \text{лето} \\ 
+4 & \text{осень} 
+\end{cases} 
+\end{align*}
+Если категориальных переменных много, включаются dummy переменные на все категории в количестве $ n - 1 $. Это называется OneHotEncoding. Та категория, которую мы выкидываем, называется базовой категорией.  
+\begin{align*}
+\text{educ} = \begin{cases} 1 & \text{school} \\ 2 & \text{college} \\ 3 & \text{university} \\ 4 & \text{Phd} \end{cases} \\
+\text{В этой штуке мы вводим дамми на максимальный уровень образования} \\ 
+\begin{pmatrix} \\
+ & Dschool & Dcollege & Duni & Dphd \\
+\text{school} & 1 & 0 & 0 & 0 \\
+\text{college} & 0 & 1 & 0 & 0 \\
+\text{uni} & 0 & 0 & 1 & 0 \\
+\text{Phd} & 0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\end{align*}
+То есть кодирование выглядит, как ни страннно, так. 
+\begin{align*}
+\widehat{\text{wage}} = 20  + 5 \cdot \text{D college} + 8 \cdot \text{D uni} - 3 \cdot \text{D phd} + 2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2  
+\end{align*}
+Найдём опыт, который даёт максимальную заработную плату: 
+\begin{align*}
+\dfrac{2}{2 \cdot -0.04} = 25 
+\end{align*}
+Давайте поменяем базовую категорию. Теперь базовая категориия это ученая степень. Найдём 
+\begin{align*}
+&\widehat{\text{wage(\text{school})}} = 20 + 2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2  \\
+&\widehat{\text{wage(\text{college})}} = 25 + 2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2  \\
+&\widehat{\text{wage(\text{university})}} = 28 + 2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2  \\
+&\widehat{\text{wage(\text{Phd})}} = 17 + 2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2  \\
+& \widehat{\text{wage}} = 17 + 3 \cdot \text{D school} + 8 \cdot \text{D college} + 11 \cdot \text{D uni}  + 2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2
+\end{align*}
+Перекодируем dummy, чтобы она была на все оконченные уровни образования. Это будет "премия" за повышение категории. 
+\begin{align*}
+\begin{pmatrix} \\
+ & Dschool^* & Dcollege^* & Duni^* & Dphd^* \\
+\text{school} & 1 & 0 & 0 & 0 \\
+\text{college} & 1 & 1 & 0 & 0 \\
+\text{uni} & 1 & 1 & 1 & 0 \\
+\text{Phd} & 1 & 1 & 1 & 1 \\
+\end{pmatrix}
+\end{align*}
+\begin{align*}
+\widehat{\text{wage}} =  20 + 5 \cdot \text{D college}^* + 3 \cdot \text{D uni}^*  -11  \cdot \text{Phd}^* +  2 \cdot \text{expirience} - 0.04 \cdot \text{expirience} ^ 2
+\end{align*}
+\subsection*{Тест Чоу}
+\begin{align*}
+n \rightarrow \begin{cases} n_1 \\ n_2 \end{cases} \\
+\text{F}_{\text{stat}} = \dfrac{\Big(RSS_0 - (RSS_1 + RSS_2) \Big)/ (k + 1)}{(RSS_1 + RSS_2) / \Big( n - 2 \cdot (k + 1) \Big)} \\
+\text{Как у нас получаются такие степени свободы?} \\ 
+df RSS = n - k - 1  \\
+\text{числитель}: k + 1 = n - k - 1 - (n_1 - k - 1 + n_2 - k - 1 ) \\
+\text{знаменатель}: n - 2 (k + 1) = n_1 - k - 1 + n_2 - k - 1 
+\end{align*}
+Если у нас 3 разбиения: 
+\begin{align*}
+\text{F}_{\text{stat}} = \dfrac{\Big( RSS_0 - (RSS_1 + RSS_2 + RSS_3) \Big) / (2k +2)}{\Big( RSS_1 + RSS_2 + RSS_3 \Big) / (n - 3 (k + 1))}
+\end{align*}
+\subsubsection*{Выбор функциональной формы модели}
+\begin{itemize}
+\item lin-lin 
+\begin{align*}
+y = X \cdot \beta  + \varepsilon \\
+\dfrac{\partial y_i}{\partial x_k} = \beta_k 
+\end{align*}
+\item lin-log 
+\begin{align*}
+y = \ln X \cdot \beta + \varepsilon \\
+\dfrac{\partial y_i}{\partial x_k} = \dfrac{1}{X_k} \cdot \beta_k \Rightarrow \Delta y =  \dfrac{\Delta x}{x} \cdot \beta  \\
+\end{align*}
+\item log lin 
+\begin{align*}
+\ln y = X \cdot \beta + \varepsilon \\ 
+\dfrac{1}{y_i} \cdot \dfrac{\partial y_i}{\partial x_k} = \beta_k \Rightarrow \Delta y = \Delta X \cdot y \cdot \beta \\
+\end{align*}
+\item log-log 
+\begin{align*}
+\ln y_i = \ln X \cdot \beta \\
+\dfrac{1}{y_i} \cdot \dfrac{\partial y_i}{\partial x_i} = \dfrac{1}{x_k} \cdot \beta_k \\
+\beta_k = \dfrac{x_k}{y_i} \cdot \dfrac{\partial y_i}{\partial x_k} = \dfrac{\partial y_i / y_i}{\partial x_k / x_k } \rightarrow \text{что-то вроде эластичности игрека по икс} \\
+\Delta y = \dfrac{\Delta x}{x} \cdot y \cdot \beta  
+\end{align*}
+\end{itemize}
+\end{otherlanguage*} 
+\end{document}

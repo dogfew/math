@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 9}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsection*{Модификации множественной регрессии}
+\subsubsection*{Задача с автомобилеем}
+\begin{align*}
+\hat y_i = \hat \beta_0 + \hat \beta_1 \cdot X_{1, i } + \hat \beta_2 \cdot X_{1, i} ^ 2 \\
+\widehat{\text{Petrol}} = \hat \beta_0 + \hat \beta_1 \cdot \text{speed}_i + \hat \beta_2 \cdot \text{speed}_i^2   
+\end{align*}
+Иногда таргет может нелинейно зависеть от признаков, это можно учесть с помощью полиномов. 
+Можно найти оптимум у $ \text{speed} = \dfrac{-b}{2a} =\dfrac{- \hat \beta_1}{2 \cdot \hat \beta_2}$. Таккже можно найти оптимальное $ \text{Petrol} $, подставив.
+
+\begin{align*}
+\text{Petrol}(\text{Speed}^*) = \hat \beta_0 + \hat \beta_1 \cdot \dfrac{- \hat \beta_1}{2 \cdot \hat \beta_2} + \hat \beta_2 \cdot (\dfrac{\hat \beta_1}{2 \cdot \hat \beta_2})^2
+\end{align*} 
+\subsubsection*{OneHotEncoding (Dummy Features)}
+\begin{align*}
+&D_i = \begin{cases} 
+1 \\ 0 
+\end{cases}  \\
+&\text{sex}_i  = \begin{cases} 
+1 & \text{Мужской пол} \\ 
+0 & \text{Женский пол} 
+\end{cases} \\
+&\widehat{\text{wage}} = \hat \beta + \hat \beta_1 \cdot \text{education}_i + \hat \beta_2 \cdot \text{age}_i + \ldots + \hat \beta_3 \cdot \text{sex}_i 
+\end{align*}
+\begin{align*}
+\widehat{\text{wage}}_i = 50 + 30 \cdot \text{sex} + 5 \cdot \text{uni} - 20 \cdot \text{sex} \cdot \text{uni} \\
+\begin{cases}
+\text{sex} = \begin{cases} 0 \\ 1 \end{cases} \\
+\text{uni} = \begin{cases} 0 \\ 1 \end{cases}
+\end{cases}
+\end{align*}
+Дальше можно посмотреть всякие подстановки в этот полином и т.д.
+\subsubsection*{Тест Чоу (Chow)}
+Идея в том, что выборка делится на две подвыборки. 
+
+Оценим модель общую с n наблюдениями
+\begin{align*}
+n \rightarrow \begin{cases} n_1 \\ n_2 \end{cases} \\
+y_i = \beta_0 + \beta_1 \cdot x_{1, i} + \ldots + \beta_k \cdot x_{k, i} + \varepsilon_i \rightarrow RSS_0 \\
+\end{align*}
+
+Оцениваем модели по подвыборкам 
+\begin{align*}
+y_i^{(1)} = \beta_0^{(1)} + \beta_1^{(1)} \cdot x_{1, i}^{(1)} + \ldots + \beta_k^{(1)} \cdot x_{k, i}^{(1)} + \varepsilon_i^{(1)} \rightarrow RSS_1 \\
+y_i^{(2)} = \beta_0^{(2)} + \beta_1^{(2)} \cdot x_{1, i}^{(2)} + \ldots + \beta_k^{(2)} \cdot x_{k, i}^{(2)} + \varepsilon_i^{(2)} \rightarrow RSS_2 \\
+H_0: 
+\begin{cases}
+\beta_0^{(1)} = \beta_0^{(2)} \\
+\ldots \ldots \\ 
+\beta_0^{(k)} = \beta_0^{(k)} \\
+\end{cases} \\
+F_{\text{стат}} = \dfrac{(RSS_0 - (RSS_1 + RSS_2)) / (k + 1) }{(RSS_1 + RSS_2) / (n - 2 (k + 1)) } \sim F_{k+1; n- 2(k+1)}
+\end{align*}
+\begin{align*}
+D_i = 
+\begin{cases} 
+1 & \text{Первая подвыборка} \\ 
+0 & \text{Вторая подвыборка} 
+\end{cases} \\
+y_i = \beta_0 + \beta_1 \cdot X_{1, i} + \ldots + \beta_k \cdot X_{k, i} + \alpha_0 \cdot D_i + \alpha_1 \cdot X_{1, i} \cdot D_i + \ldots + \alpha_k \cdot X_{k, i} \cdot D_i + \varepsilon_i 
+\end{align*}
+\begin{align*}
+H_0: \begin{cases}
+\alpha_0 = 0 \\
+\ldots \ldots \\ 
+\alpha_k = 0 
+\end{cases} 
+\end{align*}
+Проверять через $ F_{test} $ гипотезу о совместной незначимости коэффициентов $ \alpha $ 
+\end{otherlanguage*} 
+\end{document}

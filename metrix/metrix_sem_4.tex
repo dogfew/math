@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 3}}
+\maketitle
+\begin{otherlanguage*}{russian}
+
+\begin{align*}
+y_i = \beta_0 + \beta_1 x_i  + \varepsilon_i \\ 
+\check{y_i} = \check{\beta_0} + \check{\beta_1} X_i \\
+\check{Var(\check{\beta_0})} = \dfrac{\sum X_i^2}{n \sum (X_i - \bar{X})^2} \cdot \sigma^2_{\varepsilon} \\ 
+\check{Var(\check{\beta_1})} = \dfrac{1}{\sum (X_i - \bar{X})^2} \cdot \sigma^2_{\varepsilon} \\ 
+\end{align*}
+
+$ H_0: \beta = \beta^ * $ 
+
+$ H_1: \beta \ne \beta^* $
+
+$ t_{\operatorname stat} = \dfrac{\check{\beta} - \beta^*}{\check{s.e} (\check{\beta})} \sim t_{n-2} $
+
+$ \operatorname{p-value} < \alpha \Rightarrow H_0 $ отвергаем
+
+$ \operatorname{p-value} = 2 \cdot (1 - F_t (\operatorname{t-stat})) $
+
+Через доверительынй интервал
+
+$ \check{\beta} - t_{n-2, \alpha / 2} \cdot \check{s.e} (\check{\beta}) \le \beta \le \check{\beta} + t_{n-2, \alpha/2} \cdot \check{s.e} (\check{\beta}) $ 
+\begin{enumerate}
+\item 
+
+$$ \widehat{cov} (\hat \beta_0, \hat \beta_1) = \dfrac{\sum X_i}{n \sum (X_i - \bar X )^2} \cdot \hat \sigma^2_{\varepsilon} $$
+
+\item Рассмотрим модель 
+
+\begin{align*}
+\widehat{\text{Grade}}_i = 2.1 + 0.2 \text{Hours}_i \\
+\widehat{cov} (\hat \beta_0, \hat \beta_1) = -0.06 \\
+\widehat{var} (\hat \beta) = \begin{pmatrix}
+0.8^2 & -0.06 \\
+-0.06 & 1.2^ 2
+\end{pmatrix} \\
+\begin{cases}
+H_0: \beta_0 + \beta_1 = 3 \\
+H_1: \beta_0 + \beta_1 < 3 
+\end{cases} \\
+\text{t}_{\text{stat}} = \dfrac{\hat \beta_0 + \hat \beta_1 - 3}{\sqrt{\widehat{var} (\hat \beta_0 + \hat \beta_1)}} \\
+\widehat{var} (\hat \beta_0 + \hat \beta_1) = \widehat{var} (\hat \beta_0) + \widehat{var} (\beta_1) + 2 \widehat{cov} (\hat \beta_0, \hat \beta_1) = 0.8 ^ 2 + 1.2 ^2 + 2 \cdot (-0.06) = 1.4^ 2 \Rightarrow \text{t}_{\text{stat}} = - 0.5 
+\end{align*}
+\begin{align*}
+-\text{t}_{\text{crit}} = - \text{t}_{88 \cdot 0.05} = -1.66 \Rightarrow
+\end{align*}
+$H_0$ не отвергается 
+
+\item Прогнозы 
+\begin{enumerate}
+\item Точечный
+
+Подставляется $ \hat{\text{Grade}_j} = 2.13 $
+
+\item Интервальный 
+
+\begin{enumerate}
+\item Для среднего значения
+
+$ 2.13 \pm  t_{88, \dfrac{0.05}{2}} \cdot \sqrt{\widehat{var} (\widehat{Grade}_j}$
+\begin{align*}
+ \widehat{var} (\widehat{Grade}_j) = \widehat{var} (\hat \beta_0 + \hat \beta_1 \cdot 1/6) = \widehat{var} (\hat \beta_0) + \dfrac{1}{36} \cdot \widehat{\beta_1} + 2 \cdot \dfrac{1}{6} \cdot \widehat{cov} (\hat \beta_0, \hat \beta_1) = 0.8^2 \\
+2.13 \pm 1.6 \rightarrow [0.53, 3.73]
+\end{align*}
+\item Для индивидуального значения
+\begin{align*}
+2.13 \pm t_{88, 0.05 / 2} \cdot \sqrt{\widehat{var} (\widehat{\text{Grade}_j} + \varepsilon_j)} = \widehat{var} (\widehat{Grade}_j) + \widehat{var} (\varepsilon_j) = 0.66 + \dfrac{176}{90-2} = 2.66 \\
+2.13 \pm 2 \cdot 1.63 \Rightarrow [-1.13; 5.39] 
+\end{align*}
+\end{enumerate}
+\end{enumerate}
+\item Решение большой задачки 
+
+У нас есть исследователи, которые полагают что влияние длины судьбы на ладони оказывает какое-то ввлияние на возраст вступления в брак  (зачем?) 
+
+\begin{align*}
+\begin{pmatrix}
+cm & 4 & 6 & 8 \\
+age & 20 & 30 & 25 
+\end{pmatrix}
+\end{align*}
+
+\begin{enumerate}
+\item $ \hat \beta_0$ $ \hat \beta_1 $ МНК 
+
+\item $ TSS, ESS , RSS, R^2 $ 
+
+\item $ \widehat{var} ( \hat \beta )  $ 
+
+\item 
+
+
+\item Решение  
+
+\begin{align*}
+\beta_0 = \bar{Y} - \hat \beta \bar{X} \\ 
+X = \begin{pmatrix}
+1 & 4 \\
+1 & 6 \\
+1 & 8 \\
+\end{pmatrix} \\
+\beta = (X^T \cdot X) ^ {-1} \cdot X^T \cdot y \\
+\beta = \begin{pmatrix}
+17.5 \\ 1.25
+\end{pmatrix}
+\end{align*}
+
+\item 
+
+\begin{align*}
+TSS = \sum_{i=1}^\beta (Y_i - \bar{Y})^ 2 = (25 - 25)^ 2 + (30 - 25) ^ 2 + (25 - 20) ^ 2 = 50 \\
+\hat{Y} = \begin{pmatrix}
+22.5 \\ 25 \\ 27.5 
+\end{pmatrix} \\
+RSS = (y - X \cdot \beta)^T \cdot (y - X \cdot \beta) = 37.5 \\
+\widehat{var} (\hat \beta_0) = \dfrac{\bar{X^2}}{\sum (x_i - \bar{Y})} \cdot \hat \sigma^2_{\varepsilon} = 181.2 \\ 
+\widehat{var} (\hat \beta_1) = \dfrac{1}{\sum (x_i - \bar{x})} \cdot \hat \sigma^2_{\varepsilon} = 4.69 \\ 
+\widehat{cov} (\beta_0, \beta_1) = \dfrac{\bar{X}}{\sum (X_i - \bar{X})^2} \cdot \hat \sigma_{\varepsilon}^ 2 = 28.125  
+\end{align*}
+
+\begin{align*}
+H_0: \beta_1 = 0 \\ 
+H_1: \beta_1 \ne 0 \\
+t_{stat} = \dfrac{1.25}{\sqrt{4.69}} = 0.58 \\
+t_{3-2, 0.025} = t_{1, 0.025} = 12.706 \\
+\end{align*}
+
+\item Интервальный для индивидуального 
+
+\begin{align*}
+30 \pm t_{1, 0.05 / 2} \cdot \sqrt{\widehat{Var} (\hat Age + \varepsilon)}
+\end{align*}
+\end{enumerate}
+
+\item 
+
+\begin{align*}
+\hat Y_i = \hat \beta_i + \hat \beta_i \cdot X_i \\
+\hat X_i = \hat \alpha_0 + \hat \alpha_1 \cdot Y_i 
+\end{align*}
+
+Доказать что $R^2 $ совпадают, $ \hat \beta_1 \cdot \hat \alpha_1 = R^2 $
+\begin{align*}
+R^2 = \dfrac{ESS}{TSS} = \widehat{corr}^2 (X; y) = \widehat{corr}^2 (y;X) 
+\end{align*}
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

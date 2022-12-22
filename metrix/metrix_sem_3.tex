@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 3}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\begin{enumerate}
+\item Теория
+
+\begin{enumerate}
+\item $DGP:\,\,\, Y = \beta_0  + \beta_1 X_i + \varepsilon_i $ 
+
+$ Y_i = \check{\beta_0} + \check{\beta_1} X_i + \varepsilon_i $
+
+а как вы думаете здесь стоит модифицировать градиентный спуск
+
+$ \varepsilon_i = Y_i - \check{Y_i} $
+
+$ \sum \varepsilon_i^2 \rightarrow \min $ (МНК) 
+
+\item Странная модификация: $ Y_i = \beta X_i + \varepsilon_i $
+
+\begin{align}
+\sum e_i^2 = \sum (Y_i - \check{\beta} - \check{\beta} X_i)^ 2 \rightarrow \min \\ 
+RSS^{'}_\beta = 2(Y_i - \check{\beta} - \check{\beta} X_i) \cdot (-1 - X_i) = 0 \\
+\sum (Y_i - \check{\beta} - \check{\beta} X_i)(1 + X_i) = 0\\
+\sum Y_i - n \check{\beta} - 2 \check{\beta} \sum X_i + \sum Y_i X_i - \check{\beta} \sum X_i^2 = 0 \\ 
+\check{\beta}  = \frac{\sum Y_i + \sum X_i Y_i }{n + 2 \sum Y_i + \sum X_i^2 }
+\end{align}
+
+\item Ещё одна модификация $ \ln Y_i = \beta + \ln X_i + \varepsilon_i $
+
+\begin{align}
+\ln Y_i - \ln X_i = \beta + \varepsilon_i \\
+\ln (\frac{Y_i}{X_i}) = \beta + \varepsilon_i \\
+Z = \ln (\frac{Y_i}{X_i}) = \beta + \varepsilon_i \\
+\check{\beta} = \bar{\ln \frac{Y}{X}} = \bar{\ln Y} - \bar{\ln X}
+\end{align}
+\end{enumerate}
+\item Свойства МНК
+
+Мера разброса: 
+\begin{align}
+\sum_{i=1}^n (Y_i - \bar{Y})^ 2 
+\end{align}
+
+Ошибка: 
+\begin{align} 
+\varepsilon_i = Y_i - \check{Y_i} \Rightarrow Y_i = \check{Y_i} + \varepsilon_i \\
+\check{Y_i} = \check{\beta_0} + \check{\beta_1} X_i \\ 
+\check{\beta_0} = \bar{X} - \check{\beta_1} \bar{X} \\ 
+\varepsilon_i = Y_i - \bar{Y} + \check{\beta_1} \bar{X} - \check{\beta_1} X_i \\ 
+\sum e_i = \sum Y_i - n \bar{Y} + \check{\beta_1} \cdot n \cdot \bar{X} - \check{\beta_1} X_i \\
+\sum e_i = 0 \Rightarrow \bar{e} = 0 \\
+\sum (Y_i - \check{Y_i}) = 0 \\
+\sum Y_i = \sum \check{Y_i} \\
+\bar{Y} = \bar{\check{Y}}
+\end{align} 
+Как-то всё слишком очевидно воспринимается
+
+Мера разброса нашего $Y$ 
+\begin{align}
+\sum_{i=1}^n (Y_i - \bar{Y})^ 2 = \sum_{i=1}^n (\check{Y_i} + \varepsilon_i - \bar{Y}) ^2 = \\
+= \sum_{i=1}^n (\check{Y_i} - \bar{Y} + \varepsilon_i^2)^2 = \sum_{i=1}^n \Big( (\check{Y_i} - \bar{Y} ) ^2 + \varepsilon_i^2 + 2 \cdot \varepsilon_i (\check{Y_i} - \bar{Y}) \Big) = \\
+= \sum_{i=1}^n (\check{Y_i} - \bar{Y} )^2 + \sum \varepsilon_i^2 + 2 \sum e_i \check{Y_i} - 2 \bar{Y} \sum \varepsilon_i = \cdots = \sum_{i=1}^n (\check{Y_i} - \bar{Y}) ^ 2 + \sum_{i=1}^n \varepsilon_i^2 
+\end{align} 
+Если все $\varepsilon_i$ и т.д. преобразовать, зная то, что написано в пред. пунктах и чему равны частные производные. 
+
+В чёрную рамку: 
+\begin{align}
+\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n (\check{Y_i} - \bar{Y}) ^ 2 + \sum_{i=1}^n \varepsilon_i^2 \\
+TSS = ESS + RSS
+\end{align}
+Коэффициент детерминации 
+\begin{equation}
+R^2 = \frac{ESS}{TSS} = \frac{\sum_{i=1}^n (\check{Y_i} - \bar{\check{Y}})^2}{\sum_{i=1}^n (Y_i - \bar{Y})^2} = \frac{\check{var} (\check{Y})}{\check{var}(Y)}
+\end{equation}
+Таким образом, $ R ^ 2 $ - доля дисперсии $ Y $, объясненная регрессией 
+
+Ещё факты относительно $ R^ 2$: 
+
+\begin{align}
+R ^ 2 = \frac{TSS - RSS}{TSS} = 1 - \frac{RSS}{TSS} \\
+R^2 = \check{r}^ 2 (\check{Y}, Y) = \check{r}^2 (X; Y)\\
+R^2 = \frac{\check{\beta_1}^2 \cdot \check{var (X)}}{\check{var (Y)}} 
+\end{align}
+$ RSS \rightarrow \min \equiv R^2 \rightarrow \max$
+
+Задачка, которую с удовольствием вставили бы в контрольную. Во втором случае $ R ^ 2 $ не имеет смысла и вторая модель не оч адекватная. 
+\begin{align}
+\check{\operatorname{salary}} = 20 + 5 \cdot \operatorname{experience} \rightarrow R^2 = 0.5 \\
+\check{\operatorname{salary}} = 10 \cdot \operatorname{experience} \rightarrow R^2 = 0.7 
+\end{align}
+Важно помнить: 
+\begin{align}
+\check{cov} (X, Y) = \bar{XY} - \bar{X} \cdot \bar{Y} \\ 
+\check{D(X)} = \bar{X} ^ 2 - \bar{X^2} 
+\end{align}
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

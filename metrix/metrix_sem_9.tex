@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Эконометрика, семинар 12}}
+\maketitle
+\begin{otherlanguage*}{russian}
+\subsection*{Мультиколлинеарность}
+\begin{align*}
+\text{мультиколлинеарность} \rightarrow 
+\begin{cases}
+\text{строгая, (теоретическая, идеальная) } \\
+\text{нестрогая (квази-, практическая)} 
+\end{cases}
+\end{align*} 
+\begin{itemize}
+\item строгая 
+
+Существует линейная зависимость между столбцами. Тогда $ \det (X^T \cdot X) = 0 $ и $ \hat \beta $ не посчитается. Нарушается условие теоремы Гауса Маркова. 
+
+\item нестрогая 
+
+существует какая-то тесная связь между признаками. Условия теоремы Гауса Маркова не нарушаются. 
+$ \text{det} (X^T \cdot X) \rightarrow 0 $ 
+
+$ R ^ 2 $ высокий, но почти все коэффициенты незначимы.  
+
+ПРИЧИНЫ:
+\begin{enumerate}
+\item мало наблюдений, но много переменных
+\item неправильная или неудачная спецификация модели 
+\item использование близких по смыслу переменных 
+\item неудачная выборка
+\item просто не повезло
+\end{enumerate}
+ДИАГНОСТИКА
+\begin{enumerate}
+\item $ R ^ 2 $ высокий, почти все коэффициенты незначимы 
+\item посчитать парные корреляции между признаками 
+\item если корреляция между признаками больше 0.9, это уже плоховато
+\item VIF (variance infation factor ) : $ VIG_j == \dfrac{1}{1 - R^2_j} $ 
+\begin{align*}
+\text{var} \beta_j = \dfrac{\hat \sigma^2_{\varepsilon}}{\sum (X_{ji} - \bar{X}_j)^2} \cdot \dfrac{1}{1 - R^2_j} = \dfrac{\hat \sigma^2_{\varepsilon}}{TSS_j} \cdot \dfrac{1}{1 - R^2_j} \\
+TSS_j == (n - 1) \cdot \text{var} X_j
+\end{align*}
+\item VIF показывает, во сколько рах увеличение дисперсии $ B_j $ по сравнению с тем, когда иксы независимы. Эмпирически умные люди выявили что 
+\begin{align*}
+\begin{cases}
+VIF > 10 \rightarrow \text{плохо} \\
+VIF < 3 \rightarrow \text{хорошо}
+\end{cases}
+\end{align*}
+\end{enumerate}
+\end{itemize}
+\subsubsection*{Пример}
+Известно, что $ \text{corr} (x, z) = 0.5 $ 
+
+Найти $ \min VIF_x$ в регрессии $ y_i = \beta_1 + \beta_2 \cdot x_i + \beta_3 \cdot z_i + \beta_4 \cdot w_i + u_i $ 
+
+Чтобы найти $ VIF_x $ мы строим регрессию для $ X $ с помощью остальных переменных модели
+\begin{align*}
+VIF_x = \dfrac{1}{1 - R^2_x} \rightarrow R^2_x \text{ из регрессии } X_i \sim z_i + w_i \\
+R^2_x = \widehat{\text{cov}} (X, \hat X) \\
+\widehat{\text{cov}} (x, z) = R ^ 2  \text{ из модели } x_i \sim z_i \Rightarrow R^2 = 0.5 ^ 2 = 0.25 \\
+\min \text{VIF}_x = \dfrac{1}{1 - 0.25} = \dfrac{4}{3}
+\end{align*}
+\subsubsection*{CN (conditional number, число обусловленности)}
+\begin{align*}
+CN(X^T X) = \sqrt{\dfrac{\lambda_{\max}}{\lambda_{\min}}} \\
+\text{ Собственные значения, как их считать? Отсюда: } \\
+\text{det} (X^T  X - \lambda \cdot \mathcal{I} ) = 0  \\
+CI_{index} = \dfrac{\lambda_{\max}}{\lambda_{\min}} 
+\end{align*}
+\subsubsection*{Пример}
+\begin{align*}
+X^T X = \begin{pmatrix}
+10 & 0 & 1 \\
+0 & 20 & 2 \\
+1 &  2 & 5
+\end{pmatrix} \Rightarrow \\
+\Rightarrow \text{det} \begin{pmatrix}
+10 - \lambda & 0 & 1 \\
+0 & 20 - \lambda & 2 \\
+1 & 2 & 5 - \lambda 
+\end{pmatrix} = \ldots = - \lambda ^ 3 + 35 \lambda ^ 2 - 345 \lambda + 940 \Rightarrow
+\lambda  = \begin{cases}
+\lambda_1 = 4.56 \\
+\lambda_2 = 10.18 \\
+\lambda_3 = 20.26
+\end{cases}
+\end{align*}
+ЛЕЧЕНИЕ: 
+\begin{enumerate}
+\item Выкинуть лишние регрессоры (переменные) 
+\item Изменить спецификацию модели (функциональные преобразования) 
+\item Найти больше данных 
+\item Снижение размерности (метод главных компонент) 
+\item Регуляризация 
+\item Забить
+\end{enumerate}
+\end{otherlanguage*} 
+\end{document}

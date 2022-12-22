@@ -1118,6 +1118,157 @@ u = 2 \\
 y = 7 \cdot e^t - 2
 \end{cases}
 \end{align*}
+\subsection*{Задачи на принцип максимума понтрягина, но численно. }
+В прошлый раз мы рассматривали такую задачку:
+\begin{align*}
+T \rightarrow \min \\
+y^{'} = y + u\\ 
+y(0) = 5 \\
+y(T) = 11 \\
+u \in [-1; 1] 
+\end{align*}
+\subsection*{Дискретный случай принципа Беллмана.}
+\subsubsection*{Задача 1}
+\begin{align*}
+t = \{ 0, 1, 2 \} \\
+\text{Есть две отрасли } x_t, y_t \\
+x_0 = 1, \,\,\, y_0 = 0 \\
+\text{target: } y_0 + y_1 + y_2 \rightarrow \max \\
+\text{restrictions:} \\
+\begin{cases}
+x_{t+1} = 2 x_{t} - u_t  \\
+y_{t+1} = 0.5 y_t + u_t \\
+0 \le u_t \le x_t 
+\end{cases}  \\
+\beta_t = \phi_t + \max \beta_{t+1} 
+\end{align*}
+\begin{enumerate}
+\item итерация
+\begin{align*}
+t = 2 \\
+\beta_2 = y_2 \\
+0 \le u_2 \le x_2 
+\end{align*}
+\item итерация
+\begin{align*}
+t = 1 \\ 
+\beta_1 = y_1 + \max_{u_1 \in [0, x_t] } \beta_2 = \\
+= y_1 + \max_{u_1} y_2 = y_1 + \max (0.5 y_1 + u_1) =  \\ 
+= (u_1 \in [0, x_1] ) = y_1 + 0.5 y_1 + x_1 
+\end{align*}
+\item итерация 
+\begin{align*}
+t = 0 \\
+\beta_0 = y_0 + \max_{u_0} \beta_1 = y_0 + \max_{u_0} (1.5 y_1 + x_1) = y_0 + \max_{u_0} (1.5 \cdot (0.5 y_0 + u_0) + 2 x_0 - u_0 ) = \\ 
+= (y_0 = 0, \,\, x_0 = 1 ) = \\ = 0 + \max_{u_0} (1.5 u_0 + 2 - u_0) = \\ = \max_{u_0} (0.5 u_0 + 2) = (0 \le u_0 \le x_0 \Rightarrow u^* = x_0 = 1 ) \Rightarrow \beta_0 = 2.5 
+\end{align*}
+\item Ответ 
+\begin{align*}
+t = 0: \,\,\, u_0^* = 1 \,\,\, x_0 = 1 \,\,\, y_0 = 0 \\
+t = 1: \,\,\, u_1 = x_1 = 1 \\
+x_1 = 2 x_0 - u_0 = 1 \\
+y_1 = 0.5 y_0 + u_0 = 1 \\
+t = 2 : \,\,\, u_2 \rightarrow \text{любое} \,\,\,\, 0 \le u_2 \le x_2 \\
+x_2 = 2 x_1 - u_1 = 1 \\
+y_2 = 0.5 y_1 + u_1 = 1.5 
+\end{align*}
 \end{enumerate}
+\end{enumerate}
+\subsubsection*{Задача 2}
+\begin{align*}
+t = \{ 0, 1, 2 \} \\
+\text{Есть две отрасли } x_t, y_t \\
+\begin{cases}
+x_{t+1} = 2 x_t - u_t \\
+y_{t+1} = y_t + u_t \\
+0 \le u_t \le x_t \\
+y_2 \rightarrow \max \\
+\end{cases} \\
+\begin{cases}
+y_1 \ge 1 \\
+x_2 \ge 3 \\
+y_0 = \dfrac{3}{4} \\
+x_0 = 1 
+\end{cases}
+\end{align*}
+\begin{enumerate}
+\item итерация 
+\begin{align*}
+t = 2 \\ 
+\beta_2 = y_2, \,\,\,\,\,\,x_2 \ge 3 \\
+0 \le u_2 \le x_2 \Rightarrow u_2 \rightarrow \text{любое из этого } \\
+\begin{cases}
+2 x_1 - u_1 \ge 3  \\
+0 \le u_1 \le x_1 
+\end{cases} \Leftrightarrow \begin{cases}
+u_1 \le 2 x_1 - 3 \\
+0 \le u_1 \le x_1 
+\end{cases} = \\
+= 0 \le u_1 \le \min \{x_1, 2x_1 - 3  \}
+\end{align*}
+\item итерация
+\begin{align*}
+t =1  \\ 
+\beta_1 = \max_{u_1} \beta_2 = \max_{u_1} \Big( y_2 \Big)  = \\ = \max_{u_1} \Big( y_1 + u_1  \Big) = \max_{u_1} \Big( y_1 + \min \{ x_1, 2x_1 - 3  \} \Big) \\
+\begin{cases}
+x_1 \ge 0 \\
+2 x_1 - 3 \ge 0 \\
+y_1 \ge 1 \\
+\end{cases} \Leftrightarrow \begin{cases} 
+2 x_0 - u_0 \ge 0 \\
+4 x_0 - 2 u_0 - 3 \ge 0 \\
+y_0 + u_0 \ge 1 \\
+(x_0 = 1; \,\,\, y_0 = \dfrac{3}{4} 
+\end{cases} \Leftrightarrow 
+\begin{cases}
+u_0 \le 2 \\
+u_0 \le \dfrac{1}{2} \\
+u_0 \ge \dfrac{1}{4}
+\end{cases}
+\end{align*}
+\item итерация 
+\begin{align*}
+t =0 \\ 
+\beta_0 = \max_{u_0} \beta_1 = \max_{u_01} \Big(y_1 + \min \{x_1, 2x_1 - 3  \} \Big) = \\ = \max_{u_0} (y_0 + u_0  + \min \{ 2x_0 - u_0 , \, 4x_0 - 2 u_0 - 3  \} ) = \\
+= \max_{u_0} ( \dfrac{3}{4} + u_0 + \min \{ 2 - u_0 , \,\,\, 1 - 2 u_0 \} )  = \\
+= ( \dfrac{1}{4} \le u_0 \le \dfrac{1}{2} \Rightarrow \text{правая часть всегда меньше} ) = \max_{\dfrac{1}{4} \le u \le \dfrac{1}{2}} ( \dfrac{3}{4} + u_0 + 1 - 2 u_0 ) \Rightarrow u^* = \dfrac{1}{4}
+\end{align*}
+\item Ответ
+\begin{align*}
+t = 0 \Rightarrow u^*_0 = \dfrac{1}{4} , \,\,\, x_0 = 1 , \,\,\, y_0 = \dfrac{3}{4} \\
+t = 1: \,\,\,\, u_1 ^* = \min \{x_1, \,\,\, 2 x_1 - 3  \}  = \dfrac{1}{2}\\
+x_1 = 2 x_0 - u_0 = 1 \dfrac{3}{4} \\
+y_1 = y_0 + u_0 = 1 \\
+t = 2 : u_2 \rightarrow \text{любое из нашего ограничения} \\
+x_2 = 2 x_1 - u_1 = 3 \\
+y_2 = y_1 + u_1 = 1.5 
+\end{align*}
+Если все ограничения задачи выполняются в ответе, то всё найдено корректно, иначе где-то была допущена ошибка или условия невыполнимы. 
+\end{enumerate}
+\subsubsection*{Принцип максиума Понтрягина, задача.}
+\begin{align*}
+\int_0^6 (2x + 1) dt \rightarrow \min \\
+| x ^ {''} | \le 2 \\
+x(0) = x^{'} (0) = x^{'} (6) = 0 \\
+\text{Преобразуем немножечко} \\
+x^{''} = u \\
+x(0) = y(0) = y(6) = 0 \\
+x^{'} = y \\
+y^{'} = u \\
+\end{align*}
+\begin{align*}
+H = - 2 x -1  + \lambda_x \cdot y + \lambda_y  \cdot u \rightarrow \max_u \\
+u = \begin{cases}
+-2 & \lambda_y < 0 \\
+[-2, 2 ] & \lambda_y = 0 \\
+2 & \lambda_y > 0 
+\end{cases} \\
+\begin{cases}
+- \dfrac{\partial H}{\partial \lambda_x} = x^{'} = y \\
+\dfrac{\partial H}{\partial \lambda_y} = y^{'} = u \\
+- \dfrac{\partial H}{\partial x} = \lambda^{'}_x = 2 \\
+- \dfrac{\partial H}{\partial y} = \lambda^{'}_y = - \lambda_x & \rightarrow \text{трансверсальность тождество}
+\end{cases}
+\end{align*}
 \end{otherlanguage*}
 \end{document}

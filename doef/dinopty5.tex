@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Динамическая оптимизация в экономике и финансах}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+`\section*{Принцип Беллмана в непрерывном времени}
+\begin{align*}
+B(y, \tau) = \max_{u \in \mathcal{U}_t} \begin{cases} F(y, u, \tau) + B \Big( f(y, u, \tau), \tau + 1 \Big) 
+\end{cases}  \\
+B(y, \tau) = G(y(\tau)) \\
+\int_0^{T} F(y, u, t) dt + G(y(T)) \\
+y^{'} = f(y, u, t) \\
+\text{Функция максимального выигрыша: } \\
+B(y, \tau) = \max_{(y, u)^T_{\tau}} \int_{\tau}^T F(y, u, t) dt + G(y (T)) \\
+B(y, \tau) = \max_{(y, u)_{\tau}^{\tau + \Delta \tau}} \int_{\tau}^{\tau + \Delta \tau} F(y, u, t) dt + B(y + \Delta y, \tau + \Delta \tau) 
+\end{align*}
+\begin{enumerate}
+\item Мысль № 1
+\begin{align*}
+\Delta y = y_{\tau + \Delta \tau} - y_{\tau} 
+\end{align*} 
+Выберем $ \Delta \tau $ достаточно малым. Пусть $ 0 < \Delta \tau << 1 $ 
+\item Мысль № 2
+Из матанализа мы знаем: 
+\begin{align*}
+f(x + \Delta x) = f^{'} (x_0) \Delta x + f(x_0) +  o(\Delta x) 
+\end{align*}
+\item По формуле Тейлора для первого порядка 
+\begin{align*}
+\int_\tau^{\tau + \Delta \tau} F(y, u, t) dt  = F(y_\tau, u_\tau, \tau) \cdot \Delta \tau + o(\Delta \tau) \\
+B(y_\tau + \Delta y, \tau + \Delta \tau) = \\ 
+= B(y_\tau, \tau) + \Big(\dfrac{\partial B}{\partial y}_{(y_\tau, \tau)}\Big) \cdot \Delta y + \Big(\dfrac{\partial B}{\partial t}_{(y_\tau, \tau)}\Big) \cdot \Delta \tau + o(\Delta y, \Delta \tau) \\
+B(y_\tau, \tau) = \max_{(y, u)^{\tau + \Delta \tau}_{\tau}} \begin{cases} F(y_\tau, u_\tau, \tau) \cdot \Delta \tau + o(\Delta \tau) + \\ + B(y_\tau, \tau) + \Big(\dfrac{\partial B}{\partial y}_{(y_\tau, \tau)}\Big) \cdot \Delta y + \Big(\dfrac{\partial B}{\partial t}_{(y_\tau, \tau)}\Big) \cdot \Delta \tau  \end{cases}
+\end{align*}
+
+Так можно сделать если выполняются следующие условия:
+\begin{itemize}
+\item $ F $ непрерывна по $ y, u, t $  
+\item Функция $ B $ существует непрерывно и непрерывно дифференцируема
+\begin{align*}
+B(y_\tau, \tau) = B(y_\tau, \tau) + \max_{(y, u)^{\tau + \Delta \tau}_{\tau}} \begin{cases} F(y_\tau, u_\tau, \tau) \cdot \Delta \tau + o(\Delta \tau) + \\ + \Big(\dfrac{\partial B}{\partial y}_{(y_\tau, \tau)}\Big) \cdot \Delta y + \Big(\dfrac{\partial B}{\partial t}_{(y_\tau, \tau)}\Big) \cdot \Delta \tau  \end{cases} \\
+0 = \max_{(y, u)^{\tau + \Delta \tau}_{\tau}} \begin{cases} F(y_\tau, u_\tau, \tau) \cdot \Delta \tau + o(\Delta \tau) +  \Big(\dfrac{\partial B}{\partial y}_{(y_\tau, \tau)}\Big) \cdot \Delta y + \Big(\dfrac{\partial B}{\partial t}_{(y_\tau, \tau)}\Big) \cdot \Delta \tau  \end{cases}
+\end{align*}
+Мы влияем только на $ \Delta y$, а на $ \Delta \tau $ не влияем, её можно вынести за максимум. 
+\begin{align*}
+0 = \Big(\dfrac{\partial B}{\partial t}_{(y_\tau, \tau)}\Big) \cdot \Delta \tau + \max_{(y, u)^{\tau + \Delta \tau}_{\tau}} \begin{cases} F(y_\tau, u_\tau, \tau) \cdot \Delta \tau + o(\Delta \tau) +  \Big(\dfrac{\partial B}{\partial y}_{(y_\tau, \tau)}\Big) \cdot \Delta y \end{cases} \\
+ \Big(\dfrac{\partial B}{\partial t}_{(y_\tau, \tau)}\Big) = - \max_{(y, u)^{\tau + \Delta \tau}_\tau} \{ F(y_\tau, u_\tau, \tau) + \Big(\dfrac{\partial B}{\partial y}_{(y_\tau, \tau)}\Big) \cdot \dfrac{\Delta y}{\Delta \tau}  + \dfrac{O(\Delta \tau)}{\Delta \tau} \} \\
+\text{пусть } \Delta \tau \rightarrow 0 \\
+(y, u)^{\tau + \Delta \tau}_\tau \rightarrow u_\tau \\
+\end{align*}
+Итог:
+\begin{align*}
+& B(y, \tau) = G(y(T)) \\
+& \dfrac{\partial \mathcal{B}}{\partial t} = - \max_{u(t) \in \mathcal{U}(t)} \{ F(y, u, t) + \dfrac{\partial \mathcal{B}}{\partial y} \cdot f(y, u, t) \}
+\end{align*}
+Вспомнить историю с Понтрягиным:
+\begin{align*}
+H = F + \lambda f 
+\lambda (T) = 0 \\
+\lambda \sim \dfrac{\partial \mathcal{B}}{\partial }
+\end{align*}
+В отличие от Понтрягина, в Беллмане множество ограничений меняется на каждом шаге. 
+\subsubsection*{Пример}
+\begin{align*}
+\int_0^T u \cdot y \text d t \rightarrow \max \\
+y^{'} = (1 - u) \cdot y \\
+y(0) = 1 \\
+u \in [0, 1] \\
+\dfrac{\partial \mathcal{B}}{\partial t} = - \max_{u \in [0, 1]} \{ u \cdot y + (1 - u) \cdot \dfrac{\partial \mathcal{B}}{\partial y}\} =\\
+=  y \cdot \dfrac{\partial \mathcal{B}}{\partial y} - \max \{ y \cdot u (1 - \dfrac{\partial \mathcal{B}}{\partial y} ) \} \\
+u^* = \begin{cases}
+1 & 1 - \dfrac{\partial \mathcal{B}}{\partial y} > 0 \\
+0 & 1 - \dfrac{\partial \mathcal{B}}{\partial y} < 0 \\
+[0, 1] & 1 - \dfrac{\partial \mathcal{B}}{\partial y } = 0 
+\end{cases} 
+\end{align*} 
+\begin{align*}
+\begin{cases}
+\dfrac{\partial B}{\partial y} < 1 & \dfrac{\partial B}{\partial t} = - y \\
+\dfrac{\partial B}{\partial y} > 1 & 
+\dfrac{\partial B}{\partial t} = - y \dfrac{\partial B}{\partial y}
+\end{cases} \\
+B(y, T) = 0 \Rightarrow \dfrac{\partial B}{\partial y}_\tau = 0 
+\end{align*}
+В момент $ T $ и в некоторой окрестности до него реализуется режим 
+\begin{align*}
+u^* = 1 \\
+\dfrac{\partial B}{\partial t} = - y 
+\end{align*}
+При интегрировании уравнения в частных производных появляется не константа, а частная проивзодная
+\begin{align*}
+\dfrac{\partial B}{\partial t} = a \\
+B = a \cdot t + c(y) \\
+B = - y \cdot t  + c(y) \\
+B(y, \tau) = - y \cdot T + c(y) = 0 \\
+c(y) = y \cdot  T \\
+\mathcal{B} = (T - t) \cdot y 
+\end{align*}
+Но это верно только для интервала $ [\tau^*, T] $  
+\begin{align*}
+\dfrac{\partial B}{\partial y} = T - t. \\
+\text{переключение происходит при } \dfrac{\partial B}{\partial y} \Rightarrow \tau ^* = T - 1 \\
+\text{ далее начинается режим где  } \dfrac{\partial B}{\partial y} < 1 \\
+\text{ далее мы занимаеся следующими вещами } \\
+\dfrac{\partial B}{\partial t} = - y \dfrac{\partial B}{\partial y} \\
+\dfrac{\partial B}{\partial t} = - y \cdot e ^{T - 1 - t } \\
+\dfrac{\partial B}{\partial y} = e^{T - 1 - t} \\
+B(y, t) = y \cdot e^{T - 1 - t} 
+\end{align*}
+В беллмане по хорошему надо ещё склеивать функциии $ B $ 
+\begin{align*}
+B(y, T - 1) = 1 \Rightarrow \text{других переключений нет } \\
+u^* = 1, t \in [0, \tau - 1] \\
+u^* = 0, t \in (\tau - 1 , \tau] 
+\end{align*}
+\end{itemize}
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}

@@ -1,0 +1,172 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{epsfig}  
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\title{\foreignlanguage{russian}{Динамическая оптимизация в экономике и финансах}}
+\maketitle
+
+\begin{otherlanguage*}{russian}
+\section*{Принцип Беллмана?}
+\subsection*{\foreignlanguage{russian}{Каноническая задача в дискретном времени}}
+\begin{align*}
+y(t) \,\,\,\,\,\, y_t \\
+\mathcal{J} (y, u) = \sum_{t=0}^{T-1} F(y_t, u_t, t) \\
+y_{t+1} = f(y_t, u_t, t) \\
+u_t \in \mathcal{U}_t \\
+y_0 \rightarrow \text{задан} 
+\end{align*}
+Как устроено время в этой задаче? 
+В момент $ 0 $ вам известно $ y_0 $. Решения, принимаемые $ \in (0, 1) $ обозначаются как $ u_0 $. 
+$$ y = (y_0, y_1, \ldots, y_T) $$ 
+$$ y = (u_0, \ldots, u_{T-1}) $$
+\begin{align*}
+y_t \in \mathcal{R}^n \\
+u_t \in \mathcal{R}^m 
+\end{align*}
+\subsubsection*{Особенности}
+\begin{itemize}
+\item Отсутствие памяти. Фазовое состояние системы $ y_{t+1} $ определяется только $ y_t, u_t, t) $. 
+\item Отсутствие ограничений на текущие и конечные значения $ \rightarrow y_t, y_T $.
+\item $ y_0 $ задан. 
+\item Отсутствие в ограничениях на управление $ (u) $ фазовых координат (фазового состояния) $ y$.  
+\item Отсутствие в функционале вклада конечного состояния $ y_T \notin \mathcal{J} (y, u) $ 
+\end{itemize}
+\subsubsection*{Функция максимальных выигрышей (Беллмана)}
+\begin{align*}
+& B(y, \tau) = \max_{(y, u)_\tau} \sum_{t=\tau}^{T-1} F( y_t, u_t, t) \\
+& (y, u)_{\tau} = (y_\tau, y_{\tau + 1}, \ldots, y_T; u_\tau, \ldots, u_{T-1} ) \\
+& B(y_0, 0) = J^* \rightarrow \text{решение нашей задачи, оптимальное хначение нашего функционала} \\
+& B(y, T) = 0 \rightarrow \text{конечное значение нашего функционала} \forall y \in \mathcal{R}^n 
+\end{align*}
+\subsubsection*{Вывод уравнения Беллмана}
+\begin{align*}
+B(y, T - 1) = \max_{(y, u)_{T-1}} \begin{cases} F(y_{T-1}, u_{T-1}, T-1 )  | y_{T-1} = y, \,\, u_{T-1} \in \mathcal{U}_{T-1} \end{cases} 
+\end{align*}
+то есть единственное переменной остаётся  $ U_{T-1} $ 
+\begin{align*}
+B(y, T - 1) = \max_{ u_{T-1} \in \mathcal{U}_{T-1}} F(y, u_{T-1}, T-1) \\
+B(y, T - 1) = \max_{(y, u)_{T-1}} (F(y_{T-1}, u_{T-1}, T-1 ))\\ s.t. \begin{cases}  y_{T-1} = y, \\
+y_{T-1} = f(y_{T-2} u_{T-2} , T-2 ) \\
+u_{T-1} \in \mathcal{U}_{T-1} 
+\end{cases} \\
+B(y, T - 2) = \max_{u_{T-2} \in \mathcal{U}_{t-2}} \Big( F(y, u_{T-2}, T-2) + B(y_{T-1}, T - 1) \Big)
+\end{align*}
+Называется рекуррентным уравнением Беллмана. 
+\subsubsection*{Общее рекуррентное уравнение Беллманна}
+Если повторить эту штуку для произвольного момента времени
+\begin{align*}
+B(y, T) = \max_{u_t \in \mathcal{U}_t} \Big( F(y, u_T, \tau) + B(f(y, u_t, \tau), \tau + 1)  \Big) \\
+B(y, T) = 0 
+\end{align*}
+\subsubsection*{Использование уравнения Беллмана}
+Оно итеративное, из последнего момента времени в первый. 
+\begin{align*}
+& B(y, T) \rightarrow_{u^*_{T-1}} B(y, T-1) \rightarrow_{u^*_{T-2}} B(y, T - 2) \rightarrow  \ldots \rightarrow_{u^*_0} B(y, 0) \\
+& y_{t+1} = f(y_t, u_t^*, t) \rightarrow y_0, y_1 ^* , y_2^*, \ldots, y^*_T\\
+& y_0 
+\end{align*}
+\subsubsection*{Обобщение канонической задачи.}
+\begin{itemize}
+\item Более глубокие запаздывания можно "убрать" засчёт ввода новых переменных. $ z_t = y_{t-1} $, то есть мы расширяем вектор $ y_t $ вектором $ z_t $. 
+\begin{align*}
+F(y, y^{'}, y^{''}, u, t) \,\,\, z = y^{'}
+\end{align*}
+\item Добавление ограничений на текущие и конечные значения $ y_t $. Ограничения на $ y_t $ это вообще-то ограничения на $ u_t \in \mathcal{U}_t $. 
+\item Задание $ y_0 $. Его можно при желании найти из задачи $ B(y_0, 0) \rightarrow \max_{y_0} $.  
+\item Введение в ограничения на управление фазовых координат $ y_t \Rightarrow \mathcal{U}_t (y_t) $. Принимая решения относительно более раннего управления, в какой-то момент это повлияет на $ U_t $. Выбирая управление на текущем шаге, нужно заботиться о выполнимости всех ограничений на продолжении траектории, а смешанных ограничений -- на текущем шаге. 
+\item Добавить в функционал вклад конечного состояния. 
+\begin{align*}
+\mathcal{J} (y, u) = \sum_{t=0}^{T-1} F(y_t, u_t, t) + G(y_T) \\
+B(y, T) = G(y_T) 
+\end{align*}
+\subsubsection*{Задачи}
+\begin{enumerate}
+\item Задача 1. 
+\begin{align*}
+& t = (0, 1, 2, 3) \\
+& x_t \rightarrow \text{мощность производства средств производства} \\
+& y_t \rightarrow \text{мощность производства средств потребления} \\
+& \begin{cases} 
+& \mathcal{J} = y_3 \rightarrow \max \\
+& x_{t + 1} = 2 \cdot x_t - u_t \\
+& y_{t+1} = y_t + u_t \\
+& 0 \le u_t \le x_t \\
+& x_0 = 1 \,\,\, y_0 = 0 
+\end{cases} \\
+& \text{ограничения}: \begin{cases} 
+x_3 \ge 3 \\
+y_1 \ge \dfrac{1}{2} \\
+y_2 \ge 1 
+\end{cases}
+\end{align*}
+\begin{align*}
+B_3 (x_3, y_3) = y_3, \,\,\,\, x_3 \ge 3  \,\,\,\, \text{по условию} \\
+\end{align*}
+Выпишем все ограничения на $ u_2 $ 
+\begin{align*}
+0 \le u_2 \le x_2 \\
+x_3 \ge 3 \Rightarrow x_3 = 2 x_2 - u_2  \ge 3 \\
+u_2 \le 2 \cdot x_2 - 3 \\
+0 \le u_2 \le \min \Big( x_2, 2x_2 - 3 \Big) \\
+\text{реализуемость шага 2} \\
+\begin{cases}
+x_2 \ge 0 \\
+2 x_2 - 3 \ge 0 
+\end{cases} \Rightarrow x_2 \ge \dfrac{3}{2} 
+\end{align*}
+Теперь пишем функцию Беллмана для второго периода 
+\begin{align*}
+& B_2 (x_2, y_2) = \max_{ 0 \le u_2 \le \min (x_2, 2x_2 - 3 )}  (0 + B_3(x_3, y_3)) =  \max_{u_2 \in U^{'}_2} y_3 = \\
+& = \max_{u_2 \in U_2^{'}} y_2 + u_2 = y_2 + \min (x_2, 2x_2 - 3)  = \min \Big( x_2 + y_2, y_2 +  2x_2 - 3 \Big) \\
+& y_2 \ge 1 \,\,\, x_2 \ge \dfrac{3}{2}
+\end{align*}
+Ограничения на $ u_1 $
+\begin{align*}
+0 \le u_1 \le x_1 \\
+y_2 \ge 1 \\
+y_2 = y_1 + u_1 \ge 1 \\
+u_1 \ge 1 - y _1 \\
+x_3 \\ge \dfrac{3}{2} \Rightarrow x_2 = 2 x_1 - u_1 \ge \dfrac{3}{2} \\
+u_1 \le 2 x_1 - \dfrac{3}{2} \\
+\max \Big( 0, 1 - y_1 \Big) \le u_1 \le \min \Big( x_1, 2 x_1 - \dfrac{3}{2} \Big)
+\end{align*}
+Реализуемость шага 1. 
+\begin{align*}
+\begin{cases} 
+x_1 \ge 0 \\
+x_1 \ge 1 - y_1 \\
+2x_1 - \dfrac{3}{2} \ge 0 \\
+2 x_1 - \dfrac{3}{2} \ge 1 - y_1 
+\end{cases} \Rightarrow \\
+\begin{cases}
+x_1 \ge \dfrac{3}{4} \\
+2x_1 + y_1 \ge \dfrac{5}{2} \\
+\ldots \ldots \ldots
+\end{cases} 
+\end{align*}
+\end{enumerate}
+\end{itemize}
+\section*{Уравнение Беллмана в непрерывном виде}
+\subsubsection*{Каноническпая задача динамическкого программирования}
+\begin{align*}
+\int_0^T F(y, u, t) dt + G(y(T)) \rightarrow \max_{y, u} \\
+y^{'} = f(y, u, t) \\
+y(0) = y_0 \\
+u(t) \in \mathcal{U}(t) \\
+y \in \mathcal{R}^n \\
+u \in \mathcal{R}^m \\
+(y, u)|^T_{\tau} \rightarrow \text{траектрия от } \tau \text{ до } T \\
+B(y, \tau) = \max_{(y, u)|^T_{\tau}} \int_\tau^T F(y, u, t) dt + G(y(T)) 
+\end{align*}
+\subsubsection*{Принцип оптимальности}
+Идея: оптимальные траектория и управление $ (y, u)|_{\tau}^{\tau + \Delta \tau} $. Траектория переменных от $ \tau $ до $ \tau + \Delta \tau $, выбираемая для отрезка $ [\tau , \tau + \Delta \tau ]$ должны быть такими, чтобы максимизировать вклад этого отрезка в критерий в сумме с максимальным значением критерия на продолжении траектории. 
+План: 
+\begin{align*}
+B(y, \tau) = \max \Big( \int_\tau^T F(\ldots) + G(\ldots) + B(y_\tau + \Delta y , \tau + \Delta \tau )\Big)
+\end{align*}
+\end{otherlanguage*}
+\end{document}
